@@ -1,0 +1,224 @@
+{
+  "lastUpdated": "2026-05-14",
+  "version": "0.3.0",
+  "domains": [
+    {
+      "name": "삼성전자",
+      "url": "https://www.samsung.com",
+      "sector": "반도체/전자",
+      "scores": {
+        "tls": { "value": 86, "source": "automated" },
+        "hybridKem": { "value": 22, "source": "automated" },
+        "certOps": { "value": 78, "source": "automated" },
+        "quantumThreat": { "value": 23, "source": "automated" }
+      },
+      "certificate": {
+        "renewal": "자동 갱신",
+        "ca": "DigiCert",
+        "chain": "DigiCert Global Root CA → DigiCert SHA2 Secure Server CA",
+        "keyAlgorithm": "RSA",
+        "keyBits": 2048
+      },
+      "pqc": {
+        "keyExchange": "비활성화",
+        "hybrid": "미감지",
+        "maturity": "도입 검토 단계"
+      },
+      "regulatoryGaps": [
+        {
+          "refName": "개인정보보호법",
+          "article": "제29조",
+          "note": "안전성 확보 조치 — TLS 위생은 양호하나 PQC 전환 로드맵은 검토 단계.",
+          "source": "llm+verified"
+        },
+        {
+          "refName": "가이드라인",
+          "note": "KISA 암호 알고리즘 활용 가이드 준수, PQC 하이브리드 도입은 미진행.",
+          "source": "llm-only"
+        }
+      ],
+      "findings": [
+        { "text": "TLS 1.3 강제, HSTS preload 등재 확인.", "source": "automated" },
+        { "text": "ClientHello 에서 ML-KEM 그룹은 관측되지 않음 (X25519 단독).", "source": "automated" }
+      ],
+      "recommendations": [
+        { "text": "2026년 하반기까지 X25519+ML-KEM-768 하이브리드 시험 도입 권장.", "source": "llm+verified" },
+        { "text": "공급망 측면에서 CDN 다중화로 단일 CA 의존도 완화.", "source": "manual" }
+      ],
+      "narrative": {
+        "text": "글로벌 전자 기업의 대표 도메인답게 TLS 위생은 안정적이지만, 하이브리드 KEM 신호는 아직 관측되지 않으며, RSA-2048 키는 Willsch 2023 실증 기준으로 양자 위협 노출도가 높습니다.",
+        "source": "llm+verified"
+      },
+      "supplyChainNotes": {
+        "text": "글로벌 CDN 의존도 높음 (Akamai · Cloudflare 혼용). 단일 CA 의존도 완화 권고.",
+        "source": "manual"
+      },
+      "quantumThreatDetail": {
+        "keyAlgorithm": "RSA-2048",
+        "keyBits": 2048,
+        "estimates": {
+          "conservative": {
+            "logicalQubits": 4099,
+            "toffoliGates": 549755813888,
+            "score": 34,
+            "successRate": 0.04,
+            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+          },
+          "empirical": {
+            "logicalQubits": 4099,
+            "toffoliGates": 549755813888,
+            "score": 23,
+            "successRate": 0.5,
+            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
+          }
+        },
+        "citations": ["Roetteler-2017", "Willsch-2023"],
+        "source": "automated"
+      }
+    },
+    {
+      "name": "네이버",
+      "url": "https://www.naver.com",
+      "sector": "IT/플랫폼",
+      "scores": {
+        "tls": { "value": 92, "source": "automated" },
+        "hybridKem": { "value": 65, "source": "automated" },
+        "certOps": { "value": 88, "source": "automated" },
+        "quantumThreat": { "value": 87, "source": "automated" }
+      },
+      "certificate": {
+        "renewal": "자동 갱신",
+        "ca": "Sectigo",
+        "chain": "USERTrust → Sectigo RSA Domain Validation Secure Server CA",
+        "keyAlgorithm": "Hybrid-ECC-ML-KEM",
+        "keyBits": 256
+      },
+      "pqc": {
+        "keyExchange": "활성화",
+        "hybrid": "하이브리드",
+        "maturity": "베타 적용"
+      },
+      "regulatoryGaps": [
+        {
+          "refName": "개인정보보호법",
+          "article": "제29조",
+          "note": "전송 구간 암호화 의무 충족, PQC 하이브리드는 일부 엔드포인트 베타 적용.",
+          "source": "llm+verified"
+        }
+      ],
+      "findings": [
+        { "text": "X25519+ML-KEM-768 하이브리드 협상 신호 일부 엔드포인트에서 관측.", "source": "automated" },
+        { "text": "OCSP Stapling 활성화, HSTS max-age 1년 이상.", "source": "automated" }
+      ],
+      "recommendations": [
+        { "text": "베타 적용 범위를 전사 표준으로 확대.", "source": "llm+verified" },
+        { "text": "내부 mTLS 채널에도 하이브리드 KEM 단계적 도입 검토.", "source": "llm-only" }
+      ],
+      "narrative": {
+        "text": "국내 플랫폼 사업자 중 PQC 하이브리드 전환을 가장 적극적으로 진행 중인 사례이며, ML-KEM 백업 덕분에 보수·실증 두 시나리오 모두 양자 위협 노출도가 낮습니다.",
+        "source": "llm+verified"
+      },
+      "supplyChainNotes": {
+        "text": "자체 글로벌 엣지 운영으로 외부 CDN 종속도 낮음. 자체 WAF · CA 인벤토리 보유.",
+        "source": "manual"
+      },
+      "quantumThreatDetail": {
+        "keyAlgorithm": "Hybrid-ECC-ML-KEM-256",
+        "keyBits": 256,
+        "estimates": {
+          "conservative": {
+            "logicalQubits": 2348,
+            "toffoliGates": 419430400,
+            "score": 92,
+            "successRate": 0.04,
+            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). Hybrid 의 ML-KEM 백업 가산."
+          },
+          "empirical": {
+            "logicalQubits": 2348,
+            "toffoliGates": 419430400,
+            "score": 87,
+            "successRate": 0.5,
+            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. Hybrid 의 ML-KEM 백업 가산."
+          }
+        },
+        "citations": ["Roetteler-2017", "Willsch-2023"],
+        "source": "automated"
+      }
+    },
+    {
+      "name": "한국전력공사",
+      "url": "https://home.kepco.co.kr",
+      "sector": "공공/정부",
+      "scores": {
+        "tls": { "value": 62, "source": "automated" },
+        "hybridKem": { "value": 8, "source": "automated" },
+        "certOps": { "value": 50, "source": "automated" },
+        "quantumThreat": { "value": 23, "source": "automated" }
+      },
+      "certificate": {
+        "renewal": "수동 갱신",
+        "ca": "한국전자인증",
+        "chain": "KISA Root CA → 한국전자인증 Class 3 CA",
+        "keyAlgorithm": "RSA",
+        "keyBits": 2048
+      },
+      "pqc": {
+        "keyExchange": "미지원",
+        "hybrid": "미감지",
+        "maturity": "준비 미착수"
+      },
+      "regulatoryGaps": [
+        {
+          "refName": "전자금융감독규정",
+          "note": "공공기관 보안 권고 준수, PQC 항목은 미반영.",
+          "source": "llm-only"
+        },
+        {
+          "refName": "가이드라인",
+          "note": "KISA 가이드 권장사항 인지는 되어 있으나 운영 반영 단계가 아님.",
+          "source": "llm+verified"
+        }
+      ],
+      "findings": [
+        { "text": "TLS 1.2 활성, TLS 1.3 fallback 미구성.", "source": "automated" },
+        { "text": "PQC 하이브리드 협상 신호 미관측, 표준 ECDHE 만 사용.", "source": "automated" }
+      ],
+      "recommendations": [
+        { "text": "TLS 1.3 전면 적용 및 cipher suite 정비.", "source": "llm+verified" },
+        { "text": "공공기관용 PQC 도입 로드맵 수립 및 자동 인증서 갱신 파이프라인 도입.", "source": "llm-only" }
+      ],
+      "narrative": {
+        "text": "공공기관 도메인 중 인증서 운영은 보수적이고 PQC 전환은 미착수 상태입니다. RSA-2048 키는 Willsch 2023 실증 시나리오에서 양자 위협 노출도가 매우 높게 평가됩니다.",
+        "source": "llm+verified"
+      },
+      "supplyChainNotes": {
+        "text": "공공 PKI(GPKI) 의존도 높음. 알고리즘 전환 결정권이 공공망 차원에서 분산됨.",
+        "source": "manual"
+      },
+      "quantumThreatDetail": {
+        "keyAlgorithm": "RSA-2048",
+        "keyBits": 2048,
+        "estimates": {
+          "conservative": {
+            "logicalQubits": 4099,
+            "toffoliGates": 549755813888,
+            "score": 34,
+            "successRate": 0.04,
+            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+          },
+          "empirical": {
+            "logicalQubits": 4099,
+            "toffoliGates": 549755813888,
+            "score": 23,
+            "successRate": 0.5,
+            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
+          }
+        },
+        "citations": ["Roetteler-2017", "Willsch-2023"],
+        "source": "automated"
+      }
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+/* SPEC-PQC-001 §4.4 (테마 토큰), §3.12 (i18n: Pretendard/Inter/JetBrains Mono) */
+@import 'tailwindcss';
+
+/* 폰트 (self-host: REQ-I18N-003/004, OQ-006) */
+@import 'pretendard/dist/web/variable/pretendardvariable.css';
+@import '@fontsource-variable/inter';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';
+
+/* Tailwind v4 CSS-first 테마 토큰 (font-family stacks) */
+@theme {
+  --font-sans:
+    'Pretendard Variable', 'Inter Variable', system-ui, -apple-system,
+    'Segoe UI', Roboto, sans-serif;
+  --font-mono:
+    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* shadcn/ui 호환 HSL 토큰 + Tailwind v4 inline 매핑 */
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius: var(--radius);
+}
+
+/* Dark mode: next-themes 가 <html class="dark"> 적용 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    /* Light tokens (SPEC §4.4, REQ-THM-010) */
+    --background: 210 20% 98%;
+    --foreground: 215 30% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 30% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 30% 12%;
+    --primary: 215 80% 35%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 215 16% 92%;
+    --secondary-foreground: 215 30% 12%;
+    --muted: 215 16% 94%;
+    --muted-foreground: 215 16% 40%;
+    --accent: 215 16% 92%;
+    --accent-foreground: 215 30% 12%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 16% 88%;
+    --input: 215 16% 88%;
+    --ring: 215 80% 35%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark tokens (REQ-THM-009) */
+    --background: 215 30% 8%;
+    --foreground: 210 20% 96%;
+    --card: 215 30% 10%;
+    --card-foreground: 210 20% 96%;
+    --popover: 215 30% 10%;
+    --popover-foreground: 210 20% 96%;
+    --primary: 210 80% 60%;
+    --primary-foreground: 215 30% 8%;
+    --secondary: 215 25% 18%;
+    --secondary-foreground: 210 20% 96%;
+    --muted: 215 25% 16%;
+    --muted-foreground: 215 16% 65%;
+    --accent: 215 25% 18%;
+    --accent-foreground: 210 20% 96%;
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 25% 18%;
+    --input: 215 25% 18%;
+    --ring: 210 80% 60%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 접근성: prefers-reduced-motion (REQ-A11Y-006) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* 포커스 링 가시성 (REQ-A11Y-003) */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}

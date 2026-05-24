@@ -1,0 +1,10 @@
+dist
+dev-dist
+coverage
+node_modules
+pnpm-lock.yaml
+*.min.*
+reference-build
+.moai
+.claude
+.github

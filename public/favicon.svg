@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="12" fill="#1e3a8a"/>
+  <path d="M32 14 L48 22 V34 C48 43 41 50 32 52 C23 50 16 43 16 34 V22 L32 14 Z" fill="#f5f7fa"/>
+  <text x="32" y="38" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" font-weight="700" fill="#1e3a8a">PQC</text>
+</svg>
