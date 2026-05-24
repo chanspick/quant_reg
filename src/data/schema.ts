@@ -273,3 +273,33 @@ export function parseDomainsEnvelope(raw: unknown): DomainValidationResult {
     invalidReasons,
   };
 }
+
+/* ============================================================
+ * Placeholder 감지 — narrative / supplyChainNotes 등 TODO 텍스트
+ *
+ * scanner/measure.py:to_partial_domain 이 분석 텍스트를 채울 때 사용하는
+ * placeholder 마커("TODO: ...")를 UI 단에서 감지하기 위한 헬퍼.
+ *
+ * 배경 (SPEC-PQC-001 §8-A 11):
+ *   - 50개 합성 데이터는 폐기되고, scanner 가 자동 측정 + placeholder 로
+ *     partial 레코드를 생성한다. narrative / supplyChainNotes 는 후속 작업으로
+ *     사용자가 채우거나 LLM 보조로 작성하기 전까지 placeholder 상태로 남는다.
+ *   - 정직성 컨셉상 placeholder 를 그대로 사용자에게 노출하는 것은 "TODO" 문자열
+ *     자체가 자가당착(claims-vs-reality)을 보이므로, UI 는 placeholder 가 감지되면
+ *     해당 섹션을 unmount 하여 빈 공간으로 처리한다 (REQ-DSH-007 보강).
+ *   - 후속 작업으로 사용자가 실제 텍스트를 채우면 자동으로 다시 노출된다 — 별도
+ *     플래그 토글 불필요.
+ * ============================================================ */
+
+const PLACEHOLDER_PREFIX = /^TODO:\s/;
+
+/**
+ * SourcedText 가 scanner 가 채운 placeholder 인지 판별.
+ *
+ * - `TODO:` 접두사로 시작하는 텍스트는 placeholder 로 간주한다.
+ * - 출처 라벨(`source`)은 검사하지 않는다 — narrative 는 'llm-only',
+ *   supplyChainNotes 는 'manual' 로 다르게 마킹되므로 텍스트 접두사가 더 robust.
+ */
+export function isPlaceholderText(t: SourcedText): boolean {
+  return PLACEHOLDER_PREFIX.test(t.text);
+}

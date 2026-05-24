@@ -466,6 +466,107 @@ def auto_findings(f: TlsFeatures) -> list[dict]:
     return out
 
 
+# --- 자동 권고 (recommendations) ---------------------------------------------
+
+def auto_recommendations(f: TlsFeatures) -> list[dict]:
+    """sslyze features → recommendations 배열 (mechanical mapping).
+
+    auto_findings 와 짝지어 "진단 → 처방" 1:1 매핑. 모든 룰의 권고 텍스트
+    끝에 표준 인용 (RFC 8996 / Mozilla v6.0 / OWASP / NIST PQC) 출처가 박혀있어
+    source='automated' 가 정확한 라벨이다.
+
+    scripts/regenerate-recommendations.ts (TS) 와 동일한 룰 집합으로 동기화.
+    Python 측은 향후 batch 측정 시 to_partial_domain() 에서 자동 호출되며,
+    기존 47개 도메인의 recommendations 는 TS 스크립트로 in-place 갱신된다.
+    """
+    out: list[dict] = []
+
+    if f.tls_1_0_active or f.tls_1_1_active:
+        out.append({
+            "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 "
+                    "(RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+            "source": "automated",
+        })
+    if not f.tls_1_3_active:
+        out.append({
+            "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy "
+                    "기본 지원 (Mozilla intermediate v6.0).",
+            "source": "automated",
+        })
+    if f.cbc_ciphers_count > 0:
+        out.append({
+            "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) "
+                    "만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+            "source": "automated",
+        })
+    if f.non_ecdhe_ciphers_count > 0:
+        out.append({
+            "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, "
+                    "ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+            "source": "automated",
+        })
+    if f.compression_active:
+        out.append({
+            "text": "TLS Compression 비활성화 — CRIME 공격 차단 (OWASP must-disable).",
+            "source": "automated",
+        })
+    if f.heartbleed:
+        out.append({
+            "text": "OpenSSL 즉시 패치 — Heartbleed (CVE-2014-0160) 영향 차단.",
+            "source": "automated",
+        })
+    if f.robot_vulnerable:
+        out.append({
+            "text": "RSA key transport cipher 비활성화 — ROBOT 공격 (2017) 차단. "
+                    "PFS cipher 만 허용.",
+            "source": "automated",
+        })
+    if f.chain_has_sha1 or f.leaf_signature_hash == "sha1":
+        out.append({
+            "text": "인증서 체인을 SHA-256 이상 서명으로 재발급 — SHA-1 은 "
+                    "OWASP·NIST 폐기 (TLS 신뢰 저하).",
+            "source": "automated",
+        })
+    if not f.ocsp_stapling_active:
+        out.append({
+            "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 "
+                    "프라이버시 보호 (Mozilla recommended).",
+            "source": "automated",
+        })
+    if f.ocsp_stapling_active and f.ocsp_response_is_trusted is False:
+        out.append({
+            "text": "OCSP responder URL 및 인증서 신뢰 체인 점검 — stapled "
+                    "response 검증 실패 원인 분석.",
+            "source": "automated",
+        })
+    if f.key_algorithm == "RSA" and f.key_bits < 2048:
+        out.append({
+            "text": "RSA-2048 이상 또는 ECC P-256 이상으로 키 교체 — "
+                    "Mozilla minimum 요구.",
+            "source": "automated",
+        })
+    # PQC: Phase 1 단계에서는 항상 'X25519MLKEM768 검토' 권고가 적용됨.
+    # Phase 2 merge 후 keyExchange=='활성화' 가 된 도메인은 별도 후속 권고로 전환되며,
+    # 그 전환은 merge_pqc.py 또는 scripts/regenerate-recommendations.ts 가 담당한다.
+    if not (f.has_x25519mlkem768 or f.has_pure_ml_kem):
+        out.append({
+            "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL "
+                    "Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem "
+                    "표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+            "source": "automated",
+        })
+
+    # 분석 영역 — scanner 가 측정 불가한 부분 (회사 공개 자료 필요)
+    out.append({
+        "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / "
+                "204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 "
+                "한국 적용 권고 참조.",
+        "source": "automated",
+    })
+
+    return out
+
+
 # --- 감점 trace (v2 보정 분석용) ---------------------------------------------
 
 def scoring_breakdown(f: TlsFeatures) -> dict:

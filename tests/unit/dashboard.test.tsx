@@ -186,6 +186,42 @@ describe('DashboardPage', () => {
     expect(screen.getByRole('article', { name: '실증 시나리오' })).toBeInTheDocument();
   });
 
+  it('hides narrative/공급망 sections when text is a scanner TODO placeholder', async () => {
+    // Phase 1+2 scanner partial 레코드 시뮬레이션: narrative/supplyChainNotes 가 TODO 마커
+    const baseDomain = fixture.domains[0] as Record<string, unknown>;
+    const placeholderEnvelope = parseDomainsEnvelope({
+      lastUpdated: '2026-05-19',
+      version: '0.6.0-test',
+      domains: [
+        {
+          ...baseDomain,
+          narrative: {
+            text: 'TODO: 삼성전자 분석 narrative 를 작성하세요.',
+            source: 'llm-only',
+          },
+          supplyChainNotes: {
+            text: 'TODO: 삼성전자 공급망(CA·CDN·WAF) 종속성 메모를 작성하세요.',
+            source: 'manual',
+          },
+        },
+      ],
+    });
+    mockState = { isLoading: false, error: null, data: placeholderEnvelope };
+
+    const user = userEvent.setup();
+    renderDashboard();
+    const toggle = screen.getByRole('button', { name: /상세 보기/ });
+    await user.click(toggle);
+
+    // 실제 데이터 섹션은 그대로 노출
+    expect(screen.getByRole('heading', { name: '양자 위협 정량 상세' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '인증서 정보' })).toBeInTheDocument();
+    // placeholder 섹션은 unmount (정직성: TODO 노출 차단)
+    expect(screen.queryByRole('heading', { name: '분석 요약' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: '공급망 메모' })).not.toBeInTheDocument();
+    expect(screen.queryByText(/TODO:/)).not.toBeInTheDocument();
+  });
+
   it('renders filtered EmptyState when search matches nothing', async () => {
     const user = userEvent.setup();
     renderDashboard();

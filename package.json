@@ -18,7 +18,8 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
     "validate-data": "tsx scripts/validate-data.ts",
-    "add-domain": "tsx scripts/add-domain.ts"
+    "add-domain": "tsx scripts/add-domain.ts",
+    "regenerate-recommendations": "tsx scripts/regenerate-recommendations.ts"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",

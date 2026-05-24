@@ -2,7 +2,7 @@ import { ko } from '@/i18n/ko';
 import { SourceChip } from '@/components/shared/SourceChip';
 import { scoreBandClasses } from '@/components/shared/scoreBand';
 import { cn } from '@/lib/utils';
-import type { Domain, QuantumEstimate } from '@/data/schema';
+import { isPlaceholderText, type Domain, type QuantumEstimate } from '@/data/schema';
 
 /**
  * SPEC-PQC-001 §3.5 / §3.14:
@@ -100,21 +100,23 @@ export function DomainDetailPanel({
 
   return (
     <div className="mt-4 flex flex-col gap-4 border-t border-[hsl(var(--border))] pt-4 text-sm">
-      {/* 분석 요약 */}
-      <section aria-labelledby={`narrative-${domain.name}`} className="flex flex-col gap-1.5">
-        <div className="flex items-center gap-2">
-          <h3
-            id={`narrative-${domain.name}`}
-            className="text-sm font-semibold text-[hsl(var(--foreground))]"
-          >
-            분석 요약
-          </h3>
-          <SourceChip source={narrative.source} size="sm" />
-        </div>
-        <p className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-          {narrative.text}
-        </p>
-      </section>
+      {/* 분석 요약 — scanner placeholder 면 섹션 자체를 숨김 (정직성: TODO 노출 차단) */}
+      {!isPlaceholderText(narrative) && (
+        <section aria-labelledby={`narrative-${domain.name}`} className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            <h3
+              id={`narrative-${domain.name}`}
+              className="text-sm font-semibold text-[hsl(var(--foreground))]"
+            >
+              분석 요약
+            </h3>
+            <SourceChip source={narrative.source} size="sm" />
+          </div>
+          <p className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
+            {narrative.text}
+          </p>
+        </section>
+      )}
 
       {/* 양자 위협 정량 상세 — 보수 vs 실증 side-by-side */}
       <section aria-labelledby={`qt-${domain.name}`} className="flex flex-col gap-2">
@@ -245,21 +247,23 @@ export function DomainDetailPanel({
         </section>
       )}
 
-      {/* 공급망 메모 */}
-      <section aria-labelledby={`sup-${domain.name}`} className="flex flex-col gap-1.5">
-        <div className="flex items-center gap-2">
-          <h3
-            id={`sup-${domain.name}`}
-            className="text-sm font-semibold text-[hsl(var(--foreground))]"
-          >
-            공급망 메모
-          </h3>
-          <SourceChip source={supplyChainNotes.source} size="sm" />
-        </div>
-        <p className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-          {supplyChainNotes.text}
-        </p>
-      </section>
+      {/* 공급망 메모 — scanner placeholder 면 섹션 자체를 숨김 (정직성: TODO 노출 차단) */}
+      {!isPlaceholderText(supplyChainNotes) && (
+        <section aria-labelledby={`sup-${domain.name}`} className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            <h3
+              id={`sup-${domain.name}`}
+              className="text-sm font-semibold text-[hsl(var(--foreground))]"
+            >
+              공급망 메모
+            </h3>
+            <SourceChip source={supplyChainNotes.source} size="sm" />
+          </div>
+          <p className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
+            {supplyChainNotes.text}
+          </p>
+        </section>
+      )}
 
       {/* 인증서 정보 */}
       <section aria-labelledby={`cert-${domain.name}`} className="flex flex-col gap-1.5">

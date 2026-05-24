@@ -1,6 +1,6 @@
 {
   "lastUpdated": "2026-05-19",
-  "version": "0.6.0-phase2-pqc-merge",
+  "version": "0.6.0-phase2-pqc-merge+recs",
   "domains": [
     {
       "name": "삼성전자",
@@ -47,7 +47,16 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 삼성전자 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -152,7 +161,40 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: SK하이닉스 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -249,7 +291,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: LG전자 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -346,7 +417,24 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 삼성SDI 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -427,7 +515,16 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: LG이노텍 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -508,7 +605,16 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 현대자동차 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -605,7 +711,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 기아 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -690,7 +817,24 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: POSCO홀딩스 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -795,7 +939,40 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 고려아연 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -880,7 +1057,20 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: LG화학 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -965,7 +1155,20 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 한국전력공사 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1066,7 +1269,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 한국가스공사 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1151,7 +1383,24 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 한화 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1248,7 +1497,24 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 두산 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1333,7 +1599,24 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 셀트리온 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1430,7 +1713,24 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 삼성바이오로직스 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1531,7 +1831,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 네이버 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1624,7 +1945,32 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 카카오 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1705,7 +2051,20 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 쿠팡 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1798,7 +2157,32 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 다음 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1883,7 +2267,24 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: SK텔레콤 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -1972,7 +2373,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: KT 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2057,7 +2479,16 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: LG U+ 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2146,7 +2577,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 신한지주 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2243,7 +2695,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: KB금융 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2336,7 +2817,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 하나금융지주 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2425,7 +2935,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: KB국민은행 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2522,7 +3053,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 우리은행 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2619,7 +3179,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 하나은행 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2712,7 +3301,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 농협 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2793,7 +3411,16 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 미래에셋 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2886,7 +3513,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 삼성증권 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -2979,7 +3635,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: KB증권 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3072,7 +3757,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 키움증권 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3165,7 +3871,32 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 카카오페이 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3258,7 +3989,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 토스 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3355,7 +4107,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: NCSoft 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3436,7 +4217,16 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        },
+        {
+          "text": "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. HNDL 위협 모델상 선도 사례.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 크래프톤 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3529,7 +4319,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 정부24 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3630,7 +4449,40 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "인증서 즉시 갱신 + 갱신 자동화 구축 — 만료 시 서비스 중단 위험.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 국세청 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3731,7 +4583,40 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 국민건강보험 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3832,7 +4717,40 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 국민연금 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -3925,7 +4843,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: KISA 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -4026,7 +4965,36 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 기상청 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -4127,7 +5095,40 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 대법원 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -4228,7 +5229,40 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+          "source": "automated"
+        },
+        {
+          "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+          "source": "automated"
+        },
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 국토교통부 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"
@@ -4313,7 +5347,28 @@
           "source": "automated"
         }
       ],
-      "recommendations": [],
+      "recommendations": [
+        {
+          "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+          "source": "automated"
+        },
+        {
+          "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+          "source": "automated"
+        },
+        {
+          "text": "외부 TLS 1.3 직접 probe 차단 정책 재검토 — 보안 감사·PQC 전환 평가·CT log 모니터링이 외부에서 검증 불가능해짐.",
+          "source": "automated"
+        },
+        {
+          "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+          "source": "automated"
+        },
+        {
+          "text": "ACME 등 자동 갱신 파이프라인 도입 — 운영 위생 + 만료 임박 위험 차단 (Mozilla, Let’s Encrypt).",
+          "source": "automated"
+        }
+      ],
       "narrative": {
         "text": "TODO: 서울특별시 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
         "source": "llm-only"

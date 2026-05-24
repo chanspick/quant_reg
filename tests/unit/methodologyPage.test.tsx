@@ -43,4 +43,18 @@ describe('MethodologyPage', () => {
       screen.getByText(/본 데모의 도메인 점수·소견·인증서·규제 매핑 정보는 합성 데이터/),
     ).toBeInTheDocument();
   });
+
+  it('renders calibration disclosure for the 22 / 0.7 magic constants (SPEC §8-B 23)', () => {
+    // 점수 정규화의 calibration scalar 가 정당화 출처 없음을 사용자에게 명시.
+    // 정직성 컨셉(SourceChip) 과 UI 공식의 자가당착을 차단하는 핵심 박스.
+    render(<MethodologyPage />);
+    const caveat = screen.getByRole('complementary', {
+      name: /Calibration Disclosure/,
+    });
+    expect(caveat).toBeInTheDocument();
+    // 핵심 키워드: 계수 인정 + ordering-preserving 한정 + Future Work 명시
+    expect(caveat).toHaveTextContent(/계수 22 와 0\.7/);
+    expect(caveat).toHaveTextContent(/ordering-preserving/);
+    expect(caveat).toHaveTextContent(/HNDL/);
+  });
 });

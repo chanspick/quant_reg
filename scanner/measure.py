@@ -31,6 +31,7 @@ from scanner.roetteler import summarize_quantum_threat  # noqa: E402
 from scanner.scoring import (  # noqa: E402
     TlsFeatures,
     auto_findings,
+    auto_recommendations,
     derive_pqc_status,
     derive_renewal,
     extract_features,
@@ -296,7 +297,7 @@ def to_partial_domain(
         },
         "regulatoryGaps": [],
         "findings":       auto_findings(f),
-        "recommendations": [],
+        "recommendations": auto_recommendations(f),
         "narrative": {
             "text":   f"TODO: {name} 분석 narrative 를 작성하세요 "
                       "(예: TLS 위생 N점, PQC 미적용 등).",

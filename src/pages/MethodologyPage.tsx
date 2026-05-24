@@ -51,6 +51,10 @@ export function MethodologyPage(): React.JSX.Element {
         <p className="text-sm text-[hsl(var(--muted-foreground))]">
           {ko.methodology.scoringNote}
         </p>
+        <CalibrationCaveat
+          title={ko.methodology.scoringCaveatTitle}
+          body={ko.methodology.scoringCaveat}
+        />
         <ul className="list-disc space-y-1 pl-6 text-sm">
           <li>{ko.methodology.pqcNote}</li>
           <li>{ko.methodology.hybridNote}</li>
@@ -90,6 +94,31 @@ function FormulaCallout({ lines }: { lines: string[] }): React.JSX.Element {
         </p>
       ))}
     </div>
+  );
+}
+
+/**
+ * SPEC-PQC-001 §8-B 23 (calibration scalars 인정).
+ * 점수 정규화의 22 · 0.7 계수가 정당화된 출처 없음을 사용자에게 명시한다.
+ * 정직성 컨셉의 자가당착(UI 에 magic constant 노출)을 차단하는 핵심 박스.
+ */
+function CalibrationCaveat({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}): React.JSX.Element {
+  return (
+    <aside
+      aria-label={title}
+      className="rounded-md border-l-4 border-amber-500 bg-amber-500/5 p-4 text-sm"
+    >
+      <p className="mb-2 font-semibold text-amber-700 dark:text-amber-300">
+        {title}
+      </p>
+      <p className="leading-relaxed text-[hsl(var(--foreground))]/90">{body}</p>
+    </aside>
   );
 }
 

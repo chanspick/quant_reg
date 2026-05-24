@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   DomainSchema,
   DataSourceSchema,
+  isPlaceholderText,
   parseDomainsEnvelope,
 } from '@/data/schema';
 import type { Domain, QuantumThreatDetail } from '@/data/schema';
@@ -148,6 +149,48 @@ describe('DomainSchema', () => {
       },
     };
     expect(() => DomainSchema.parse(bad)).toThrow();
+  });
+});
+
+describe('isPlaceholderText', () => {
+  it('detects scanner-generated TODO narrative placeholder', () => {
+    expect(
+      isPlaceholderText({
+        text: 'TODO: 삼성전자 분석 narrative 를 작성하세요.',
+        source: 'llm-only',
+      }),
+    ).toBe(true);
+  });
+
+  it('detects scanner-generated TODO supplyChain placeholder', () => {
+    expect(
+      isPlaceholderText({
+        text: 'TODO: 네이버 공급망(CA·CDN·WAF) 종속성 메모를 작성하세요.',
+        source: 'manual',
+      }),
+    ).toBe(true);
+  });
+
+  it('returns false for genuine analysis text regardless of source mode', () => {
+    expect(
+      isPlaceholderText({
+        text: '글로벌 전자 기업의 대표 도메인답게 TLS 위생은 안정적이지만...',
+        source: 'llm+verified',
+      }),
+    ).toBe(false);
+    expect(
+      isPlaceholderText({ text: '단일 CDN 의존.', source: 'manual' }),
+    ).toBe(false);
+  });
+
+  it('does not false-positive on text that merely contains TODO somewhere', () => {
+    // "TODO" 가 문장 중간에 있는 경우는 placeholder 가 아닌 실제 텍스트로 본다
+    expect(
+      isPlaceholderText({
+        text: '운영팀 TODO 리스트에 따라 분기별 갱신이 이루어집니다.',
+        source: 'manual',
+      }),
+    ).toBe(false);
   });
 });
 

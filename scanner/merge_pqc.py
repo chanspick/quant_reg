@@ -66,6 +66,44 @@ def _finding_for_result(probe: dict) -> dict:
     return {"text": text, "source": "automated"}
 
 
+# Phase 1 기본 권고 (auto_recommendations 가 모든 도메인에 추가하는 텍스트).
+# Phase 2 SUPPORTED 도메인에서는 이 두 권고를 제거하고 후속 권고로 교체한다.
+# "로드맵 수립" 은 SUPPORTED 도메인 fact 와 모순되므로 함께 제거.
+_PHASE1_PQC_REC = (
+    "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL "
+    "Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem "
+    "표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장."
+)
+_PHASE1_ROADMAP_REC = (
+    "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / "
+    "204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 "
+    "한국 적용 권고 참조."
+)
+_PHASE2_SUPPORTED_REC = (
+    "Hybrid KEM (X25519+ML-KEM-768) 운영 안정화 — 클라이언트 호환성 "
+    "모니터링·핸드셰이크 latency 측정·PQC-only 마이그레이션 일정 수립. "
+    "HNDL 위협 모델상 선도 사례."
+)
+
+
+def _swap_pqc_recommendation_if_supported(rec_list: list[dict]) -> None:
+    """Phase 2 SUPPORTED 도메인의 권고 배열을 in-place 갱신.
+
+    Phase 1 의 두 권고("X25519MLKEM768 검토" + "PQC 로드맵 수립") 를 제거하고,
+    "Hybrid KEM 운영 안정화 + PQC-only 마이그레이션" 후속 권고로 교체.
+    중복 방지: 이미 후속 권고가 있으면 추가 안 함.
+
+    "로드맵 수립" 까지 제거하는 이유:
+        Phase 2 SUPPORTED 는 이미 PQC 협상 활성화된 상태이므로 "roadmap required"
+        라는 권고가 fact 와 모순. 후속 권고만 남기는 게 정직성 일관.
+    """
+    obsolete = {_PHASE1_PQC_REC, _PHASE1_ROADMAP_REC}
+    rec_list[:] = [r for r in rec_list if r.get("text") not in obsolete]
+    existing_texts = {r.get("text") for r in rec_list}
+    if _PHASE2_SUPPORTED_REC not in existing_texts:
+        rec_list.append({"text": _PHASE2_SUPPORTED_REC, "source": "automated"})
+
+
 def _normalize_host(url_or_host: str) -> str:
     """https://www.foo.com → www.foo.com / foo.com → foo.com (lowercase, no scheme/path)."""
     h = url_or_host.lower()
@@ -112,6 +150,8 @@ def main() -> int:
         if status == "SUPPORTED":
             rec["pqc"]["keyExchange"] = "활성화"
             rec["pqc"]["hybrid"] = "하이브리드"
+            # Phase 2 SUPPORTED: Phase 1 권고를 후속 권고로 교체
+            _swap_pqc_recommendation_if_supported(rec.setdefault("recommendations", []))
             upgraded_to_100.append(rec.get("name"))
         elif status in ("NOT_SUPPORTED", "NOT_SUPPORTED_OTHER_GROUP"):
             rec["pqc"]["keyExchange"] = "미지원"

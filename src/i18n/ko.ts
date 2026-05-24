@@ -99,7 +99,11 @@ export const ko = {
       'ECC-n discrete log 필요 logical qubit 수 ≈ 9n + 2⌈log₂(n)⌉ + 10 (Roetteler 2017, Table 1)',
     scoringFormula:
       '점수 = clip(0, 100, log₁₀(필요 qubit / 가용 qubit) × 22 × (1 − 성공률 × 0.7))',
-    scoringNote: '점수가 높을수록 양자 저항이 강합니다. 가용 qubit 기준값은 Willow-class 2026 추정(100 logical qubit).',
+    scoringNote:
+      '본 점수는 도메인 간 상대 비교(ordering)를 위한 정규화 값입니다. 절대값에 정량적 의미를 부여하지 않으며, 가용 qubit 기준은 Willow-class 2026 추정(100 logical qubit)을 사용합니다.',
+    scoringCaveatTitle: '점수 정규화의 한계 (Calibration Disclosure)',
+    scoringCaveat:
+      '공식의 계수 22 와 0.7 은 정당화된 출처가 없는 calibration scalar 입니다. 사전 가정값 부근에 도메인 점수가 위치하도록 눈으로 보정한 값으로, Roetteler 2017 의 인용 범위는 logical qubit · Toffoli gate 계산까지이며 0-100 정규화 자체에는 별도 출처가 없습니다. 따라서 본 점수는 ordering-preserving 측정으로만 해석해야 합니다 — 두 도메인의 점수 차이는 상대 순위 차이만 의미하고, 절대값은 양자 깨짐까지의 시간·자원·확률 어느 것과도 직접 매핑되지 않습니다. HNDL(Harvest Now Decrypt Later) 시간축 모델로의 교체는 Future Work 입니다.',
     pqcNote: 'PQC 알고리즘(ML-KEM, ML-DSA, SLH-DSA, FALCON)은 Shor 공격으로 다항시간 내 깨지지 않으므로 두 시나리오 모두 점수 100.',
     hybridNote: 'Hybrid (예: X25519+ML-KEM-768)는 PQC 백업이 존재하므로 고전 알고리즘 단독 대비 점수 가산.',
     limitsBody:
