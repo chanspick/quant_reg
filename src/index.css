@@ -1,8 +1,14 @@
 /* SPEC-PQC-001 §4.4 (테마 토큰), §3.12 (i18n: Pretendard/Inter/JetBrains Mono) */
 @import 'tailwindcss';
 
-/* 폰트 (self-host: REQ-I18N-003/004, OQ-006) */
-@import 'pretendard/dist/web/variable/pretendardvariable.css';
+/* 폰트 (self-host: REQ-I18N-003/004, OQ-006)
+ *
+ * Pretendard 는 dynamic-subset CSS 를 사용한다 — 브라우저가 현재 표시되는 글자
+ * 의 unicode-range 에 해당하는 woff2 만 다운로드. 전체 ~2MB woff2 가 ~200KB
+ * 수준으로 줄어 LCP/Performance 점수가 크게 개선된다.
+ * (PWA 오프라인 동작 유지 — 모두 self-host 이므로 SW precache 대상)
+ */
+@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 @import '@fontsource-variable/inter';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
