@@ -15,8 +15,10 @@ RUN corepack enable
 WORKDIR /build
 
 # 왜: 의존성 레이어 캐시 분리 — lockfile 변경 없을 때 pnpm install skip
-COPY scanner-web/package.json scanner-web/pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+# .npmrc 도 함께 — pnpm install 시 정책 (minimum-release-age) 즉시 적용
+COPY scanner-web/package.json scanner-web/pnpm-lock.yaml scanner-web/.npmrc ./
+# 왜: 발표 시연 빌드 안정성 — pnpm 11+ supply-chain policy CLI 인자로도 명시 disable
+RUN pnpm install --frozen-lockfile --config.minimum-release-age=0
 
 # 왜: 소스 복사 후 빌드 — TS strict + Vite 6
 COPY scanner-web/tsconfig.json scanner-web/tsconfig.app.json scanner-web/tsconfig.node.json ./
