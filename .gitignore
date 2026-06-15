@@ -111,6 +111,8 @@ logs/
 .env
 .env.*
 !.env.example
+# Vite 프로덕션 빌드용 — 빈 값 (same-origin) 라 시크릿 없음, Docker COPY 필요
+!scanner-web/.env.production
 
 # Certificate files
 *.pem
