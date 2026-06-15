@@ -56,7 +56,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api", tags=["scan"])
 
 # 전체 요청 timeout (SPEC §5.1 REQ-API-001)
-OVERALL_TIMEOUT_SECONDS = 75.0
+OVERALL_TIMEOUT_SECONDS = 120.0
 
 
 # --- 헬퍼: scoring breakdown 변환 --------------------------------------------
