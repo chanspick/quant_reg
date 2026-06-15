@@ -1,0 +1,13 @@
+# SPEC-PQC-002 Phase A: FastAPI subprocess wrapper deps.
+# Run in the same Python env as scanner CLI; include scanner deps too.
+# ASCII-only to stay portable on Windows cp949 default-encoding pip.
+
+# FastAPI core
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.32,<1.0
+pydantic>=2.9,<3.0
+
+# scanner CLI deps (same as scanner/requirements.txt for env consistency).
+# Phase B Dockerfile can replace with -r ../scanner/requirements.txt instead.
+sslyze>=6.0,<7
+cryptography>=45,<46
