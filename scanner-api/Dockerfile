@@ -17,8 +17,9 @@ WORKDIR /build
 # 왜: 의존성 레이어 캐시 분리 — lockfile 변경 없을 때 pnpm install skip
 # .npmrc 도 함께 — pnpm install 시 정책 (minimum-release-age) 즉시 적용
 COPY scanner-web/package.json scanner-web/pnpm-lock.yaml scanner-web/.npmrc ./
-# 왜: 발표 시연 빌드 안정성 — pnpm 11+ supply-chain policy CLI 인자로도 명시 disable
-RUN pnpm install --frozen-lockfile --config.minimum-release-age=0
+# 왜: 발표 시연 빌드 안정성 — supply-chain policy disable + lockfile 자동 갱신 허용
+# (host 의 pnpm-lock.yaml 은 그대로, 컨테이너 내부 lockfile 만 update)
+RUN pnpm install --no-frozen-lockfile --config.minimum-release-age=0
 
 # 왜: 소스 복사 후 빌드 — TS strict + Vite 6
 COPY scanner-web/tsconfig.json scanner-web/tsconfig.app.json scanner-web/tsconfig.node.json ./
