@@ -36,8 +36,9 @@ logger = logging.getLogger("scanner_api.narrative")
 # REQ-LLM-001 — 모델 ID 박제 (1M 변형 아님)
 MODEL_ID = "claude-sonnet-4-6"
 
-# narrative timeout (SPEC §5.1)
-NARRATIVE_TIMEOUT_SECONDS = 8.0
+# narrative timeout — 첫 호출 시 prompt cache write(system 2000+ tokens) +
+# 한국어 300-500자 생성 합쳐 8s 가 빠듯해 15s 로 상향. cache hit 후엔 3-5s 회복.
+NARRATIVE_TIMEOUT_SECONDS = 15.0
 
 # 출력 토큰 상한 — 300-500자 한국어 + recommendations 3개면 충분
 MAX_OUTPUT_TOKENS = 1024
