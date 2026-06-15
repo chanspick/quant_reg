@@ -1,0 +1,9 @@
+{
+  "hostname": "www.naver.com",
+  "status": "SUPPORTED",
+  "selected_group": "0x11EC",
+  "is_hrr": true,
+  "alert_level": null,
+  "alert_description": null,
+  "detail": "selected X25519MLKEM768 via HRR"
+}

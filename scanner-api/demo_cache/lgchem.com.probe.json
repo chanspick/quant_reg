@@ -1,0 +1,9 @@
+{
+  "hostname": "lgchem.com",
+  "status": "NOT_SUPPORTED",
+  "selected_group": null,
+  "is_hrr": false,
+  "alert_level": 1,
+  "alert_description": 0,
+  "detail": "alert level=1 desc=0"
+}

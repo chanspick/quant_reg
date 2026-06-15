@@ -59,8 +59,11 @@ curl -X POST http://localhost:8000/api/scan \
 | `PORT` | `8000` | uvicorn 포트 | A |
 | `LOG_LEVEL` | `INFO` | logging 레벨 | A |
 | `SCANNER_PROJECT_ROOT` | (자동 감지) | `scanner/` 패키지 부모 디렉토리 | A |
-| `ALLOWED_ORIGINS` | (미사용) | CORS 화이트리스트 (콤마 구분) | A-3 |
-| `ANTHROPIC_API_KEY` | (미사용) | Claude Sonnet 4.6 호출 | D |
+| `ALLOWED_ORIGINS` | `http://localhost:5173,http://localhost:5174` | CORS 화이트리스트 (콤마 구분, scheme 필수). 예: `https://quant-reg.vercel.app,http://localhost:5173`. `*` 입력 시 경고 로그 출력 (차단 안 함). | A-3 |
+| `ANTHROPIC_API_KEY` | (미설정) | Claude Sonnet 4.6 (`claude-sonnet-4-6`) narrative 호출용. 미설정 시 narrative 섹션 omit + `errors[]` 에 `stage="narrative"`, `code="NO_API_KEY"` 추가. timeout 8초 (SPEC §5.1). | D |
+| `DEMO_CACHE_FALLBACK` | `0` | `=1` 시 `demo_cache/{hostname}.*` 사전 측정 결과로 즉시 응답 (REQ-DEMO-001 발표 안전망). lgchem.com / www.naver.com / www.kakao.com 3개 한정. 그 외는 그대로 실시간 측정. | B |
+| `DEMO_CACHE_DIR` | (자동 감지) | `demo_cache/` 디렉토리 override. Docker: `/app/demo_cache`, 로컬: `scanner-api/demo_cache`. | B |
+| `STATIC_DIR` | `/app/static` | scanner-web 빌드 산출물 경로. 미존재 시 StaticFiles 마운트 skip (로컬 dev 가정). | B |
 
 ## Phase A 범위
 
@@ -72,10 +75,10 @@ curl -X POST http://localhost:8000/api/scan \
 | Phase 2 `scanner.pqc_probe` subprocess (15s timeout) | 완료 |
 | 60s 전체 timeout + errors[] 응답 (REQ-API-001/004) | 완료 |
 | In-memory 캐시 (REQ-API-005) | **Phase A-3** |
-| 엄격 CORS (REQ-API-006) | **Phase A-3** (현재 `allow_origins=["*"]`) |
-| Dockerfile + Railway 배포 (REQ-OPS-001) | **Phase B** |
+| 엄격 CORS (REQ-API-006) | 완료 (`ALLOWED_ORIGINS` 화이트리스트, `.env.example` 참조) |
+| Dockerfile + Railway 배포 (REQ-OPS-001) | 완료 (`Dockerfile` 멀티스테이지 + [`RAILWAY.md`](./RAILWAY.md) 가이드) |
 | frontend (scanner-web/) | **Phase C** |
-| LLM narrative (REQ-LLM-001~004) | **Phase D** |
+| LLM narrative (REQ-LLM-001~004) | 완료 (Sonnet 4.6 + prompt cache, 8s timeout, `services/narrative_llm.py`) |
 | pytest / E2E | **Phase A-3** |
 
 ## 의도적 SPEC 차이

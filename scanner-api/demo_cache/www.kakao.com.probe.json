@@ -1,0 +1,9 @@
+{
+  "hostname": "www.kakao.com",
+  "status": "NOT_SUPPORTED",
+  "selected_group": null,
+  "is_hrr": false,
+  "alert_level": 2,
+  "alert_description": 40,
+  "detail": "alert level=2 desc=40"
+}

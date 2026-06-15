@@ -93,7 +93,7 @@
 
 | # | 한계 | Future Work |
 |---|------|-------------|
-| 1 | Calibration scalar (22, 0.7) 정당화 출처 없음 — ordering-preserving only | discrete grade v2 마이그레이션 (5-tier: pq-observed / hybrid-capable / classical-only / legacy / critical) |
+| 1 | Calibration scalar (22, 0.7) — `scanner/roetteler.py:96` 한 줄에 박혀있는 self-calibration. 정당화 논문 없음, ordering-preserving 측정으로만 해석 | 발표 이후 discrete grade v2 로 마이그레이션 — 0-100 연속 점수 → A/B/C/D/F 5-tier 또는 분위수 정규화 (self-calibration scalar 의존 제거) |
 | 2 | narrative / 공급망 메모 수동 작성 미완 (placeholder 47/47) | LLM 검증 파이프라인 (도메인별 자동 분석 + 사람 검증 게이트) |
 | 3 | HNDL 시간축 미반영 — 정적 점수만, decrypt-later 임계 미모델링 | 데이터 수명 × Q-day 추정 결합 모델 (Microsoft Azure Quantum / IBM hardware roadmap 활용) |
 | 4 | Supply chain 자동 측정 불가 — HW/펌웨어/HSM 영역 측정 안 됨 | CDN/CA 의존성 자동 그래프 + HSM 벤더 PQC 로드맵 트래킹 |

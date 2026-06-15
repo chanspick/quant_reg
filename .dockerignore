@@ -1,0 +1,64 @@
+# 왜: Railway single-image 빌드 컨텍스트를 최소화 — node_modules · 캐시 · 정적 dashboard 제외
+.git
+.github
+.idea
+.claude
+.moai
+
+# Python 캐시
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# Node / pnpm
+node_modules
+**/node_modules
+.pnpm-store
+
+# 빌드 산출물 (멀티스테이지에서 다시 생성)
+dist
+build
+coverage
+**/dist
+**/build
+**/coverage
+
+# 정적 대시보드 (SPEC-PQC-001) — single image 에 불필요
+src/
+public/
+scripts/
+tests/
+quantum/
+reference-build/
+package.json
+pnpm-lock.yaml
+vite.config.ts
+vitest.config.ts
+tsconfig*.json
+index.html
+eslint.config.js
+components.json
+
+# scanner 측정 산출물 (런타임에서 임시 디렉토리 사용)
+scanner/out/
+
+# 문서 / 메타
+*.md
+!scanner-api/README.md
+!scanner-api/RAILWAY.md
+CHANGELOG.md
+.prettierrc.json
+.prettierignore
+.mcp.json
+.gitignore
+
+# OS · IDE
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

@@ -1,0 +1,237 @@
+{
+  "hostname": "www.kakao.com",
+  "measured_at": "2026-06-15T05:54:17.579812+00:00",
+  "formula_version": "v1-2026-05-16",
+  "scanner": "sslyze (in-process)",
+  "scan_targets_completed": [
+    "ssl_2_0_cipher_suites",
+    "ssl_3_0_cipher_suites",
+    "tls_1_0_cipher_suites",
+    "tls_1_1_cipher_suites",
+    "tls_1_2_cipher_suites",
+    "tls_1_3_cipher_suites"
+  ],
+  "features": {
+    "tls_versions": {
+      "1.0": false,
+      "1.1": false,
+      "1.2": true,
+      "1.3": true
+    },
+    "tls_1_2_ciphers": {
+      "total": 25,
+      "non_aead": 16,
+      "non_ecdhe": 14,
+      "cbc": 14
+    },
+    "vulnerabilities": {
+      "heartbleed": false,
+      "robot": false,
+      "ccs_injection": false,
+      "insecure_renegotiation": false,
+      "compression": false
+    },
+    "certificate": {
+      "ca_subject": "CN=Thawte TLS RSA CA G1,OU=www.digicert.com,O=DigiCert Inc,C=US",
+      "ca_short": "DigiCert",
+      "chain_length": 3,
+      "chain_has_sha1": false,
+      "leaf_signature_hash": "sha384",
+      "key_algorithm": "RSA",
+      "key_bits": 2048,
+      "ec_curve_name": null,
+      "not_valid_before": "2025-09-01",
+      "not_valid_after": "2026-09-29",
+      "cert_lifetime_days": 393,
+      "days_until_expiry": 106,
+      "ocsp_stapling_active": false,
+      "ocsp_response_is_trusted": null
+    },
+    "curves": {
+      "supported": [
+        "X25519",
+        "X448",
+        "secp256r1",
+        "secp384r1",
+        "secp521r1"
+      ],
+      "has_x25519mlkem768": false,
+      "has_pure_ml_kem": false,
+      "has_ecdhe": true
+    },
+    "hsts": {
+      "active": true,
+      "max_age": 31536000,
+      "include_subdomains": false,
+      "preload": false
+    }
+  },
+  "scoring": {
+    "tls": {
+      "rules": [
+        {
+          "id": "tls_1_0_active",
+          "label": "TLS 1.0 활성",
+          "fired": false,
+          "deduction": 0,
+          "source": "RFC 8996 / Mozilla intermediate / NIST 800-52"
+        },
+        {
+          "id": "tls_1_1_active",
+          "label": "TLS 1.1 활성",
+          "fired": false,
+          "deduction": 0,
+          "source": "RFC 8996 / Mozilla intermediate / NIST 800-52"
+        },
+        {
+          "id": "tls_1_3_missing",
+          "label": "TLS 1.3 미지원",
+          "fired": false,
+          "deduction": 0,
+          "source": "Mozilla intermediate v6.0 / NIST 800-52 (2024+)"
+        },
+        {
+          "id": "tls_1_2_missing",
+          "label": "TLS 1.2 미지원",
+          "fired": false,
+          "deduction": 0,
+          "source": "Mozilla intermediate v6.0 minimum"
+        },
+        {
+          "id": "compression",
+          "label": "TLS Compression 활성 (CRIME)",
+          "fired": false,
+          "deduction": 0,
+          "source": "OWASP Cheat Sheet — must disable"
+        },
+        {
+          "id": "fallback_scsv",
+          "label": "TLS_FALLBACK_SCSV 미지원",
+          "fired": false,
+          "deduction": 0,
+          "source": "OWASP — should be enabled"
+        },
+        {
+          "id": "heartbleed",
+          "label": "Heartbleed 취약",
+          "fired": false,
+          "deduction": 0,
+          "source": "CVE-2014-0160"
+        },
+        {
+          "id": "robot",
+          "label": "ROBOT 취약",
+          "fired": false,
+          "deduction": 0,
+          "source": "ROBOT attack 2017"
+        },
+        {
+          "id": "ccs_injection",
+          "label": "OpenSSL CCS Injection",
+          "fired": false,
+          "deduction": 0,
+          "source": "CVE-2014-0224"
+        },
+        {
+          "id": "insecure_reneg",
+          "label": "Insecure Renegotiation",
+          "fired": false,
+          "deduction": 0,
+          "source": "CVE-2009-3555"
+        }
+      ],
+      "cipher_deductions": {
+        "non_aead": 32,
+        "non_ecdhe": 42,
+        "cbc": 28
+      },
+      "final": 0
+    },
+    "certOps": {
+      "rules": [
+        {
+          "id": "expired",
+          "label": "인증서 만료됨",
+          "fired": false,
+          "deduction": 0,
+          "source": "trivial"
+        },
+        {
+          "id": "expiring_soon",
+          "label": "만료 임박 (≤30일)",
+          "fired": false,
+          "deduction": 0,
+          "source": "운영 위생"
+        },
+        {
+          "id": "lifetime_too_long",
+          "label": "수명 > 366일",
+          "fired": true,
+          "deduction": 20,
+          "source": "Mozilla v6.0 max 366"
+        },
+        {
+          "id": "chain_sha1",
+          "label": "체인에 SHA-1 서명",
+          "fired": false,
+          "deduction": 0,
+          "source": "OWASP / NIST 폐기"
+        },
+        {
+          "id": "leaf_sha1",
+          "label": "Leaf SHA-1 서명",
+          "fired": false,
+          "deduction": 0,
+          "source": "OWASP / NIST 폐기"
+        },
+        {
+          "id": "leaf_md5",
+          "label": "Leaf MD5 서명",
+          "fired": false,
+          "deduction": 0,
+          "source": "OWASP must not"
+        },
+        {
+          "id": "chain_incomplete",
+          "label": "체인 길이 ≤1 (불완전)",
+          "fired": false,
+          "deduction": 0,
+          "source": "TLS 신뢰 끊김"
+        },
+        {
+          "id": "chain_too_long",
+          "label": "체인 길이 > 4 (과도)",
+          "fired": false,
+          "deduction": 0,
+          "source": "성능 / 위생"
+        },
+        {
+          "id": "ocsp_missing",
+          "label": "OCSP Stapling 미설정 / 미신뢰",
+          "fired": true,
+          "deduction": 15,
+          "source": "Mozilla recommended"
+        },
+        {
+          "id": "rsa_weak",
+          "label": "RSA 키 < 2048 bit",
+          "fired": false,
+          "deduction": 0,
+          "source": "Mozilla intermediate minimum"
+        },
+        {
+          "id": "ecc_nonstandard",
+          "label": "ECC 곡선 비표준",
+          "fired": false,
+          "deduction": 0,
+          "source": "Mozilla intermediate v6.0 ECDH curves"
+        }
+      ],
+      "final": 65
+    },
+    "hybridKem": {
+      "value": 30,
+      "basis": "X25519MLKEM768=100, ML-KEM=90, ECDHE=30, DHE-only=15, none=0. Phase 1 sslyze 한계: 대부분 30 (Phase 2 보강 예정)."
+    }
+  }
+}

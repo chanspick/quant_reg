@@ -1,0 +1,17 @@
+# 왜: scanner-web 빌드 컨텍스트 최소화 — node_modules / dist 는 컨테이너 내부에서 재생성
+node_modules
+dist
+.pnpm-store
+coverage
+.vite
+
+# 로컬 IDE / OS
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# 로그
+*.log
+npm-debug.log*
+pnpm-debug.log*

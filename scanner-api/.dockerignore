@@ -1,0 +1,18 @@
+# 왜: scanner-api 하위 컨텍스트 최소화 — 캐시 / 테스트 / 로컬 산출물 제외
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.venv
+
+# 테스트 (런타임 이미지엔 불필요)
+tests/
+
+# 로컬 IDE / OS
+.idea
+.vscode
+.DS_Store
+Thumbs.db

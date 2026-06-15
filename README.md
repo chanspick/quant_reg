@@ -199,6 +199,7 @@ quant_reg/
 
 - **자동 측정 (`source: automated`)**: 4축 점수 + Phase 2 PQC probe + 인증서 메타 + 자동 finding + 자동 recommendations — 모두 실측 또는 결정적 계산. RFC 8996 / Mozilla SSL Config v6.0 / OWASP / NIST PQC 표준 인용이 룰 안에 박혀있음. UI 의 `SourceChip` (sky 색) 로 시각 구분.
 - **미완성 영역 (`TODO:` placeholder)**: narrative · supplyChainNotes (47/47). UI 는 placeholder 가 감지되면 섹션 자체 unmount 하여 노출 차단. 향후 LLM 검증 게이트로 채울 예정.
-- **calibration scalar (22 와 0.7)**: 정당화된 출처 없음 — Methodology 페이지 Section 4 의 Calibration Disclosure 박스에 명시. **ordering-preserving 측정으로만 해석** (두 도메인 점수 차이는 상대 순위만 의미, 절대값은 양자 깨짐까지의 시간·자원·확률 어느 것과도 직접 매핑되지 않음).
+- **calibration scalar (22 와 0.7)**: 정당화된 출처 없음 — `scanner/roetteler.py:96` 의 `score = gap * 22 * (1 - success_rate * 0.7)` 한 줄에서 사용되며, 같은 공식이 `src/i18n/ko.ts:101` (Methodology 페이지 Section 4 Calibration Disclosure) 에 그대로 노출. **두 상수는 논문 직접 인용이 아니라 측정 분포 정규화를 위한 self-calibration scalar** 이며 (사전 가정값 부근에 도메인 점수가 위치하도록 눈으로 보정한 값), 별도 정당화 논문은 확보되지 않음. **ordering-preserving 측정으로만 해석** — 두 도메인 점수 차이는 상대 순위만 의미하고, 절대값은 양자 깨짐까지의 시간·자원·확률 어느 것과도 직접 매핑되지 않음.
+- **Future Work — discrete grade 모델 v2 마이그레이션**: 발표 이후 별도 사이클에서 0-100 연속 점수를 `discrete grade` (예: A/B/C/D/F 5-tier 또는 `pq-observed` / `hybrid-capable` / `classical-only` / `legacy` / `critical`) 또는 분위수 정규화(quantile normalization) 로 교체 예정. 목적은 ① calibration scalar 의존 제거, ② 표본 격차의 의미를 등급 경계로 흡수, ③ 측정 모델의 정직성 게이트 ([[feedback_data_source_honesty]]) 강화. 마이그레이션 시점은 발표 이후로 잡되, 본 문서에는 구체 일자 박제하지 않음.
 - **진단·감사·구매 의사결정에 사용하지 마십시오.** 본 데이터는 강의 데모 목적입니다.
 - 4개 도메인 (현대모비스·현대글로비스·HL만도·신한은행) 은 sslyze 자체 차단, Phase 2 raw probe 도 16개 (공공·금융 다수) 추가 차단 — 별도 카테고리, 그 자체가 발견 사항.

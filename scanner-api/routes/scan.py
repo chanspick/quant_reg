@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
 from datetime import datetime, timezone
 from typing import Any
 
@@ -41,7 +42,12 @@ from models.scan_result import (
     ScoringMeta,
     TlsScoring,
 )
+from services import demo_cache
 from services.measure_wrapper import ErrorCode, run_measure
+from services.narrative_llm import (
+    NARRATIVE_TIMEOUT_SECONDS,
+    generate_narrative,
+)
 from services.normalize import HostnameValidationError, normalize_hostname
 from services.probe_wrapper import run_pqc_probe
 
@@ -318,6 +324,21 @@ async def _do_scan(hostname: str) -> ScanResponse:
     """정규화된 hostname 으로 실제 측정 수행."""
     errors: list[ErrorTrace] = []
 
+    # 발표 안전망 — DEMO_CACHE_FALLBACK=1 일 때만 사전 캐시 즉시 반환
+    cached = demo_cache.lookup(hostname)
+    if cached is not None:
+        response = _build_success_response(
+            hostname=hostname,
+            partial=cached["partial"],
+            meta=cached["meta"],
+            probe_result=cached.get("probe"),
+            errors=errors,
+        )
+        # 왜: 시연 캐시도 cached=True 로 표시 — 정직성 (REQ-API-005 와 동일 시그널)
+        response.cached = True
+        await _attach_narrative(response, errors)
+        return response
+
     # Phase 1: sslyze 측정
     measure = await run_measure(hostname)
     if not measure.get("ok"):
@@ -356,13 +377,92 @@ async def _do_scan(hostname: str) -> ScanResponse:
             )
         )
 
-    return _build_success_response(
+    response = _build_success_response(
         hostname=hostname,
         partial=partial,
         meta=meta,
         probe_result=probe_result,
         errors=errors,
     )
+
+    # Phase D: LLM narrative — 측정 결과가 산출된 직후, 60s budget 내에서 호출.
+    # 실패/timeout/no-key 는 모두 None 반환 → narrative 섹션 omit 으로 자가당착 차단.
+    await _attach_narrative(response, errors)
+
+    return response
+
+
+async def _attach_narrative(
+    response: ScanResponse,
+    errors: list[ErrorTrace],
+) -> None:
+    """측정 결과로 LLM narrative 생성을 시도하고 응답에 부착.
+
+    SPEC §3.3 / REQ-LLM-001~004:
+    - 성공: response.narrative = NarrativeMeta
+    - 실패: response.narrative = None + errors[] 에 ErrorTrace 추가
+    - NO_API_KEY 와 그 외 실패는 errors[] 의 code 로만 구분 (메시지로는 노출 안 함)
+    """
+    # 환경변수 미설정이면 호출 자체를 안 한다 — NO_API_KEY 로 표기
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        errors.append(
+            ErrorTrace(
+                stage="narrative",
+                code="NO_API_KEY",
+                message="ANTHROPIC_API_KEY 미설정으로 LLM 분석 건너뜀.",
+            )
+        )
+        response.errors = errors or None
+        return
+
+    # camelCase 직렬화된 dict 를 LLM 입력으로 — 프론트와 동일한 view
+    scan_dict = response.model_dump(by_alias=True, exclude_none=True)
+
+    try:
+        narrative = await asyncio.wait_for(
+            generate_narrative(scan_dict),
+            timeout=NARRATIVE_TIMEOUT_SECONDS,
+        )
+    except asyncio.TimeoutError:
+        logger.warning("narrative 외곽 timeout: %s", response.hostname)
+        errors.append(
+            ErrorTrace(
+                stage="narrative",
+                code="TIMEOUT",
+                message=(
+                    f"LLM 분석이 {NARRATIVE_TIMEOUT_SECONDS:.0f}초 내에 "
+                    "완료되지 않았습니다."
+                ),
+            )
+        )
+        response.errors = errors or None
+        return
+    except Exception as exc:  # noqa: BLE001 — 어떤 실패든 응답 자체는 보존
+        logger.warning("narrative 호출 예외: %s", exc)
+        errors.append(
+            ErrorTrace(
+                stage="narrative",
+                code="LLM_ERROR",
+                message="LLM 분석 호출이 실패했습니다.",
+            )
+        )
+        response.errors = errors or None
+        return
+
+    if narrative is None:
+        # SDK 응답 파싱 실패 또는 API 에러 — generate_narrative 내부 로그 참조
+        errors.append(
+            ErrorTrace(
+                stage="narrative",
+                code="LLM_ERROR",
+                message="LLM 분석 응답을 처리할 수 없습니다.",
+            )
+        )
+        response.errors = errors or None
+        return
+
+    response.narrative = narrative
+    # 측정은 성공했는데 narrative 만 실패한 경우 status 는 그대로 유지 (REQ-API-004)
 
 
 # --- 라우트 ------------------------------------------------------------------

@@ -4,7 +4,7 @@
 
 ## [Unreleased] — 후속 stepup 후보
 
-- ⬜ 22 / 0.7 calibration scalar 정당화 — 또는 "ordering preservation only" 명시
+- ⬜ calibration scalar v2 — discrete grade 모델로 마이그레이션 (현재 `scanner/roetteler.py:96` 의 `22 · 0.7` self-calibration scalar 의 정당화 논문 미확보, [[feedback_data_source_honesty]] 정직성 게이트 강화 목적, 0-100 연속 점수 → A/B/C/D/F 또는 분위수 정규화)
 - ⬜ HNDL (Harvest Now Decrypt Later) 시점 위협 모델 — Roetteler/Willsch 인용을 시간축 모델로 발전
 - ⬜ 분석 텍스트 (`narrative` / `findings` / `recommendations`) 채우기 — 사용자 작업
 - ⬜ supply chain 측정 보강 — HW 백도어, 펌웨어 PQC 지원, HSM 벤더 로드맵 (Phase 1 자동 측정 불가 영역)

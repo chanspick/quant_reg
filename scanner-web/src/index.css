@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+
+/* SPEC-PQC-002 — Tailwind v4 인라인 토큰. 정적 대시보드(SPEC-PQC-001) 의
+ * shadcn HSL 변수와는 격리. 발표 시연용이라 다크/라이트 자동만 지원.
+ */
+
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-500: #2563eb;
+  --color-brand-600: #1d4ed8;
+  --color-brand-700: #1e40af;
+}
+
+html {
+  font-family:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+}
+
+/* 진행 인디케이터 펄스 — 시각 임팩트용 */
+@keyframes pulse-scale {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+.animate-stage-active {
+  animation: pulse-scale 1.4s ease-in-out infinite;
+}

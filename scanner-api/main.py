@@ -8,12 +8,13 @@
     cd scanner-api && python main.py
 
 CORS:
-    Phase A-1+A-2 는 ``allow_origins=["*"]`` 로 모두 허용.
-    Phase A-3 에서 ``ALLOWED_ORIGINS`` 환경변수 기반으로 제한 (REQ-API-006).
+    Phase A-3 부터 ``ALLOWED_ORIGINS`` 환경변수 (콤마 구분) 화이트리스트로
+    제한 (REQ-API-006). 미설정 시 로컬 dev 기본값만 허용 — production 폴백
+    으로 ``*`` 금지. 파싱 로직은 ``services.cors.parse_allowed_origins`` 참조.
 
 환경변수:
     - PORT             : uvicorn 포트 (기본 8000)
-    - ALLOWED_ORIGINS  : Phase A-3 에서 사용 (현재는 미사용)
+    - ALLOWED_ORIGINS  : CORS 화이트리스트 (콤마 구분, 예: ``https://a.com,https://b.com``)
     - ANTHROPIC_API_KEY: Phase D 에서 사용 (현재는 미사용)
     - LOG_LEVEL        : 로그 레벨 (기본 INFO)
 """
@@ -22,11 +23,14 @@ from __future__ import annotations
 
 import logging
 import os
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from routes.scan import router as scan_router
+from services.cors import parse_allowed_origins
 
 # 로깅 — 환경변수로 레벨 제어
 _log_level = os.environ.get("LOG_LEVEL", "INFO").upper()
@@ -45,11 +49,12 @@ app = FastAPI(
     version="0.1.0-phase-a",
 )
 
-# TODO Phase A-3: tighten via ALLOWED_ORIGINS env (REQ-API-006)
-# 현재는 개발 편의를 위해 모든 origin 허용.
+# REQ-API-006 — ALLOWED_ORIGINS 환경변수 기반 화이트리스트
+_allowed_origins = parse_allowed_origins(os.environ.get("ALLOWED_ORIGINS"))
+logger.info("CORS allow_origins=%s", _allowed_origins)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_allowed_origins,
     allow_credentials=False,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization"],
@@ -63,6 +68,23 @@ app.include_router(scan_router)
 async def health() -> dict[str, str]:
     """헬스 체크 — Railway / load balancer 용."""
     return {"status": "ok"}
+
+
+# 발표 시연용 single image 배포 — Railway 컨테이너에서만 활성
+# StaticFiles 는 반드시 /api · /health 라우트 **이후** 마운트 (catch-all 이 API 를 가리지 않도록).
+_static_dir = Path(os.environ.get("STATIC_DIR", "/app/static"))
+if _static_dir.is_dir() and (_static_dir / "index.html").exists():
+    app.mount(
+        "/",
+        StaticFiles(directory=str(_static_dir), html=True),
+        name="static",
+    )
+    logger.info("StaticFiles mounted at / from %s", _static_dir)
+else:
+    logger.info(
+        "StaticFiles skip — %s 미존재 (로컬 dev: scanner-web/dist 별도 서빙 가정)",
+        _static_dir,
+    )
 
 
 def main() -> None:

@@ -11,3 +11,7 @@ pydantic>=2.9,<3.0
 # Phase B Dockerfile can replace with -r ../scanner/requirements.txt instead.
 sslyze>=6.0,<7
 cryptography>=45,<46
+
+# Phase D — Claude Sonnet 4.6 narrative (REQ-LLM-001~004).
+# AsyncAnthropic + cache_control + APIStatusError 모두 0.40+ 에서 안정 지원.
+anthropic>=0.40,<1.0

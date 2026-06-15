@@ -1,0 +1,130 @@
+{
+  "name": "LG화학",
+  "url": "https://lgchem.com",
+  "sector": "화학",
+  "scores": {
+    "tls": {
+      "value": 0,
+      "source": "automated"
+    },
+    "hybridKem": {
+      "value": 30,
+      "source": "automated"
+    },
+    "certOps": {
+      "value": 85,
+      "source": "automated"
+    },
+    "quantumThreat": {
+      "value": 23,
+      "source": "automated"
+    }
+  },
+  "certificate": {
+    "renewal": "수동 갱신",
+    "ca": "DigiCert",
+    "chain": "CN=*.lgchem.com,O=LG Chem\\, Ltd,L=Yeongdeungpo District,ST=S → CN=Thawte TLS RSA CA G1,OU=www.digicert.com,O=DigiCert Inc,C → CN=DigiCert Global Root G2,OU=www.digicert.com,O=DigiCert In",
+    "keyAlgorithm": "RSA",
+    "keyBits": 2048
+  },
+  "pqc": {
+    "keyExchange": "미지원",
+    "hybrid": "미감지",
+    "maturity": "준비 미착수"
+  },
+  "regulatoryGaps": [],
+  "findings": [
+    {
+      "text": "TLS 1.0 활성 — RFC 8996 권고에 따라 비활성화 필요.",
+      "source": "automated"
+    },
+    {
+      "text": "TLS 1.1 활성 — RFC 8996 권고에 따라 비활성화 필요.",
+      "source": "automated"
+    },
+    {
+      "text": "TLS 1.3 미지원 — Mozilla intermediate 권고 미충족.",
+      "source": "automated"
+    },
+    {
+      "text": "TLS 1.2 CBC 모드 cipher 8개 활성 — OWASP 권고는 GCM 우선.",
+      "source": "automated"
+    },
+    {
+      "text": "Non-ECDHE/DHE cipher 6개 — Forward Secrecy 미적용 cipher 존재.",
+      "source": "automated"
+    },
+    {
+      "text": "OCSP Stapling 미설정 — 인증서 폐기 확인 지연.",
+      "source": "automated"
+    },
+    {
+      "text": "ClientHello 에서 ML-KEM (X25519MLKEM768 등) PQC KEM 그룹은 관측되지 않음.",
+      "source": "automated"
+    }
+  ],
+  "recommendations": [
+    {
+      "text": "TLS 1.0 / 1.1 비활성화 후 TLS 1.2+ 만 허용 (RFC 8996, Mozilla SSL Config v6.0 intermediate).",
+      "source": "automated"
+    },
+    {
+      "text": "TLS 1.3 활성화 — 최신 cipher suite·0-RTT·forward secrecy 기본 지원 (Mozilla intermediate v6.0).",
+      "source": "automated"
+    },
+    {
+      "text": "TLS 1.2 cipher suite 를 AEAD (AES-GCM, ChaCha20-Poly1305) 만 허용하도록 제한 (OWASP TLS Cheat Sheet, Mozilla intermediate).",
+      "source": "automated"
+    },
+    {
+      "text": "Forward Secrecy 미적용 cipher (RSA key transport 등) 제거, ECDHE/DHE 기반 cipher 만 허용 (Mozilla v6.0).",
+      "source": "automated"
+    },
+    {
+      "text": "OCSP Stapling 활성화 — 인증서 폐기 확인 지연 완화 및 프라이버시 보호 (Mozilla recommended).",
+      "source": "automated"
+    },
+    {
+      "text": "X25519MLKEM768 (0x11EC) 협상 활성화 검토 — Mozilla SSL Config v6.0 intermediate 등재, draft-ietf-tls-ecdhe-mlkem 표준화 진행 중. CDN/load balancer 단에서 우선 시범 적용 권장.",
+      "source": "automated"
+    },
+    {
+      "text": "PQC 전환 로드맵 수립 — NIST PQC 표준 FIPS 203 (ML-KEM) / 204 (ML-DSA) / 205 (SLH-DSA) 기준, 김의결·안혁 2025 의 한국 적용 권고 참조.",
+      "source": "automated"
+    }
+  ],
+  "narrative": {
+    "text": "TODO: LG화학 분석 narrative 를 작성하세요 (예: TLS 위생 N점, PQC 미적용 등).",
+    "source": "llm-only"
+  },
+  "supplyChainNotes": {
+    "text": "TODO: LG화학 공급망(CA·CDN·WAF) 종속성 메모를 작성하세요.",
+    "source": "manual"
+  },
+  "quantumThreatDetail": {
+    "keyAlgorithm": "RSA-2048",
+    "keyBits": 2048,
+    "estimates": {
+      "conservative": {
+        "logicalQubits": 4099,
+        "toffoliGates": 549755813888,
+        "score": 34,
+        "successRate": 0.04,
+        "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+      },
+      "empirical": {
+        "logicalQubits": 4099,
+        "toffoliGates": 549755813888,
+        "score": 23,
+        "successRate": 0.5,
+        "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+        "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
+      }
+    },
+    "citations": [
+      "Roetteler-2017",
+      "Willsch-2023"
+    ],
+    "source": "automated"
+  }
+}
