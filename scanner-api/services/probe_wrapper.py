@@ -13,6 +13,9 @@ scanner.pqc_probe CLI (검증 결과, ``scanner/pqc_probe.py`` 의 ``main()``):
 - stdout JSON 파싱이 성공하면 ``status`` 필드로 결과를 분류한다.
 - stdout 파싱 실패 + 빈 출력 같은 진짜 실패만 ``ok: False`` 로 보고한다.
 
+subprocess 실행 모델: measure_wrapper 와 동일. ``asyncio.to_thread`` +
+동기 ``subprocess.run`` 으로 Windows SelectorEventLoop 에서도 동작.
+
 Phase 1 실패 시 호출하지 않는다 — 호출자(라우트 핸들러) 책임.
 """
 
@@ -20,6 +23,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import subprocess
 import sys
 from typing import Any
 
@@ -52,32 +56,19 @@ async def run_pqc_probe(hostname: str) -> dict[str, Any]:
         hostname,
     ]
 
-    try:
-        proc = await asyncio.create_subprocess_exec(
-            *cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
+    # event loop 타입 무관 패턴 — measure_wrapper 와 동일
+    def _run_sync() -> subprocess.CompletedProcess[bytes]:
+        return subprocess.run(  # noqa: S603 - 신뢰된 cmd
+            cmd,
+            capture_output=True,
+            timeout=PROBE_TIMEOUT_SECONDS,
             cwd=str(PROJECT_ROOT),
+            check=False,
         )
-    except (OSError, FileNotFoundError) as exc:
-        return {
-            "ok": False,
-            "error_code": ErrorCode.INTERNAL,
-            "message": f"subprocess 시작 실패: {exc}",
-            "stderr": "",
-        }
 
     try:
-        stdout_bytes, stderr_bytes = await asyncio.wait_for(
-            proc.communicate(),
-            timeout=PROBE_TIMEOUT_SECONDS,
-        )
-    except asyncio.TimeoutError:
-        try:
-            proc.kill()
-            await proc.wait()
-        except ProcessLookupError:
-            pass
+        completed = await asyncio.to_thread(_run_sync)
+    except subprocess.TimeoutExpired:
         return {
             "ok": False,
             "error_code": ErrorCode.TIMEOUT,
@@ -87,19 +78,26 @@ async def run_pqc_probe(hostname: str) -> dict[str, Any]:
             ),
             "stderr": "",
         }
+    except (OSError, FileNotFoundError) as exc:
+        return {
+            "ok": False,
+            "error_code": ErrorCode.INTERNAL,
+            "message": f"subprocess 시작 실패: {exc}",
+            "stderr": "",
+        }
 
-    stderr_text = stderr_bytes.decode("utf-8", errors="replace") if stderr_bytes else ""
-    stdout_text = stdout_bytes.decode("utf-8", errors="replace") if stdout_bytes else ""
+    stderr_text = completed.stderr.decode("utf-8", errors="replace") if completed.stderr else ""
+    stdout_text = completed.stdout.decode("utf-8", errors="replace") if completed.stdout else ""
 
     # exit code 가 0 또는 1 이면 정상 측정 — JSON 파싱 시도
     # exit code 가 그 외 (예: 2 = argparse 실패) 이면 무조건 실패
-    if proc.returncode not in (0, 1):
+    if completed.returncode not in (0, 1):
         code = _classify_stderr(stderr_text)
         return {
             "ok": False,
             "error_code": code,
             "message": (
-                f"scanner.pqc_probe 가 비정상 종료 (exit={proc.returncode}). "
+                f"scanner.pqc_probe 가 비정상 종료 (exit={completed.returncode}). "
                 f"분류: {code.value}"
             ),
             "stderr": stderr_text,

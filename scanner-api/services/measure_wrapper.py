@@ -11,6 +11,13 @@
   으로 호출하고, 종료 후 두 파일을 읽어 합치고 tmp 디렉토리는 정리한다.
 - scanner 코드 무수정 원칙 준수, scanner/out 디렉토리 오염 없음.
 
+subprocess 실행 모델:
+- ``asyncio.create_subprocess_exec`` 는 Windows 에서 ProactorEventLoop 필수.
+  uvicorn --reload + watchfiles 가 SelectorEventLoop 로 떨어뜨리는 경우
+  ``loop.subprocess_exec`` 가 NotImplementedError 로 죽는다.
+- 대안: 동기 ``subprocess.run`` 을 ``asyncio.to_thread`` 로 thread pool 에서
+  실행 → event loop 타입 무관, POSIX/Windows 동일 동작.
+
 에러 코드 (ErrorCode enum):
 - ``DNS_FAIL``        — hostname 해석 실패 (subprocess stderr 의 socket / DNS 키워드)
 - ``TCP_BLOCKED``     — TCP RST / 방화벽 차단
@@ -25,6 +32,7 @@ import asyncio
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 from enum import Enum
@@ -109,34 +117,22 @@ async def run_measure(hostname: str) -> dict[str, Any]:
         str(meta_path),
     ]
 
+    # event loop 타입 무관 패턴 — Windows SelectorEventLoop 에서도 동작.
+    def _run_sync() -> subprocess.CompletedProcess[bytes]:
+        # cmd 는 신뢰된 sys.executable + 고정 인자 — shell injection 위험 없음
+        return subprocess.run(  # noqa: S603
+            cmd,
+            capture_output=True,
+            timeout=MEASURE_TIMEOUT_SECONDS,
+            cwd=str(PROJECT_ROOT),
+            check=False,
+        )
+
     try:
         try:
-            proc = await asyncio.create_subprocess_exec(
-                *cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                cwd=str(PROJECT_ROOT),
-            )
-        except (OSError, FileNotFoundError) as exc:
-            return {
-                "ok": False,
-                "error_code": ErrorCode.INTERNAL,
-                "message": f"subprocess 시작 실패: {exc}",
-                "stderr": "",
-            }
-
-        try:
-            stdout_bytes, stderr_bytes = await asyncio.wait_for(
-                proc.communicate(),
-                timeout=MEASURE_TIMEOUT_SECONDS,
-            )
-        except asyncio.TimeoutError:
-            # timeout 시 프로세스 강제 종료
-            try:
-                proc.kill()
-                await proc.wait()
-            except ProcessLookupError:
-                pass
+            completed = await asyncio.to_thread(_run_sync)
+        except subprocess.TimeoutExpired:
+            # subprocess.run 이 timeout 시 자동으로 자식 프로세스 kill 후 raise
             return {
                 "ok": False,
                 "error_code": ErrorCode.TIMEOUT,
@@ -146,17 +142,24 @@ async def run_measure(hostname: str) -> dict[str, Any]:
                 ),
                 "stderr": "",
             }
+        except (OSError, FileNotFoundError) as exc:
+            return {
+                "ok": False,
+                "error_code": ErrorCode.INTERNAL,
+                "message": f"subprocess 시작 실패: {exc}",
+                "stderr": "",
+            }
 
-        stderr_text = stderr_bytes.decode("utf-8", errors="replace") if stderr_bytes else ""
+        stderr_text = completed.stderr.decode("utf-8", errors="replace") if completed.stderr else ""
 
         # subprocess 비정상 종료 시
-        if proc.returncode != 0:
+        if completed.returncode != 0:
             code = _classify_stderr(stderr_text)
             return {
                 "ok": False,
                 "error_code": code,
                 "message": (
-                    f"scanner.measure 가 비정상 종료 (exit={proc.returncode}). "
+                    f"scanner.measure 가 비정상 종료 (exit={completed.returncode}). "
                     f"분류: {code.value}"
                 ),
                 "stderr": stderr_text,

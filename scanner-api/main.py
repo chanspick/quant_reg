@@ -21,9 +21,18 @@ CORS:
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
+import sys
 from pathlib import Path
+
+# Windows + uvicorn --reload 조합에서 SelectorEventLoop 가 활성화되면
+# asyncio.create_subprocess_exec 가 NotImplementedError 로 죽는다
+# (scanner.measure / scanner.pqc_probe subprocess 호출 불가).
+# ProactorEventLoop 강제 — POSIX 에는 if 문이 매칭되지 않아 영향 없음.
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
