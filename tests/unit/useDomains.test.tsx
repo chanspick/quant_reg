@@ -50,7 +50,7 @@ const validEnvelope = {
             basis: 'Willsch 2023',
           },
         },
-        citations: ['Roetteler-2017', 'Willsch-2023'],
+        citations: ['Beauregard-2003', 'Gidney-Ekera-2019', 'Gidney-2025', 'Willsch-2023'],
         source: 'automated',
       },
     },

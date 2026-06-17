@@ -4,7 +4,7 @@ import { REFERENCES, type CitationId } from '@/data/references';
 /**
  * SPEC-PQC-001 §3.6 (Methodology Page).
  * 4축 측정 모델 + 양자 위협 정량화 + 보수 vs 실증 시나리오 + 점수 정규화 + 한계.
- * Roetteler 2017, Willsch 2023, 김의결·안혁 2025 인용.
+ * 자원 추정: RSA=Beauregard 2003·Gidney-Ekerå 2019/2025, ECC=Roetteler 2017. 실증=Willsch 2023. 이론=김의결·안혁 2025.
  */
 export function MethodologyPage(): React.JSX.Element {
   return (
@@ -28,8 +28,9 @@ export function MethodologyPage(): React.JSX.Element {
 
       <Section title={`2. ${ko.methodology.sectionQuantum}`}>
         <p>
-          각 도메인의 인증서 키 알고리즘·길이를 추출하고, Roetteler 2017의 자원 추정
-          공식을 적용해 필요 logical qubit 수와 Toffoli gate 수를 계산합니다. 이후
+          각 도메인의 인증서 키 알고리즘·길이를 추출하고, 키 종류별 자원 추정
+          공식(RSA는 Beauregard 2003 회로 + Gidney-Ekerå 자원 추정, ECC는 Roetteler
+          2017)을 적용해 필요 logical qubit 수와 Toffoli gate 수를 계산합니다. 이후
           Willsch 2023의 실증 시뮬레이션 결과를 시나리오로 결합하여 점수화합니다.
         </p>
         <FormulaCallout
@@ -38,12 +39,16 @@ export function MethodologyPage(): React.JSX.Element {
             ko.methodology.roettelerFormulaEcc,
           ]}
         />
-        <CitationInline ids={['Roetteler-2017']} />
+        <CitationInline
+          ids={['Beauregard-2003', 'Gidney-Ekera-2019', 'Gidney-2025', 'Roetteler-2017']}
+        />
       </Section>
 
       <Section title={`3. ${ko.methodology.sectionScenarios}`}>
         <ScenarioTable />
-        <CitationInline ids={['Roetteler-2017', 'Willsch-2023']} />
+        <CitationInline
+          ids={['Beauregard-2003', 'Gidney-Ekera-2019', 'Roetteler-2017', 'Willsch-2023']}
+        />
       </Section>
 
       <Section title={`4. ${ko.methodology.sectionScoring}`}>
@@ -65,7 +70,16 @@ export function MethodologyPage(): React.JSX.Element {
         <p>{ko.methodology.limitsBody}</p>
       </Section>
 
-      <ReferenceList ids={['Kim-Ahn-2025', 'Roetteler-2017', 'Willsch-2023']} />
+      <ReferenceList
+        ids={[
+          'Kim-Ahn-2025',
+          'Beauregard-2003',
+          'Gidney-Ekera-2019',
+          'Gidney-2025',
+          'Roetteler-2017',
+          'Willsch-2023',
+        ]}
+      />
     </article>
   );
 }
@@ -140,7 +154,7 @@ function AxisTable(): React.JSX.Element {
     {
       axis: ko.axisLabel.quantumThreat,
       source: ko.sourceLabel.automated,
-      method: 'Roetteler 2017 공식 → 보수·실증 두 시나리오 점수',
+      method: '자원 추정 공식(RSA=Beauregard/Gidney-Ekerå, ECC=Roetteler 2017) → 보수·실증 두 시나리오 점수',
     },
   ];
   return (

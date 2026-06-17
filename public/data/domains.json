@@ -74,19 +74,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -212,19 +214,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -338,19 +342,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -452,20 +458,18 @@
             "toffoliGates": 419430400,
             "score": 29,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Roetteler 2017 (ECC 이산로그 자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 2330,
             "toffoliGates": 419430400,
             "score": 20,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
-            "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
+            "basis": "대규모 ECC 이산로그 양자 시뮬레이션 실증은 부재 — 성공률은 보수 추정 대비 예시값."
           }
         },
         "citations": [
-          "Roetteler-2017",
-          "Willsch-2023"
+          "Roetteler-2017"
         ],
         "source": "automated"
       }
@@ -542,19 +546,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -632,19 +638,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -750,19 +758,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -852,19 +862,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -990,19 +1002,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -1088,19 +1102,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -1186,19 +1202,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -1316,19 +1334,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -1418,20 +1438,18 @@
             "toffoliGates": 419430400,
             "score": 29,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Roetteler 2017 (ECC 이산로그 자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 2330,
             "toffoliGates": 419430400,
             "score": 20,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
-            "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
+            "basis": "대규모 ECC 이산로그 양자 시뮬레이션 실증은 부재 — 성공률은 보수 추정 대비 예시값."
           }
         },
         "citations": [
-          "Roetteler-2017",
-          "Willsch-2023"
+          "Roetteler-2017"
         ],
         "source": "automated"
       }
@@ -1532,19 +1550,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -1634,19 +1654,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -1748,20 +1770,18 @@
             "toffoliGates": 419430400,
             "score": 29,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Roetteler 2017 (ECC 이산로그 자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 2330,
             "toffoliGates": 419430400,
             "score": 20,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
-            "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
+            "basis": "대규모 ECC 이산로그 양자 시뮬레이션 실증은 부재 — 성공률은 보수 추정 대비 예시값."
           }
         },
         "citations": [
-          "Roetteler-2017",
-          "Willsch-2023"
+          "Roetteler-2017"
         ],
         "source": "automated"
       }
@@ -1870,20 +1890,18 @@
             "toffoliGates": 419430400,
             "score": 29,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Roetteler 2017 (ECC 이산로그 자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 2330,
             "toffoliGates": 419430400,
             "score": 20,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
-            "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
+            "basis": "대규모 ECC 이산로그 양자 시뮬레이션 실증은 부재 — 성공률은 보수 추정 대비 예시값."
           }
         },
         "citations": [
-          "Roetteler-2017",
-          "Willsch-2023"
+          "Roetteler-2017"
         ],
         "source": "automated"
       }
@@ -1988,19 +2006,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2082,19 +2102,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2200,19 +2222,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2302,19 +2326,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2412,19 +2438,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2506,19 +2534,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2616,19 +2646,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2742,19 +2774,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2864,19 +2898,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -2974,19 +3010,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -3100,19 +3138,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -3226,19 +3266,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -3348,19 +3390,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -3438,19 +3482,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -3560,19 +3606,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -3682,19 +3730,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -3796,19 +3846,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -3914,19 +3966,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -4028,19 +4082,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -4154,19 +4210,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -4244,19 +4302,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -4366,19 +4426,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -4500,19 +4562,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -4634,19 +4698,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -4768,19 +4834,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -4882,19 +4950,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -5012,19 +5082,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -5146,19 +5218,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -5280,19 +5354,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"
@@ -5386,19 +5462,21 @@
             "toffoliGates": 549755813888,
             "score": 34,
             "successRate": 0.04,
-            "basis": "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+            "basis": "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정."
           },
           "empirical": {
             "logicalQubits": 4099,
             "toffoliGates": 549755813888,
             "score": 23,
             "successRate": 0.5,
-            "basis": "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
+            "basis": "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.",
             "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
           }
         },
         "citations": [
-          "Roetteler-2017",
+          "Beauregard-2003",
+          "Gidney-Ekera-2019",
+          "Gidney-2025",
           "Willsch-2023"
         ],
         "source": "automated"

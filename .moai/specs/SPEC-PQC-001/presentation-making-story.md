@@ -92,7 +92,7 @@
 | **TLS 위생** | 0-100 | sslyze 6.x (자동) | RFC 8996 / Mozilla v6.0 / NIST SP 800-52 / OWASP TLS |
 | **하이브리드 KEM** | 0-100 | raw socket TLS 1.3 probe (자동) | IANA Named Groups 0x11EC / draft-ietf-tls-ecdhe-mlkem |
 | **인증서 운영** | 0-100 | sslyze 6.x (자동) | Mozilla v6.0 |
-| **양자 위협 정량** | 0-100 | Roetteler·Willsch 계산 (결정적) | arXiv:1706.06752 / doi:10.3390/math11194222 |
+| **양자 위협 정량** | 0-100 | RSA: Beauregard 2003·Gidney-Ekerå 2019/2025 / ECC: Roetteler 2017 / 실증: Willsch 2023 계산 (결정적) | arXiv:quant-ph/0205095 / arXiv:1905.09749 / arXiv:2505.15917 / arXiv:1706.06752 / doi:10.3390/math11194222 |
 
 ### 차별점
 - **Phase 2 raw TLS 1.3 프로브**: sslyze 같은 표준 도구가 보지 못하는 PQC 신호 포착
@@ -604,7 +604,10 @@ Markdown        1,300 라인  13.2%  ▓▓▓
 # 출처 부록 (논문·표준·도구)
 
 ### 양자 위협 정량
-- Roetteler, M. et al. (2017) "Quantum resource estimates for computing elliptic curve discrete logarithms" — arXiv:1706.06752
+- Beauregard, S. (2003) "Circuit for Shor's algorithm using 2n+3 qubits" — arXiv:quant-ph/0205095 (RSA 2n+3 회로 출처)
+- Gidney, C. & Ekerå, M. (2019) "How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits" — arXiv:1905.09749 (RSA 자원 추정)
+- Gidney, C. (2025) "How to factor 2048 bit RSA integers with less than a million noisy qubits" — arXiv:2505.15917 (RSA 자원 추정 갱신)
+- Roetteler, M. et al. (2017) "Quantum resource estimates for computing elliptic curve discrete logarithms" — arXiv:1706.06752 (ECC 전용 — RSA 아님)
 - Willsch, M. et al. (2023) "Benchmarking advantage and D-Wave 2000Q quantum annealers with exact cover problems" — Mathematics 11(19), 4222
 - 김의결·안혁 (2025) — 교수 송부 논문 (이론 프레임)
 

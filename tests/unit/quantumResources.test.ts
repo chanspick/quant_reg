@@ -8,9 +8,9 @@ import {
   headlineQuantumScore,
 } from '@/data/quantumResources';
 
-// SPEC-PQC-001 §3.14 — Roetteler 2017 공식 sanity + 시나리오 점수 일관성
+// SPEC-PQC-001 §3.14 — 자원 추정 공식 sanity (RSA=Beauregard/Gidney, ECC=Roetteler) + 시나리오 점수 일관성
 
-describe('Roetteler logical qubit formulas', () => {
+describe('logical qubit formulas (RSA=Beauregard 2003, ECC=Roetteler 2017)', () => {
   it('RSA-2048 → 4099 logical qubits', () => {
     expect(rsaLogicalQubits(2048)).toBe(4099);
   });
@@ -79,9 +79,19 @@ describe('summarizeQuantumThreat — RSA/ECC classical', () => {
     expect(s.estimates.empirical.score).toBeLessThan(40);
   });
 
-  it('cites Roetteler-2017 and Willsch-2023', () => {
+  it('RSA cites Beauregard 2003 + Gidney resource estimates, never Roetteler', () => {
     const s = summarizeQuantumThreat('RSA', 2048);
-    expect(s.citations).toContain('Roetteler-2017');
+    expect(s.citations).toContain('Beauregard-2003');
+    expect(s.citations).toContain('Gidney-Ekera-2019');
+    expect(s.citations).toContain('Gidney-2025');
     expect(s.citations).toContain('Willsch-2023');
+    expect(s.citations).not.toContain('Roetteler-2017');
+  });
+
+  it('ECC cites Roetteler 2017, never Gidney/Beauregard', () => {
+    const s = summarizeQuantumThreat('ECC', 256);
+    expect(s.citations).toContain('Roetteler-2017');
+    expect(s.citations).not.toContain('Gidney-Ekera-2019');
+    expect(s.citations).not.toContain('Beauregard-2003');
   });
 });

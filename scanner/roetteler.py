@@ -1,9 +1,23 @@
-"""Roetteler 2017 자원 추정 + Willsch 2023 시나리오.
+"""양자 위협 자원 추정 + 시나리오 (귀속: RSA / ECC / 실증 구분).
 
 src/data/quantumResources.ts 와 결정적(deterministic)으로 동일한 결과를 산출한다.
 공식·계수는 TS 모듈과 1:1 일치.
 
+자원 추정 귀속:
+  - RSA = Beauregard 2003 회로(2n+3 큐비트) + Gidney-Ekerå 2019/2025 자원 추정
+  - ECC = Roetteler 2017 (타원곡선 이산로그 자원 추정)
+  - 실증 = Willsch 2023 (Shor 인수분해 시뮬레이션)
+
 References:
+  - Beauregard, S. (2003).
+    "Circuit for Shor's algorithm using 2n+3 qubits."
+    Quantum Information and Computation 3(2). arXiv:quant-ph/0205095.
+  - Gidney, C., Ekerå, M. (2019).
+    "How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits."
+    Quantum 5, 433 (2021). arXiv:1905.09749.
+  - Gidney, C. (2025).
+    "How to factor 2048 bit RSA integers with less than a million noisy qubits."
+    arXiv:2505.15917.
   - Roetteler, M., Naehrig, M., Svore, K. M., Lauter, K. (2017).
     "Quantum resource estimates for computing elliptic curve discrete logarithms."
     arXiv:1706.06752.
@@ -26,19 +40,60 @@ KeyAlgorithm = Literal[
     "Unknown",
 ]
 Scenario = Literal["conservative", "empirical"]
-CitationId = Literal["Kim-Ahn-2025", "Roetteler-2017", "Willsch-2023"]
+CitationId = Literal[
+    "Kim-Ahn-2025",
+    "Roetteler-2017",
+    "Willsch-2023",
+    "Beauregard-2003",
+    "Gidney-Ekera-2019",
+    "Gidney-2025",
+]
 
 # Willow-class 2026 logical qubit headline (illustrative gap reference value).
 QUANTUM_HARDWARE_2026_LOGICAL = 100
 
-_BASIS_CONSERVATIVE = (
-    "Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정."
+# --- basis 문자열 (알고리즘 family 의존; TS·Python byte-동일 必) -------------------
+# RSA-family: Shor 이론 + Beauregard 회로 + Gidney-Ekerå 자원 추정.
+# ECC-family: Shor 이론 + Roetteler ECC 이산로그 자원 추정.
+_BASIS_CONSERVATIVE_RSA = (
+    "Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 "
+    "(자원 추정). 성공률 3~4% 가정."
 )
-_BASIS_EMPIRICAL = (
-    "Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. "
+_BASIS_CONSERVATIVE_ECC = (
+    "Shor 1994 (이론) + Roetteler 2017 (ECC 이산로그 자원 추정). 성공률 3~4% 가정."
+)
+_BASIS_EMPIRICAL_RSA = (
+    "Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. "
     "성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접."
 )
+_BASIS_EMPIRICAL_ECC = (
+    "대규모 ECC 이산로그 양자 시뮬레이션 실증은 부재 — 성공률은 보수 추정 대비 예시값."
+)
+_EMPIRICAL_NOTE_RSA = (
+    "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023)."
+)
 _PQC_NOTE = "PQC 알고리즘은 Shor 공격으로 다항시간 내 깨지지 않는다 (NIST PQC 표준)."
+
+
+# --- 알고리즘 family / citations 판별 헬퍼 -------------------------------------
+
+def _algo_family(algo: str) -> Literal["RSA", "ECC"]:
+    """RSA·Hybrid-RSA → "RSA", ECC·Hybrid-ECC → "ECC" (basis/note 선택용)."""
+    if algo in ("RSA", "Hybrid-RSA-ML-KEM"):
+        return "RSA"
+    return "ECC"
+
+
+def _citations_for(algo: str) -> list:
+    """알고리즘 의존 citations (TS summarizeQuantumThreat 와 byte-동일)."""
+    if algo in ("RSA", "Hybrid-RSA-ML-KEM"):
+        return ["Beauregard-2003", "Gidney-Ekera-2019", "Gidney-2025", "Willsch-2023"]
+    if algo in ("ECC", "Hybrid-ECC-ML-KEM"):
+        return ["Roetteler-2017"]
+    if algo == "ML-KEM":
+        return ["Kim-Ahn-2025"]
+    # Unknown
+    return ["Kim-Ahn-2025"]
 
 
 class QuantumEstimate(TypedDict, total=False):
@@ -58,20 +113,20 @@ class QuantumThreatDetail(TypedDict):
     source: str  # always "automated"
 
 
-# --- Roetteler 2017, Table 1 ---------------------------------------------------
+# --- 자원 추정 공식 (RSA=Beauregard/Gidney, ECC=Roetteler) ----------------------
 
 def rsa_logical_qubits(bits: int) -> int:
-    """RSA-n 인수분해 필요 logical qubit 수 ≈ 2n + 3 (Roetteler 2017, Table 1)."""
+    """RSA-n 인수분해 ≈ 2n + 3 logical qubit (Beauregard 2003; 자원추정 Gidney-Ekerå 2019/2025). [Roetteler 아님]"""
     return 2 * bits + 3
 
 
 def ecc_logical_qubits(bits: int) -> int:
-    """ECC-n discrete log 필요 logical qubit 수 ≈ 9n + 2⌈log₂(n)⌉ + 10."""
+    """ECC-n discrete log 필요 logical qubit 수 ≈ 9n + 2⌈log₂(n)⌉ + 10 (Roetteler 2017, Table 1)."""
     return 9 * bits + 2 * math.ceil(math.log2(bits)) + 10
 
 
 def rsa_toffoli_gates(bits: int) -> int:
-    """Order-of-magnitude fit: RSA ≈ 64·n³ Toffoli (Roetteler 2017 §6)."""
+    """RSA Toffoli order-of-magnitude ≈ 64·n³ (illustrative fit; 자원추정 Gidney-Ekerå 2019). [Roetteler 아님]"""
     return round(64 * bits**3)
 
 
@@ -103,8 +158,14 @@ def summarize_quantum_threat(algo: str, bits: int) -> QuantumThreatDetail:
     """도메인 1개에 대한 보수·실증 시나리오 QuantumThreatDetail 반환.
 
     TS src/data/quantumResources.ts:summarizeQuantumThreat 와 동일한 출력 형식.
+    citations·basis 문자열은 알고리즘 family 의존 (TS 와 byte-동일).
     """
-    citations = ["Roetteler-2017", "Willsch-2023"]
+    citations = _citations_for(algo)
+    family = _algo_family(algo)
+    basis_conservative = (
+        _BASIS_CONSERVATIVE_RSA if family == "RSA" else _BASIS_CONSERVATIVE_ECC
+    )
+    basis_empirical = _BASIS_EMPIRICAL_RSA if family == "RSA" else _BASIS_EMPIRICAL_ECC
 
     # PQC: Shor 공격 무효 → 두 시나리오 모두 점수 100
     if algo == "ML-KEM":
@@ -147,14 +208,14 @@ def summarize_quantum_threat(algo: str, bits: int) -> QuantumThreatDetail:
                     "toffoliGates": classical_t,
                     "score": cons_base,
                     "successRate": 0.04,
-                    "basis": _BASIS_CONSERVATIVE + " Hybrid 의 ML-KEM 백업 가산.",
+                    "basis": basis_conservative + " Hybrid 의 ML-KEM 백업 가산.",
                 },
                 "empirical": {
                     "logicalQubits": classical_q,
                     "toffoliGates": classical_t,
                     "score": emp_base,
                     "successRate": 0.5,
-                    "basis": _BASIS_EMPIRICAL + " Hybrid 의 ML-KEM 백업 가산.",
+                    "basis": basis_empirical + " Hybrid 의 ML-KEM 백업 가산.",
                 },
             },
             "citations": list(citations),
@@ -191,6 +252,17 @@ def summarize_quantum_threat(algo: str, bits: int) -> QuantumThreatDetail:
             "source": "automated",
         }
 
+    empirical_estimate: QuantumEstimate = {
+        "logicalQubits": q,
+        "toffoliGates": t,
+        "score": classical_score(q, "empirical"),
+        "successRate": 0.5,
+        "basis": basis_empirical,
+    }
+    # RSA-family 만 Ekerå/Willsch post-processing note. ECC-family 는 note 생략.
+    if family == "RSA":
+        empirical_estimate["note"] = _EMPIRICAL_NOTE_RSA
+
     return {
         "keyAlgorithm": f"{algo}-{bits}",
         "keyBits": bits,
@@ -200,16 +272,9 @@ def summarize_quantum_threat(algo: str, bits: int) -> QuantumThreatDetail:
                 "toffoliGates": t,
                 "score": classical_score(q, "conservative"),
                 "successRate": 0.04,
-                "basis": _BASIS_CONSERVATIVE,
+                "basis": basis_conservative,
             },
-            "empirical": {
-                "logicalQubits": q,
-                "toffoliGates": t,
-                "score": classical_score(q, "empirical"),
-                "successRate": 0.5,
-                "basis": _BASIS_EMPIRICAL,
-                "note": "Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023).",
-            },
+            "empirical": empirical_estimate,
         },
         "citations": list(citations),
         "source": "automated",

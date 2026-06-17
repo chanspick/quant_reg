@@ -63,7 +63,10 @@ TLS 측정 결과를 입력받아 한국어 narrative + 권고 3개를 반환합
    - CA/Browser Forum Baseline Requirements + RFC 5280 기반.
 4) quantumThreat : ordering-preserving 양자 위협 지표 — 동일 알고리즘 비교 시
    상대적 위협 크기만 의미. 절대값 매핑 없음 (Calibration Disclosure 의무).
-   - 보수 시나리오의 logical qubits 필요량 기반 (Roetteler 2017, Willsch 2023).
+   - 보수 시나리오의 logical qubits 필요량 기반.
+     · RSA: Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019/Gidney 2025 (자원 추정).
+     · ECC: Roetteler 2017 (이산로그 자원 추정).
+     · 실증(empirical): Willsch 2023 (Shor 인수분해 시뮬레이션).
    - PQC (ML-KEM 등) 채택 시 Shor 무력 → quantumThreat 점수는 0 또는 매우 낮음.
 
 [정직성 원칙 — 엄수]

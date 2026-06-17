@@ -1,6 +1,6 @@
 """Phase 3 — IBM Quantum Shor 실험.
 
-Roetteler 2017 / Willsch 2023 의 인용 체인을 본인 실측으로 확장.
+Shor 1994 / Willsch 2023 (Shor 인수분해 실증) 의 인용 체인을 본인 실측으로 확장.
 
 모듈:
 - shor_circuit.py: Shor 회로 빌더 (N=15 textbook + N=21 generic)

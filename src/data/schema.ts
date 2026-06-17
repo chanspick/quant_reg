@@ -10,7 +10,7 @@ import { z } from 'zod';
  *   1) tls          — automated
  *   2) hybridKem    — automated
  *   3) certOps      — automated (인증서 운영)
- *   4) quantumThreat — automated (Roetteler 2017 + Willsch 2023 기반 계산)
+ *   4) quantumThreat — automated (RSA=Beauregard 2003·Gidney-Ekerå, ECC=Roetteler 2017, 실증=Willsch 2023 기반 계산)
  * supplyChain 은 점수에서 강등되어 정성 디스크립터(`supplyChainNotes`)로 보존.
  */
 
@@ -98,6 +98,9 @@ export const CitationIdSchema = z.enum([
   'Kim-Ahn-2025',
   'Roetteler-2017',
   'Willsch-2023',
+  'Beauregard-2003',
+  'Gidney-Ekera-2019',
+  'Gidney-2025',
 ]);
 export type CitationId = z.infer<typeof CitationIdSchema>;
 
@@ -159,7 +162,7 @@ export type RegulatoryGap = z.infer<typeof RegulatoryGapSchema>;
 
 /* ============================================================
  * QuantumThreatDetail — 양자 위협 정량 상세 (drill-down)
- *   Roetteler 2017 + Willsch 2023 기반 deterministic 계산 결과.
+ *   RSA=Beauregard 2003·Gidney-Ekerå / ECC=Roetteler 2017 + Willsch 2023(실증) 기반 deterministic 계산 결과.
  * ============================================================ */
 
 export const QuantumEstimateSchema = z.object({
@@ -204,7 +207,7 @@ export const DomainSchema = z.object({
    * 4축 점수에는 포함되지 않고, 도메인 상세 패널에 표시된다.
    */
   supplyChainNotes: SourcedTextSchema,
-  /** Roetteler 2017 + Willsch 2023 기반 양자 위협 정량 상세. */
+  /** RSA=Beauregard 2003·Gidney-Ekerå / ECC=Roetteler 2017 + Willsch 2023(실증) 기반 양자 위협 정량 상세. */
   quantumThreatDetail: QuantumThreatDetailSchema,
 });
 export type Domain = z.infer<typeof DomainSchema>;

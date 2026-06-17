@@ -99,10 +99,12 @@ pnpm validate-data
 
 `roetteler.py` — TypeScript `src/data/quantumResources.ts` 와 결정적으로 동일한 결과:
 
-- RSA-n: logical qubits ≈ 2n + 3 (Roetteler 2017 Table 1)
+- RSA-n: logical qubits ≈ 2n + 3 (Beauregard 2003 회로; 자원추정 Gidney-Ekerå 2019/2025) — **Roetteler 아님**
+- RSA-n: Toffoli ≈ 64·n³ (illustrative fit; 자원추정 Gidney-Ekerå 2019)
 - ECC-n: logical qubits ≈ 9n + 2⌈log₂(n)⌉ + 10 (Roetteler 2017 Table 1)
+- ECC-n: Toffoli ≈ 25·n³ (Roetteler 2017 §6)
 - 점수 = `clip(0, 100, log10(qubits / 100) × 22 × (1 − 성공률 × 0.7))`
-- 보수 시나리오 성공률 = 0.04 (Shor 1994), 실증 = 0.5 (Willsch 2023)
+- 보수 시나리오 성공률 = 0.04 (Shor 1994), 실증 = 0.5 (Willsch 2023, Shor 인수분해 실증)
 - PQC (ML-KEM, Hybrid-*): 점수 100 / 92(보수)·87(실증)
 
 ## 측정 메타 (v2 보정 분석용)
@@ -136,7 +138,7 @@ v2 보정 시 "어떤 룰이 50개 중 N개에서 발화했는지" 분석에 그
 3. **PQC maturity (`pqc.maturity`) 는 자동 측정 불가** — 회사 공개 자료 (블로그·보안 리포트·IR) 리서치 필요. 기본 `'준비 미착수'` 로 두고 사용자가 수동 갱신.
 4. **분석 텍스트 (`narrative` / `findings` / `recommendations` / `regulatoryGaps` / `supplyChainNotes`)** — auto-generated `findings` (sslyze + Phase 2 probe 결과 기반) 외에는 placeholder. 사용자가 LLM 도움 또는 직접 작성.
 5. **양자 보안 supply chain — Future Scope**: HW 백도어, 펌웨어 PQC 지원, HSM 벤더 로드맵, KMS 키 관리 정책 등 양자 보안의 실재하는 supply chain 축은 Phase 1 자동 측정으로 다룰 수 없어 `supplyChainNotes` 정성 디스크립터로 분리 보존. **강등이 아니라 측정 한계로 인한 분리 보존** — Phase 2+ 보강 대상.
-6. **`quantumThreat` 0-100 점수의 calibration**: Roetteler 2017 logical qubit / Toffoli 계산은 표준 인용 유효하지만, 0-100 점수 정규화의 두 상수 (`22`, `0.7`) 는 calibration scalar (정당화 출처 없음). **ordering 보존만 의미, 절대값 의미 없음** — 도메인 간 상대 비교용. HNDL 시간축 모델 (Microsoft Azure Quantum / IBM 등 hardware roadmap 활용) 로 교체가 Future Work.
+6. **`quantumThreat` 0-100 점수의 calibration**: 자원 추정 공식 (RSA=Beauregard 2003/Gidney-Ekerå 2019/2025, ECC=Roetteler 2017) 의 logical qubit / Toffoli 계산은 표준 인용 유효하지만, 0-100 점수 정규화의 두 상수 (`22`, `0.7`) 는 calibration scalar (정당화 출처 없음). **ordering 보존만 의미, 절대값 의미 없음** — 도메인 간 상대 비교용. HNDL 시간축 모델 (Microsoft Azure Quantum / IBM 등 hardware roadmap 활용) 로 교체가 Future Work.
 
 ## 디버깅
 

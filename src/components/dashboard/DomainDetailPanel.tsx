@@ -3,6 +3,7 @@ import { SourceChip } from '@/components/shared/SourceChip';
 import { scoreBandClasses } from '@/components/shared/scoreBand';
 import { cn } from '@/lib/utils';
 import { isPlaceholderText, type Domain, type QuantumEstimate } from '@/data/schema';
+import { REFERENCES } from '@/data/references';
 
 /**
  * SPEC-PQC-001 §3.5 / §3.14:
@@ -94,10 +95,12 @@ export function DomainDetailPanel({
   const { quantumThreatDetail, narrative, findings, recommendations, regulatoryGaps, supplyChainNotes, certificate } =
     domain;
 
-  // citations 배열을 사용해 인라인 reference 인덱스 매핑
+  // citations 배열 기반 인라인 reference 인덱스 (RSA=Beauregard/Gidney·Willsch, ECC=Roetteler).
   const citationsList = quantumThreatDetail.citations;
-  const conservativeIdx = `[${citationsList.indexOf('Roetteler-2017') + 1 || 1}]`;
-  const empiricalIdx = `[${citationsList.indexOf('Willsch-2023') + 1 || 2}]`;
+  // 보수(자원추정) = 첫 인용. 실증 = Willsch 있으면 그 위치, 없으면 첫 인용.
+  const willschPos = citationsList.indexOf('Willsch-2023');
+  const conservativeIdx = '[1]';
+  const empiricalIdx = `[${willschPos >= 0 ? willschPos + 1 : 1}]`;
 
   return (
     <div className="mt-4 flex flex-col gap-4 border-t border-[hsl(var(--border))] pt-4 text-sm">
@@ -150,20 +153,22 @@ export function DomainDetailPanel({
           />
         </div>
         <p className="text-[11px] text-[hsl(var(--muted-foreground))]">
-          <sup>[1]</sup>{' '}
-          <a
-            href="/methodology#roetteler-2017"
-            className="underline underline-offset-2 hover:text-[hsl(var(--primary))]"
-          >
-            Roetteler 2017
-          </a>{' '}
-          · <sup>[2]</sup>{' '}
-          <a
-            href="/methodology#willsch-2023"
-            className="underline underline-offset-2 hover:text-[hsl(var(--primary))]"
-          >
-            Willsch 2023
-          </a>
+          {citationsList.map((id, i) => {
+            const c = REFERENCES[id];
+            const firstAuthor = c.authors.split(',')[0]?.trim() ?? c.authors;
+            return (
+              <span key={id}>
+                {i > 0 ? ' · ' : ''}
+                <sup>[{i + 1}]</sup>{' '}
+                <a
+                  href={`/methodology#${id.toLowerCase()}`}
+                  className="underline underline-offset-2 hover:text-[hsl(var(--primary))]"
+                >
+                  {firstAuthor} {c.year}
+                </a>
+              </span>
+            );
+          })}
         </p>
       </section>
 

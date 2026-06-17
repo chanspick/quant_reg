@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 /**
  * SPEC-PQC-001 §3.7 (About Page).
- * 핵심 한 줄 (keystone) + 강의 컨텍스트 + 정직성 고지 + 3개 논문 + 기술 스택.
+ * 핵심 한 줄 (keystone) + 강의 컨텍스트 + 정직성 고지 + 인용 논문 목록 + 기술 스택.
  * OQ-009: install 프롬프트는 About 페이지에서 항상 재노출.
  */
 export function AboutPage(): React.JSX.Element {
@@ -38,7 +38,16 @@ export function AboutPage(): React.JSX.Element {
 
       <Section title={ko.about.rolesHeader}>
         <ol className="list-decimal space-y-4 pl-6 text-sm">
-          {(['Kim-Ahn-2025', 'Roetteler-2017', 'Willsch-2023'] as CitationId[]).map(
+          {(
+            [
+              'Kim-Ahn-2025',
+              'Beauregard-2003',
+              'Gidney-Ekera-2019',
+              'Gidney-2025',
+              'Roetteler-2017',
+              'Willsch-2023',
+            ] as CitationId[]
+          ).map(
             (id) => {
               const c = REFERENCES[id];
               return (

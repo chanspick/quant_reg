@@ -37,7 +37,7 @@
 | TLS 위생 | sslyze 6.x | RFC 8996 / Mozilla v6.0 / OWASP / NIST 800-52 |
 | 하이브리드 KEM | **raw socket TLS 1.3 probe** | IANA Named Groups 4588, draft-ietf-tls-ecdhe-mlkem |
 | 인증서 운영 | sslyze | Mozilla v6.0 |
-| 양자 위협 정량 | Roetteler 2017 + Willsch 2023 계산 | arXiv:1706.06752, doi:10.3390/math11194222 |
+| 양자 위협 정량 | RSA: Beauregard 2003 + Gidney-Ekerå 2019/2025 · ECC: Roetteler 2017 · 실증: Willsch 2023 계산 | arXiv:quant-ph/0205095, arXiv:1905.09749, arXiv:2505.15917, arXiv:1706.06752, doi:10.3390/math11194222 |
 
 **Phase 2 핵심 구현**: 외부 PQC 라이브러리 의존성 0. `socket` + `struct` 만으로 ClientHello 조립, `supported_groups=[0x11EC]` + 빈 `key_share` 전송 → ServerHello/HRR 의 `selected_group` 관찰.
 
@@ -116,7 +116,7 @@
 ## 부록: 자주 받을 질문 (Q&A 준비)
 
 **Q1. 22 와 0.7 은 어디서 나왔나요?**
-- A. 정당화된 출처 없는 calibration scalar 입니다. Methodology 페이지 Section 4 에 명시했듯이 ordering-preserving 측정으로만 해석합니다. Roetteler 2017 인용은 logical qubit · Toffoli gate 계산까지 유효하며, 0-100 정규화 자체는 도메인 간 상대 순위만 의미합니다. Future Work 로 discrete grade 마이그레이션을 계획하고 있습니다.
+- A. 정당화된 출처 없는 calibration scalar 입니다. Methodology 페이지 Section 4 에 명시했듯이 ordering-preserving 측정으로만 해석합니다. logical qubit · Toffoli gate 계산의 인용은 알고리즘별로 다릅니다 — RSA 는 Beauregard 2003(2n+3 회로)·Gidney-Ekerå 2019/2025(자원 추정), ECC 는 Roetteler 2017 까지 유효하며, 0-100 정규화 자체는 도메인 간 상대 순위만 의미합니다. Future Work 로 discrete grade 마이그레이션을 계획하고 있습니다.
 
 **Q2. 왜 47/51 개 도메인만 측정 가능했나요?**
 - A. 4개 도메인 (현대모비스·현대글로비스·HL만도·신한은행) 은 sslyze 자체가 거부합니다 — WAF 또는 금융권 보안 정책. Phase 2 raw TLS 1.3 probe 는 추가로 16개 도메인이 차단합니다 (공공·금융 다수). 차단 자체가 정보 — "외부 보안 감사가 불가능한 상태" 로 별도 카테고리화했습니다.
@@ -128,7 +128,7 @@
 - A. 4축 점수 + 인증서 메타 + Phase 2 PQC probe + 자동 finding + 자동 권고 — 전부 실측·자동 계산 (`source: automated`). narrative · 공급망 메모 · 규제 갭은 placeholder 또는 비어있음 — 자동 측정 한계로 분리 보존. SourceChip 으로 모든 필드의 출처가 시각적으로 구분됩니다.
 
 **Q5. 왜 강의 프로젝트인데 이렇게 깊이 갔나요?**
-- A. 교수님 논문 (김의결·안혁 2025) 이 양자 위협의 이론적 측면을 다뤘다면, 본 프로젝트는 Roetteler 2017 의 리소스 추정 공식과 Willsch 2023 의 최신 시뮬레이션 결과를 한국 50개 실제 인프라에 적용하는 게 목표였습니다. 이론 → 측정 → 정량 의 한 단계 더 나아간 적용입니다.
+- A. 교수님 논문 (김의결·안혁 2025) 이 양자 위협의 이론적 측면을 다뤘다면, 본 프로젝트는 RSA 의 리소스 추정 공식 (Beauregard 2003 회로 + Gidney-Ekerå 2019/Gidney 2025 자원 추정), ECC 의 Roetteler 2017, 그리고 Willsch 2023 의 최신 시뮬레이션 결과를 한국 50개 실제 인프라에 적용하는 게 목표였습니다. 이론 → 측정 → 정량 의 한 단계 더 나아간 적용입니다.
 
 ---
 

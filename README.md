@@ -14,7 +14,7 @@
 
 본 프로젝트는 두 개의 모듈로 구성됩니다:
 
-1. **`scanner/`** — Python 측정 엔진. sslyze 6.x 기반 자동 측정 + Mozilla SSL Config v6.0 / NIST SP 800-52 Rev. 2 / OWASP / RFC 8996 인용 점수 산출 + Roetteler 2017 + Willsch 2023 양자 위협 정량.
+1. **`scanner/`** — Python 측정 엔진. sslyze 6.x 기반 자동 측정 + Mozilla SSL Config v6.0 / NIST SP 800-52 Rev. 2 / OWASP / RFC 8996 인용 점수 산출 + 양자 위협 정량 (RSA: Beauregard 2003 회로 + Gidney-Ekerå 2019/Gidney 2025 자원 추정 · ECC: Roetteler 2017 · 실증: Willsch 2023).
 2. **`src/`** — React 19 / Vite 6 / Tailwind v4 / shadcn 대시보드 (PWA). `public/data/domains.json` 을 zod 로 검증·렌더링.
 
 SPEC: [`.moai/specs/SPEC-PQC-001/spec.md`](.moai/specs/SPEC-PQC-001/spec.md) · 자세한 측정 방법론: 빌드 후 `/methodology` 페이지.
@@ -40,7 +40,7 @@ Node 20.11+ / pnpm 10+ / Python 3.10+ 권장. 자세한 scanner 사용법은 [`s
 | **TLS 위생** | automated (sslyze) | Mozilla v6.0 / RFC 8996 / OWASP 기준 감점 합산 |
 | **하이브리드 KEM** | automated (Phase 2 raw TLS 1.3 probe) | X25519MLKEM768 (Mozilla v6.0 등재) 협상 응답 — sslyze 한계를 raw `socket`+`struct` 직접 측정으로 보완 |
 | **인증서 운영 (certOps)** | automated (sslyze) | 갱신 자동화·체인·OCSP Stapling·키 강도 |
-| **양자 위협 정량 (quantumThreat)** | automated (계산) | Roetteler 2017 + Willsch 2023 — 보수·실증 두 시나리오 |
+| **양자 위협 정량 (quantumThreat)** | automated (계산) | RSA: Beauregard 2003 + Gidney-Ekerå 2019/Gidney 2025 · ECC: Roetteler 2017 · 실증: Willsch 2023 — 보수·실증 두 시나리오 |
 
 각 점수는 0–100 (높을수록 양자 저항). 모든 측정·분석·정책 데이터는 `source` 필드 (`automated` / `manual` / `llm+verified` / `llm-only`) 로 출처를 명시한다.
 
@@ -134,8 +134,11 @@ scanner/domains.csv  ──▶  python -m scanner.measure --batch
 ## 인용 자료
 
 - 김의결, 안혁 (2025). "Shor 알고리즘의 기존 암호체계에 미치는 영향과 양자내성암호의 대응 전략." 한국정보통신학회 2025 춘계.
-- Roetteler, M., Naehrig, M., Svore, K. M., Lauter, K. (2017). "Quantum resource estimates for computing elliptic curve discrete logarithms." [arXiv:1706.06752](https://arxiv.org/abs/1706.06752)
-- Willsch, D., Willsch, M., Jin, F., De Raedt, H., Michielsen, K. (2023). "Large-Scale Simulation of Shor's Quantum Factoring Algorithm." [Mathematics 11(19), 4222](https://www.mdpi.com/2227-7390/11/19/4222)
+- Beauregard, S. (2003). "Circuit for Shor's algorithm using 2n+3 qubits." Quantum Information and Computation 3(2). [arXiv:quant-ph/0205095](https://arxiv.org/abs/quant-ph/0205095) — RSA logical-qubit 수치(2n+3)의 출처.
+- Gidney, C., Ekerå, M. (2019). "How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits." Quantum 5, 433 (2021). [arXiv:1905.09749](https://arxiv.org/abs/1905.09749) — RSA-2048 자원 추정 (canonical).
+- Gidney, C. (2025). "How to factor 2048 bit RSA integers with less than a million noisy qubits." [arXiv:2505.15917](https://arxiv.org/abs/2505.15917) — RSA-2048 자원 추정 갱신.
+- Roetteler, M., Naehrig, M., Svore, K. M., Lauter, K. (2017). "Quantum resource estimates for computing elliptic curve discrete logarithms." [arXiv:1706.06752](https://arxiv.org/abs/1706.06752) — ECC(타원곡선 이산로그) 자원 추정. RSA 아님.
+- Willsch, D., Willsch, M., Jin, F., De Raedt, H., Michielsen, K. (2023). "Large-Scale Simulation of Shor's Quantum Factoring Algorithm." [Mathematics 11(19), 4222](https://www.mdpi.com/2227-7390/11/19/4222) — Shor 인수분해 실증 시뮬레이션.
 
 표준:
 - [Mozilla SSL Configuration v6.0 (intermediate)](https://ssl-config.mozilla.org/)

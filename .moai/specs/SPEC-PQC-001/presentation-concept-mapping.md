@@ -31,7 +31,7 @@
 
 | 측정 트리거 | 발화 카드 | 강의 출처 | 페이퍼 |
 |---|---|---|---|
-| RSA-N 또는 ECC-N 인증서 (거의 모든 도메인) | 1. Shor | L4 (메인), L3 Simon (영감) | Roetteler 2017, Willsch 2023, 김의결·안혁 2025 |
+| RSA-N 또는 ECC-N 인증서 (거의 모든 도메인) | 1. Shor | L4 (메인), L3 Simon (영감) | RSA: Beauregard 2003·Gidney-Ekerå 2019/2025 / ECC: Roetteler 2017 / Willsch 2023 / 김의결·안혁 2025 |
 | AES cipher (TLS 표준이라 사실상 항상) | 2. Grover | L3 진폭 증폭, L5 KLM 일반화 | — |
 | TLS 1.0/1.1 활성 OR non-PFS cipher | 3. HNDL | 워크숍 (시간축), 김의결·안혁 (한국 동기) | 김의결·안혁 2025 |
 | Phase 2 SUPPORTED (X25519MLKEM768) | 4. 하이브리드 KEM | 워크숍 (PQC 표준화) | NIST FIPS 203 |
@@ -56,8 +56,8 @@
 - Simon 알고리즘이 영감 — L3 의 숨은 주기 찾기
 
 **정량**:
-- RSA-2048 분해에 필요한 logical qubits ≈ **2n + 3 = 4099** (Roetteler 2017, Table 1)
-- ECC-256: logical qubits ≈ **9n + 2⌈log₂(n)⌉ + 10 ≈ 2330**
+- RSA-2048 분해에 필요한 logical qubits ≈ **2n + 3 = 4099** (Beauregard 2003; 자원 추정 Gidney-Ekerå 2019/Gidney 2025)
+- ECC-256: logical qubits ≈ **9n + 2⌈log₂(n)⌉ + 10 ≈ 2330** (Roetteler 2017, Table 1)
 - Aer 시뮬레이션 N=15·21 재현 (Willsch 2023)
 
 **왜 양자 위협 축 점수가 낮은가**:
@@ -65,7 +65,10 @@
 - RSA-2048 → 약 20-30점 (보수 시나리오 성공률 0.04)
 
 **인용**:
-- Roetteler, M. et al. (2017) "Quantum resource estimates for computing elliptic curve discrete logarithms" — arXiv:1706.06752
+- Beauregard, S. (2003) "Circuit for Shor's algorithm using 2n+3 qubits" — arXiv:quant-ph/0205095 (RSA 2n+3 회로)
+- Gidney, C. & Ekerå, M. (2019) "How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits" — arXiv:1905.09749 (RSA 자원 추정)
+- Gidney, C. (2025) "How to factor 2048 bit RSA integers with less than a million noisy qubits" — arXiv:2505.15917 (RSA 자원 추정 갱신)
+- Roetteler, M. et al. (2017) "Quantum resource estimates for computing elliptic curve discrete logarithms" — arXiv:1706.06752 (ECC 전용)
 - Willsch, D. et al. (2023) "Large-Scale Simulation of Shor's Quantum Factoring Algorithm" — Mathematics 11(19), 4222
 - 김의결·안혁 (2025) — 한국정보통신학회 2025 춘계
 

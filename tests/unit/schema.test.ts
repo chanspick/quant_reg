@@ -19,7 +19,7 @@ const quantumThreatDetail: QuantumThreatDetail = {
       toffoliGates: 549755813888,
       score: 34,
       successRate: 0.04,
-      basis: 'Shor 1994 + Roetteler 2017',
+      basis: 'Shor 1994 + Beauregard 2003 / Gidney-Ekerå',
     },
     empirical: {
       logicalQubits: 4099,
@@ -30,7 +30,7 @@ const quantumThreatDetail: QuantumThreatDetail = {
       note: 'Ekerå 적용 시 ~100%.',
     },
   },
-  citations: ['Roetteler-2017', 'Willsch-2023'],
+  citations: ['Beauregard-2003', 'Gidney-Ekera-2019', 'Gidney-2025', 'Willsch-2023'],
   source: 'automated',
 };
 

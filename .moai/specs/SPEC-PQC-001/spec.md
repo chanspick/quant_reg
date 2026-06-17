@@ -495,6 +495,8 @@ The 4-axis score model (TLS / hybridKem / certOps / **quantumThreat**) replaces 
 
 본 섹션은 4축 중 4번째 축인 `quantumThreat` 의 계산·시나리오·데이터 출처를 규정한다. 모든 수치는 결정적(deterministic) 이며 source 는 항상 'automated'.
 
+> **[2026-06-17 인용 귀속 교정]** 아래 REQ-QT-001/007/008 등은 RSA 의 logical-qubit 공식(`2n+3`)·보수 basis·citations 를 Roetteler 2017 로 귀속하고 있으나, Roetteler et al. 2017 (arXiv:1706.06752) 은 **ECC(타원곡선 이산로그)** 자원 추정 논문으로 RSA 를 다루지 않는다. 실제 코드는 다음과 같이 교정되었다 (숫자값·시그니처 불변, 귀속만 교정): RSA logical-qubit(2n+3) 출처는 **Beauregard 2003** (arXiv:quant-ph/0205095), RSA 자원 추정은 **Gidney-Ekerå 2019** (arXiv:1905.09749) / **Gidney 2025** (arXiv:2505.15917). ECC 는 그대로 **Roetteler 2017**, 실증은 그대로 **Willsch 2023**. citations 는 알고리즘 family 의존(RSA → Beauregard/Gidney-Ekerå/Gidney/Willsch, ECC → Roetteler, ML-KEM → Kim-Ahn). 아래 원문 REQ 는 이력 보존을 위해 그대로 둔다.
+
 #### Ubiquitous
 
 - **REQ-QT-001**: The system shall implement Roetteler 2017 (Table 1) logical qubit formulas exactly: `RSA-n: 2n + 3`, `ECC-n: 9n + 2⌈log₂(n)⌉ + 10`. These functions MUST be unit-tested with known reference values (RSA-2048 → 4099 qubits, ECC P-256 → 2330 qubits).

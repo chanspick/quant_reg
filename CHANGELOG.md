@@ -9,6 +9,14 @@
 - ⬜ 분석 텍스트 (`narrative` / `findings` / `recommendations`) 채우기 — 사용자 작업
 - ⬜ supply chain 측정 보강 — HW 백도어, 펌웨어 PQC 지원, HSM 벤더 로드맵 (Phase 1 자동 측정 불가 영역)
 
+## 2026-06-17 (인용 귀속 교정)
+
+### Fixed
+- **양자 위협 정량의 인용 귀속 교정** — RSA 인수분해 자원 추정을 Roetteler 2017 로 잘못 귀속하던 표기를 정정. Roetteler et al. 2017 (arXiv:1706.06752) 은 ECC(타원곡선 이산로그) 자원 추정 논문으로, RSA 를 다루지 않음.
+  - RSA logical-qubit 수치(2n+3) 출처 → **Beauregard 2003** (arXiv:quant-ph/0205095), 자원 추정 → **Gidney-Ekerå 2019** (arXiv:1905.09749) / **Gidney 2025** (arXiv:2505.15917).
+  - ECC 는 그대로 **Roetteler 2017** 유지. 실증 시뮬레이션은 그대로 **Willsch 2023** 유지.
+  - 교정 범위는 귀속(주석·basis 문자열·citations·REFERENCES·산문·README·LLM 프롬프트)에 한정. logicalQubits / toffoliGates / score / successRate 등 수치값과 함수 시그니처·점수 로직은 불변.
+
 ## 2026-05-19 (Phase 2 + 정직성 보정)
 
 ### Added

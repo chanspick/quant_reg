@@ -3,7 +3,13 @@
  * 인용 자료 단일 출처. UI 곳곳에서 `formatCitation(id)` 또는 `REFERENCES[id]` 로 참조한다.
  */
 
-export type CitationId = 'Kim-Ahn-2025' | 'Roetteler-2017' | 'Willsch-2023';
+export type CitationId =
+  | 'Kim-Ahn-2025'
+  | 'Roetteler-2017'
+  | 'Willsch-2023'
+  | 'Beauregard-2003'
+  | 'Gidney-Ekera-2019'
+  | 'Gidney-2025';
 
 export interface Citation {
   id: CitationId;
@@ -34,13 +40,42 @@ export const REFERENCES: Record<CitationId, Citation> = {
     venue: 'arXiv preprint',
     identifier: 'arXiv:1706.06752',
     url: 'https://arxiv.org/abs/1706.06752',
-    role: '정량 자원 추정 공식 — 키 알고리즘·길이별 필요 logical qubit / Toffoli gate 수.',
+    role: 'ECC(타원곡선 이산로그) 정량 자원 추정 공식 — 9n + 2⌈log₂(n)⌉ + 10 logical qubit, 약 25·n³ Toffoli. (RSA 아님)',
     highlights: [
-      'RSA-n 인수분해 필요 logical qubit 수 ≈ 2n + 3',
-      'ECC-n discrete log 필요 logical qubit 수 ≈ 9n + 2⌈log₂(n)⌉ + 10',
-      'RSA 3072 → 약 1.26 × 10¹¹ qubit (오류 보정 포함 추정), Toffoli ≈ 2,300개 (코어 회로)',
-      'ECC P-256 → 6,000+ qubit (오류 보정 포함). 키 길이 대비 qubit 수가 RSA 대비 많음',
+      'ECC-n discrete log 필요 logical qubit ~ 9n + 2⌈log₂(n)⌉ + 10',
+      'ECC P-256 → 2,330 logical qubit (Table 1)',
+      'Toffoli ~ 25·n³ (order-of-magnitude fit)',
     ],
+  },
+  'Beauregard-2003': {
+    id: 'Beauregard-2003',
+    authors: 'Beauregard, S.',
+    year: 2003,
+    title: "Circuit for Shor's algorithm using 2n+3 qubits",
+    venue: 'Quantum Information and Computation 3(2)',
+    identifier: 'arXiv:quant-ph/0205095',
+    url: 'https://arxiv.org/abs/quant-ph/0205095',
+    role: 'RSA-n 인수분해 양자회로 — 2n+3 logical qubit 구성(공간효율 Shor 회로). 본 도구 RSA logical-qubit 수치(2n+3)의 출처.',
+  },
+  'Gidney-Ekera-2019': {
+    id: 'Gidney-Ekera-2019',
+    authors: 'Gidney, C., Ekerå, M.',
+    year: 2019,
+    title: 'How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits',
+    venue: 'Quantum 5, 433 (2021)',
+    identifier: 'arXiv:1905.09749',
+    url: 'https://arxiv.org/abs/1905.09749',
+    role: 'RSA-2048 자원 추정(canonical) — 2천만 noisy 물리큐비트·8시간.',
+  },
+  'Gidney-2025': {
+    id: 'Gidney-2025',
+    authors: 'Gidney, C.',
+    year: 2025,
+    title: 'How to factor 2048 bit RSA integers with less than a million noisy qubits',
+    venue: 'arXiv preprint',
+    identifier: 'arXiv:2505.15917',
+    url: 'https://arxiv.org/abs/2505.15917',
+    role: 'RSA-2048 자원 추정 갱신 — 100만 미만 noisy 물리큐비트·1주 미만(2019 대비 약 20배 감소).',
   },
   'Willsch-2023': {
     id: 'Willsch-2023',

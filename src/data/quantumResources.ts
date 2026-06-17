@@ -2,8 +2,10 @@
  * SPEC-PQC-001 §3.14 (양자 위협 정량화).
  *
  * 본 모듈은 인증서 키 알고리즘·길이로부터:
- *   1) Roetteler 2017 공식으로 필요 logical qubit / Toffoli gate 추정
- *   2) 보수(Shor 1994) / 실증(Willsch 2023) 두 시나리오 점수 산출
+ *   1) 필요 logical qubit / Toffoli gate 추정
+ *      — RSA = Beauregard 2003 회로(2n+3 큐비트) + Gidney-Ekerå 2019/2025 자원추정
+ *      — ECC = Roetteler 2017 (타원곡선 이산로그)
+ *   2) 보수(Shor 1994) / 실증(Willsch 2023, 인수분해) 두 시나리오 점수 산출
  * 모든 수치는 결정적(deterministic) 이며, source 는 항상 'automated'.
  */
 
@@ -41,13 +43,15 @@ export interface QuantumThreatDetail {
 }
 
 /* ============================================================
- * Roetteler 2017 — logical qubit / Toffoli gate 추정 공식
+ * logical qubit / Toffoli gate 추정 공식
+ *   RSA = Beauregard 2003 회로 + Gidney-Ekerå 2019/2025 자원추정
+ *   ECC = Roetteler 2017
  * ============================================================ */
 
 /** Willow-class 2026 추정. 점수 gap 정규화 기준값 (illustrative). */
 const QUANTUM_HARDWARE_2026_LOGICAL = 100;
 
-/** Roetteler 2017 Table 1: RSA-n 인수분해 ≈ 2n + 3 logical qubit. */
+/** RSA-n 인수분해 ~ 2n + 3 logical qubit (Beauregard 2003; 자원추정 Gidney-Ekerå 2019/2025). [Roetteler 아님] */
 export function rsaLogicalQubits(bits: number): number {
   return 2 * bits + 3;
 }
@@ -57,7 +61,7 @@ export function eccLogicalQubits(bits: number): number {
   return 9 * bits + 2 * Math.ceil(Math.log2(bits)) + 10;
 }
 
-/** Roetteler 2017 §6 order-of-magnitude fit: RSA ≈ 64·n³ Toffoli. */
+/** RSA Toffoli order-of-magnitude ~ 64·n³ (illustrative fit; 자원추정 Gidney-Ekerå 2019). [Roetteler 아님] */
 export function rsaToffoliGates(bits: number): number {
   return Math.round(64 * Math.pow(bits, 3));
 }
@@ -81,11 +85,50 @@ function classicalScore(qubits: number, scenario: Scenario): number {
   return Math.max(0, Math.min(100, Math.round(score)));
 }
 
-const BASIS_CONSERVATIVE =
-  'Shor 1994 (이론) + Roetteler 2017 (자원 추정). 성공률 3~4% 가정.';
-const BASIS_EMPIRICAL =
-  'Willsch 2023 (실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.';
+/* ------------------------------------------------------------
+ * basis / note 문자열 — 알고리즘 family(RSA/ECC) 의존.
+ *   TS·Python 간 byte-동일 패리티 유지 (결정적 비교).
+ * ------------------------------------------------------------ */
+
+const BASIS_CONSERVATIVE_RSA =
+  'Shor 1994 (이론) + Beauregard 2003 (2n+3 큐비트 회로) + Gidney-Ekerå 2019 (자원 추정). 성공률 3~4% 가정.';
+const BASIS_CONSERVATIVE_ECC =
+  'Shor 1994 (이론) + Roetteler 2017 (ECC 이산로그 자원 추정). 성공률 3~4% 가정.';
+const BASIS_EMPIRICAL_RSA =
+  'Willsch 2023 (Shor 인수분해 실증 시뮬레이션, 60,000회) + Ekerå post-processing. 성공률 50%+ 관측, Ekerå 적용 시 ~100% 근접.';
+const BASIS_EMPIRICAL_ECC =
+  '대규모 ECC 이산로그 양자 시뮬레이션 실증은 부재 — 성공률은 보수 추정 대비 예시값.';
+const EMPIRICAL_NOTE_RSA =
+  'Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023).';
 const PQC_NOTE = 'PQC 알고리즘은 Shor 공격으로 다항시간 내 깨지지 않는다 (NIST PQC 표준).';
+
+/* ------------------------------------------------------------
+ * 알고리즘 family 판별 / citations 매핑.
+ * ------------------------------------------------------------ */
+
+type AlgoFamily = 'RSA' | 'ECC';
+
+/** RSA·Hybrid-RSA → 'RSA', ECC·Hybrid-ECC → 'ECC'. */
+function algoFamily(algo: KeyAlgorithm): AlgoFamily {
+  return algo === 'RSA' || algo === 'Hybrid-RSA-ML-KEM' ? 'RSA' : 'ECC';
+}
+
+/** 알고리즘별 citations (schema 제약: min 1). */
+function citationsFor(algo: KeyAlgorithm): CitationId[] {
+  switch (algo) {
+    case 'RSA':
+    case 'Hybrid-RSA-ML-KEM':
+      return ['Beauregard-2003', 'Gidney-Ekera-2019', 'Gidney-2025', 'Willsch-2023'];
+    case 'ECC':
+    case 'Hybrid-ECC-ML-KEM':
+      return ['Roetteler-2017'];
+    case 'ML-KEM':
+      return ['Kim-Ahn-2025'];
+    case 'Unknown':
+    default:
+      return ['Kim-Ahn-2025'];
+  }
+}
 
 /* ============================================================
  * 도메인 1개에 대한 양자 위협 정량화 요약
@@ -95,7 +138,13 @@ export function summarizeQuantumThreat(
   algo: KeyAlgorithm,
   bits: number,
 ): QuantumThreatDetail {
-  const citations: CitationId[] = ['Roetteler-2017', 'Willsch-2023'];
+  const citations: CitationId[] = citationsFor(algo);
+  const family = algoFamily(algo);
+  const basisConservative =
+    family === 'RSA' ? BASIS_CONSERVATIVE_RSA : BASIS_CONSERVATIVE_ECC;
+  const basisEmpirical =
+    family === 'RSA' ? BASIS_EMPIRICAL_RSA : BASIS_EMPIRICAL_ECC;
+  const empiricalNote = family === 'RSA' ? EMPIRICAL_NOTE_RSA : undefined;
 
   // PQC: Shor 공격 무효 → 양 시나리오 모두 100
   if (algo === 'ML-KEM') {
@@ -136,14 +185,14 @@ export function summarizeQuantumThreat(
           toffoliGates: classicalToffoli,
           score: conservativeBase,
           successRate: 0.04,
-          basis: BASIS_CONSERVATIVE + ' Hybrid 의 ML-KEM 백업 가산.',
+          basis: basisConservative + ' Hybrid 의 ML-KEM 백업 가산.',
         },
         empirical: {
           logicalQubits: classicalQubits,
           toffoliGates: classicalToffoli,
           score: empiricalBase,
           successRate: 0.5,
-          basis: BASIS_EMPIRICAL + ' Hybrid 의 ML-KEM 백업 가산.',
+          basis: basisEmpirical + ' Hybrid 의 ML-KEM 백업 가산.',
         },
       },
       citations,
@@ -164,15 +213,15 @@ export function summarizeQuantumThreat(
         toffoliGates: gates,
         score: classicalScore(qubits, 'conservative'),
         successRate: 0.04,
-        basis: BASIS_CONSERVATIVE,
+        basis: basisConservative,
       },
       empirical: {
         logicalQubits: qubits,
         toffoliGates: gates,
         score: classicalScore(qubits, 'empirical'),
         successRate: 0.5,
-        basis: BASIS_EMPIRICAL,
-        note: 'Ekerå post-processing 적용 시 단일 실행 성공률이 ~100%에 근접 (Willsch 2023).',
+        basis: basisEmpirical,
+        ...(empiricalNote !== undefined ? { note: empiricalNote } : {}),
       },
     },
     citations,

@@ -265,7 +265,7 @@ async function main(): Promise<void> {
   // 6) quantumThreatDetail 자동 계산
   const quantumThreatDetail = summarizeQuantumThreat(keyAlgorithm, keyBits);
   console.log(
-    colorize('\n[자동 계산] 양자 위협 정량 (Roetteler 2017 + Willsch 2023)', 'cyan'),
+    colorize('\n[자동 계산] 양자 위협 정량 (RSA=Beauregard/Gidney-Ekerå, ECC=Roetteler 2017, 실증=Willsch 2023)', 'cyan'),
   );
   console.log(
     `  conservative: ${colorize(

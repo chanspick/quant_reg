@@ -10,7 +10,7 @@ describe('AboutPage', () => {
     render(<AboutPage />);
     // REQ-ABT-005: keystone 한 줄
     expect(
-      screen.getByText(/Roetteler 2017의 리소스 추정 공식과 Willsch 2023/),
+      screen.getByText(/Beauregard 2003.*Roetteler 2017.*Willsch 2023/),
     ).toBeInTheDocument();
   });
 
