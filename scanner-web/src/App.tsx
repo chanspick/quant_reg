@@ -1,24 +1,31 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ScanForm } from './components/ScanForm';
 import { LoadingProgress } from './components/LoadingProgress';
 import { ResultDohae } from './components/ResultDohae';
 import { useScan, type ScanError } from './data/useScan';
+import type { Sector } from './lib/sector';
+import { readTier } from './lib/tier';
 
 /**
- * SPEC-PQC-002 — 단일 페이지 SPA 진입점.
+ * SPEC-PQC-002 + SPEC-PQC-003 — 단일 페이지 SPA 진입점.
  *
  * 상태 머신 (useScan):
  *   idle    → ScanForm 만
  *   loading → ScanForm (disabled) + LoadingProgress (4단계)
- *   success → ScanForm + ResultDohae (4축 + trace + narrative)
+ *   success → ScanForm + ResultDohae (① 등급 + ② 4축 + ③ 비교군 + ④ 발견 + ⑦ 액션플랜)
  *   error   → ScanForm + 에러 패널 (400/500/network/timeout 모두 동일 표면)
+ *
+ * SPEC-PQC-003: 섹터는 프론트 폼 상태(백엔드 미전송), tier 는 ?tier=paid 토글.
  */
 
 export function App(): React.JSX.Element {
   const { status, data, error, startedAt, scan, reset } = useScan();
+  const [sector, setSector] = useState<Sector>('general');
+  const tier = useMemo(() => readTier(), []);
 
   const handleScan = useCallback(
-    (hostname: string) => {
+    (hostname: string, selectedSector: Sector) => {
+      setSector(selectedSector);
       void scan(hostname);
     },
     [scan],
@@ -55,6 +62,7 @@ export function App(): React.JSX.Element {
             onScan={handleScan}
             disabled={status === 'loading'}
             initialValue={data?.hostname ?? ''}
+            initialSector={sector}
           />
           <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
             <code className="font-mono">https://</code> 자동 제거 · 소문자 변환 · IP 거부.
@@ -75,7 +83,12 @@ export function App(): React.JSX.Element {
 
         {/* Result */}
         {status === 'success' && data && (
-          <ResultDohae result={data} onScanAgain={handleScanAgain} />
+          <ResultDohae
+            result={data}
+            onScanAgain={handleScanAgain}
+            sector={sector}
+            tier={tier}
+          />
         )}
 
         {/* Footer (항상 노출) */}

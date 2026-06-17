@@ -1,0 +1,335 @@
+{
+  "version": "1.0.0",
+  "generatedFrom": "public/data/domains.json",
+  "domains": [
+    {
+      "hostname": "www.samsung.com",
+      "name": "삼성전자",
+      "sector": "반도체/전자",
+      "axes": { "tls": 100, "hybridKem": 15, "certOps": 100, "quantumThreat": 23 },
+      "overall": 60
+    },
+    {
+      "hostname": "www.skhynix.com",
+      "name": "SK하이닉스",
+      "sector": "반도체/전자",
+      "axes": { "tls": 0, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 26
+    },
+    {
+      "hostname": "www.lge.com",
+      "name": "LG전자",
+      "sector": "반도체/전자",
+      "axes": { "tls": 47, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 38
+    },
+    {
+      "hostname": "www.samsungsdi.com",
+      "name": "삼성SDI",
+      "sector": "반도체/전자",
+      "axes": { "tls": 0, "hybridKem": 100, "certOps": 100, "quantumThreat": 20 },
+      "overall": 55
+    },
+    {
+      "hostname": "www.lginnotek.com",
+      "name": "LG이노텍",
+      "sector": "반도체/전자",
+      "axes": { "tls": 100, "hybridKem": 100, "certOps": 80, "quantumThreat": 23 },
+      "overall": 76
+    },
+    {
+      "hostname": "www.hyundai.com",
+      "name": "현대자동차",
+      "sector": "자동차",
+      "axes": { "tls": 100, "hybridKem": 100, "certOps": 80, "quantumThreat": 23 },
+      "overall": 76
+    },
+    {
+      "hostname": "www.kia.com",
+      "name": "기아",
+      "sector": "자동차",
+      "axes": { "tls": 7, "hybridKem": 100, "certOps": 80, "quantumThreat": 23 },
+      "overall": 53
+    },
+    {
+      "hostname": "www.posco.co.kr",
+      "name": "POSCO홀딩스",
+      "sector": "철강/소재",
+      "axes": { "tls": 100, "hybridKem": 30, "certOps": 85, "quantumThreat": 23 },
+      "overall": 60
+    },
+    {
+      "hostname": "www.koreazinc.co.kr",
+      "name": "고려아연",
+      "sector": "철강/소재",
+      "axes": { "tls": 0, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 26
+    },
+    {
+      "hostname": "www.lgchem.com",
+      "name": "LG화학",
+      "sector": "화학/에너지",
+      "axes": { "tls": 92, "hybridKem": 100, "certOps": 100, "quantumThreat": 23 },
+      "overall": 79
+    },
+    {
+      "hostname": "www.kepco.co.kr",
+      "name": "한국전력공사",
+      "sector": "화학/에너지",
+      "axes": { "tls": 90, "hybridKem": 100, "certOps": 65, "quantumThreat": 23 },
+      "overall": 70
+    },
+    {
+      "hostname": "www.kogas.or.kr",
+      "name": "한국가스공사",
+      "sector": "화학/에너지",
+      "axes": { "tls": 0, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 26
+    },
+    {
+      "hostname": "www.hanwha.com",
+      "name": "한화",
+      "sector": "화학/에너지",
+      "axes": { "tls": 76, "hybridKem": 15, "certOps": 100, "quantumThreat": 20 },
+      "overall": 53
+    },
+    {
+      "hostname": "www.doosan.com",
+      "name": "두산",
+      "sector": "화학/에너지",
+      "axes": { "tls": 0, "hybridKem": 100, "certOps": 100, "quantumThreat": 23 },
+      "overall": 56
+    },
+    {
+      "hostname": "www.celltrion.com",
+      "name": "셀트리온",
+      "sector": "바이오",
+      "axes": { "tls": 92, "hybridKem": 15, "certOps": 80, "quantumThreat": 23 },
+      "overall": 53
+    },
+    {
+      "hostname": "www.samsungbiologics.com",
+      "name": "삼성바이오로직스",
+      "sector": "바이오",
+      "axes": { "tls": 0, "hybridKem": 100, "certOps": 100, "quantumThreat": 20 },
+      "overall": 55
+    },
+    {
+      "hostname": "www.naver.com",
+      "name": "네이버",
+      "sector": "IT/플랫폼",
+      "axes": { "tls": 10, "hybridKem": 100, "certOps": 85, "quantumThreat": 20 },
+      "overall": 54
+    },
+    {
+      "hostname": "www.kakaocorp.com",
+      "name": "카카오",
+      "sector": "IT/플랫폼",
+      "axes": { "tls": 0, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 26
+    },
+    {
+      "hostname": "www.coupang.com",
+      "name": "쿠팡",
+      "sector": "IT/플랫폼",
+      "axes": { "tls": 100, "hybridKem": 15, "certOps": 100, "quantumThreat": 23 },
+      "overall": 60
+    },
+    {
+      "hostname": "www.daum.net",
+      "name": "다음",
+      "sector": "IT/플랫폼",
+      "axes": { "tls": 0, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 26
+    },
+    {
+      "hostname": "www.sktelecom.com",
+      "name": "SK텔레콤",
+      "sector": "통신",
+      "axes": { "tls": 92, "hybridKem": 15, "certOps": 80, "quantumThreat": 23 },
+      "overall": 53
+    },
+    {
+      "hostname": "www.kt.com",
+      "name": "KT",
+      "sector": "통신",
+      "axes": { "tls": 84, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 47
+    },
+    {
+      "hostname": "www.lguplus.com",
+      "name": "LG U+",
+      "sector": "통신",
+      "axes": { "tls": 84, "hybridKem": 100, "certOps": 100, "quantumThreat": 23 },
+      "overall": 77
+    },
+    {
+      "hostname": "www.shinhan.com",
+      "name": "신한지주",
+      "sector": "금융지주",
+      "axes": { "tls": 65, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 42
+    },
+    {
+      "hostname": "www.kbfg.com",
+      "name": "KB금융",
+      "sector": "금융지주",
+      "axes": { "tls": 39, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 36
+    },
+    {
+      "hostname": "www.hanafn.com",
+      "name": "하나금융지주",
+      "sector": "금융지주",
+      "axes": { "tls": 50, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 42
+    },
+    {
+      "hostname": "www.kbstar.com",
+      "name": "KB국민은행",
+      "sector": "은행",
+      "axes": { "tls": 65, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 42
+    },
+    {
+      "hostname": "www.wooribank.com",
+      "name": "우리은행",
+      "sector": "은행",
+      "axes": { "tls": 31, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 34
+    },
+    {
+      "hostname": "www.hanabank.com",
+      "name": "하나은행",
+      "sector": "은행",
+      "axes": { "tls": 9, "hybridKem": 30, "certOps": 85, "quantumThreat": 23 },
+      "overall": 37
+    },
+    {
+      "hostname": "www.nonghyup.com",
+      "name": "농협",
+      "sector": "은행",
+      "axes": { "tls": 59, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 44
+    },
+    {
+      "hostname": "www.miraeasset.com",
+      "name": "미래에셋",
+      "sector": "증권",
+      "axes": { "tls": 100, "hybridKem": 100, "certOps": 80, "quantumThreat": 23 },
+      "overall": 76
+    },
+    {
+      "hostname": "www.samsungpop.com",
+      "name": "삼성증권",
+      "sector": "증권",
+      "axes": { "tls": 45, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 41
+    },
+    {
+      "hostname": "www.kbsec.com",
+      "name": "KB증권",
+      "sector": "증권",
+      "axes": { "tls": 0, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 30
+    },
+    {
+      "hostname": "www.kiwoom.com",
+      "name": "키움증권",
+      "sector": "증권",
+      "axes": { "tls": 0, "hybridKem": 15, "certOps": 85, "quantumThreat": 23 },
+      "overall": 31
+    },
+    {
+      "hostname": "www.kakaopay.com",
+      "name": "카카오페이",
+      "sector": "페이먼트",
+      "axes": { "tls": 67, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 43
+    },
+    {
+      "hostname": "www.toss.im",
+      "name": "토스",
+      "sector": "페이먼트",
+      "axes": { "tls": 67, "hybridKem": 15, "certOps": 85, "quantumThreat": 23 },
+      "overall": 48
+    },
+    {
+      "hostname": "www.ncsoft.com",
+      "name": "NCSoft",
+      "sector": "게임",
+      "axes": { "tls": 47, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 38
+    },
+    {
+      "hostname": "www.krafton.com",
+      "name": "크래프톤",
+      "sector": "게임",
+      "axes": { "tls": 100, "hybridKem": 100, "certOps": 80, "quantumThreat": 23 },
+      "overall": 76
+    },
+    {
+      "hostname": "www.gov.kr",
+      "name": "정부24",
+      "sector": "공공/정부",
+      "axes": { "tls": 0, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 30
+    },
+    {
+      "hostname": "www.nts.go.kr",
+      "name": "국세청",
+      "sector": "공공/정부",
+      "axes": { "tls": 0, "hybridKem": 30, "certOps": 40, "quantumThreat": 23 },
+      "overall": 23
+    },
+    {
+      "hostname": "www.nhis.or.kr",
+      "name": "국민건강보험",
+      "sector": "공공/정부",
+      "axes": { "tls": 0, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 26
+    },
+    {
+      "hostname": "www.nps.or.kr",
+      "name": "국민연금",
+      "sector": "공공/정부",
+      "axes": { "tls": 0, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 30
+    },
+    {
+      "hostname": "www.kisa.or.kr",
+      "name": "KISA",
+      "sector": "공공/정부",
+      "axes": { "tls": 50, "hybridKem": 15, "certOps": 85, "quantumThreat": 23 },
+      "overall": 43
+    },
+    {
+      "hostname": "www.kma.go.kr",
+      "name": "기상청",
+      "sector": "공공/정부",
+      "axes": { "tls": 0, "hybridKem": 15, "certOps": 65, "quantumThreat": 23 },
+      "overall": 26
+    },
+    {
+      "hostname": "www.scourt.go.kr",
+      "name": "대법원",
+      "sector": "공공/정부",
+      "axes": { "tls": 0, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 30
+    },
+    {
+      "hostname": "www.molit.go.kr",
+      "name": "국토교통부",
+      "sector": "공공/정부",
+      "axes": { "tls": 0, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 30
+    },
+    {
+      "hostname": "www.seoul.go.kr",
+      "name": "서울특별시",
+      "sector": "공공/정부",
+      "axes": { "tls": 90, "hybridKem": 30, "certOps": 65, "quantumThreat": 23 },
+      "overall": 52
+    }
+  ]
+}

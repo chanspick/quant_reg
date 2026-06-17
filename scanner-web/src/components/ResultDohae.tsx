@@ -7,6 +7,14 @@ import type {
 import { ScoreBar } from './shared/ScoreBar';
 import { SourceChip } from './shared/SourceChip';
 import { scoreBandClasses } from './shared/scoreBand';
+import { GradeHeader } from './report/GradeHeader';
+import { BenchmarkPosition } from './report/BenchmarkPosition';
+import { KeyFindings } from './report/KeyFindings';
+import { ActionPlan } from './report/ActionPlan';
+import { collectFindings } from '@/lib/findings';
+import { useBenchmark } from '@/lib/useBenchmark';
+import type { Sector } from '@/lib/sector';
+import type { ReportTier } from '@/lib/tier';
 
 /**
  * SPEC-PQC-002 REQ-WEB-004/005/006 + REQ-HON-001~004 — 결과 화면.
@@ -27,6 +35,10 @@ import { scoreBandClasses } from './shared/scoreBand';
 interface ResultDohaeProps {
   result: ScanResponse;
   onScanAgain: () => void;
+  /** SPEC-PQC-003 — ScanForm 에서 surface 된 사용자 선택 섹터 (③ 비교군). */
+  sector: Sector;
+  /** SPEC-PQC-003 — reportTier (free | paid), ?tier=paid 토글. */
+  tier: ReportTier;
 }
 
 const AXIS_META = {
@@ -96,12 +108,23 @@ function statusBadge(status: ScanResponse['status']): {
 export function ResultDohae({
   result,
   onScanAgain,
+  sector,
+  tier,
 }: ResultDohaeProps): React.JSX.Element {
   const measured = useMemo(
     () => formatMeasuredAt(result.measuredAt),
     [result.measuredAt],
   );
   const badge = useMemo(() => statusBadge(result.status), [result.status]);
+
+  // SPEC-PQC-003 ③ — benchmark.json 비동기 로드 (실패 시 null → ③ unmount).
+  const benchmark = useBenchmark();
+
+  // SPEC-PQC-003 ④ — fired 룰 존재 여부 (truthy+비어있지않음 → 아니면 unmount, INTEG-3).
+  const hasFindings = useMemo(
+    () => collectFindings(result).length > 0,
+    [result],
+  );
 
   return (
     <section className="flex flex-col gap-6">
@@ -173,7 +196,10 @@ export function ResultDohae({
         </section>
       )}
 
-      {/* === Section 1: 4축 점수 도해 === */}
+      {/* === ① 종합 판정 헤더 (등급 A~F + verdict) — SPEC-PQC-003 === */}
+      <GradeHeader result={result} />
+
+      {/* === Section 1 / ② 4축 점수 도해 === */}
       <section
         aria-labelledby="scores-title"
         className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
@@ -242,6 +268,18 @@ export function ResultDohae({
         </div>
       </section>
 
+      {/* === ③ 비교군 위치 — benchmark 로드 성공 시에만 mount (INTEG-3) === */}
+      {benchmark && (
+        <BenchmarkPosition
+          result={result}
+          benchmark={benchmark}
+          selectedSector={sector}
+        />
+      )}
+
+      {/* === ④ 핵심 발견 — fired 룰이 있을 때만 mount (INTEG-3) === */}
+      {hasFindings && <KeyFindings result={result} />}
+
       {/* === Section 2: 점수 근거 (rule trace) === */}
       <ScoreTraceSection result={result} />
 
@@ -249,6 +287,9 @@ export function ResultDohae({
       {result.narrative && (
         <NarrativeSection narrative={result.narrative} />
       )}
+
+      {/* === ⑦ 우선순위 액션플랜 — SPEC-PQC-003 === */}
+      <ActionPlan result={result} tier={tier} />
 
       {/* === Footer 정직성 메타 (REQ-HON-004) === */}
       <footer className="rounded-xl border border-slate-200 bg-slate-50 p-5 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-400">
