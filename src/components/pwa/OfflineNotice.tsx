@@ -39,13 +39,14 @@ export function OfflineNotice(): React.JSX.Element | null {
       data-testid="pwa-offline-notice"
       className={cn(
         'w-full border-b border-[hsl(var(--border))]',
-        'bg-amber-500/10 text-[hsl(var(--foreground))]',
+        // 워밍 모노크롬 — 비차단형 알림은 강조색 없이 muted 면 + foreground 텍스트.
+        'bg-[hsl(var(--muted))] text-[hsl(var(--foreground))]',
       )}
     >
       <div className="container mx-auto flex max-w-7xl items-center gap-2 px-4 py-1.5 text-xs sm:text-sm">
         <WifiOff
           aria-hidden="true"
-          className="h-3.5 w-3.5 shrink-0 text-amber-700 dark:text-amber-300"
+          className="h-3.5 w-3.5 shrink-0 text-[hsl(var(--muted-foreground))]"
         />
         <span className="font-medium">{ko.pwa.offline}</span>
         <span className="text-[hsl(var(--muted-foreground))]" aria-hidden>

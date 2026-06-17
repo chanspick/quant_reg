@@ -14,11 +14,17 @@
 @import '@fontsource/jetbrains-mono/500.css';
 @import '@fontsource/jetbrains-mono/700.css';
 
+/* 세리프 헤딩 (제목·등급·큰 숫자/점수). scanner-web 과 동일한 'Noto Serif KR'.
+ * CDN @import 로 로드 — 신규 npm 의존성 없이 PWA precache 외 폰트만 추가.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap');
+
 /* Tailwind v4 CSS-first 테마 토큰 (font-family stacks) */
 @theme {
   --font-sans:
     'Pretendard Variable', 'Inter Variable', system-ui, -apple-system,
     'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Noto Serif KR', serif;
   --font-mono:
     'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
@@ -52,50 +58,58 @@
 
 @layer base {
   :root {
-    /* Light tokens (SPEC §4.4, REQ-THM-010) */
-    --background: 210 20% 98%;
-    --foreground: 215 30% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 215 30% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 30% 12%;
-    --primary: 215 80% 35%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 215 16% 92%;
-    --secondary-foreground: 215 30% 12%;
-    --muted: 215 16% 94%;
-    --muted-foreground: 215 16% 40%;
-    --accent: 215 16% 92%;
-    --accent-foreground: 215 30% 12%;
-    --destructive: 0 70% 45%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 215 16% 88%;
-    --input: 215 16% 88%;
-    --ring: 215 80% 35%;
+    /* Light tokens — 워밍 페이퍼 모노크롬 (SPEC §4.4, REQ-THM-010).
+     * 유채색 전면 제거 → 무채(웜) 단계 + destructive 만 머티드 레드로 강조.
+     * background=크림(#f3f0eb), foreground=near-black ink(#1f1b16),
+     * card=#faf7f1, border=#d9d3c7, muted=#ede8df/#6f6a60, ring=웜그레이.
+     */
+    --background: 38 25% 94%; /* #f3f0eb 크림 */
+    --foreground: 33 17% 10%; /* #1f1b16 near-black ink */
+    --card: 40 47% 96%; /* #faf7f1 */
+    --card-foreground: 33 17% 10%;
+    --popover: 40 47% 96%;
+    --popover-foreground: 33 17% 10%;
+    --primary: 33 17% 10%; /* near-black */
+    --primary-foreground: 38 25% 94%; /* 크림 (primary 위 텍스트) */
+    --secondary: 39 26% 87%; /* #e7e1d6 */
+    --secondary-foreground: 33 17% 10%;
+    --muted: 39 28% 90%; /* #ede8df */
+    --muted-foreground: 40 7% 41%; /* #6f6a60 faint */
+    --accent: 39 26% 87%;
+    --accent-foreground: 33 17% 10%;
+    --destructive: 0 57% 41%; /* #a32d2d 머티드 레드 */
+    --destructive-foreground: 40 47% 96%;
+    --border: 40 19% 82%; /* #d9d3c7 */
+    --input: 40 19% 82%;
+    --ring: 40 11% 62%; /* #a9a294 웜그레이 */
     --radius: 0.75rem;
   }
 
   .dark {
-    /* Dark tokens (REQ-THM-009) */
-    --background: 215 30% 8%;
-    --foreground: 210 20% 96%;
-    --card: 215 30% 10%;
-    --card-foreground: 210 20% 96%;
-    --popover: 215 30% 10%;
-    --popover-foreground: 210 20% 96%;
-    --primary: 210 80% 60%;
-    --primary-foreground: 215 30% 8%;
-    --secondary: 215 25% 18%;
-    --secondary-foreground: 210 20% 96%;
-    --muted: 215 25% 16%;
-    --muted-foreground: 215 16% 65%;
-    --accent: 215 25% 18%;
-    --accent-foreground: 210 20% 96%;
-    --destructive: 0 60% 50%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 215 25% 18%;
-    --input: 215 25% 18%;
-    --ring: 210 80% 60%;
+    /* Dark tokens — 워밍 다크 모노크롬 (scanner-web 그대로, REQ-THM-009).
+     * coal/surface/surface-2/ink/muted/faint/edge/risk 팔레트 1:1 매핑.
+     * background=coal, foreground=ink, card=surface, border=edge,
+     * primary=ink, primary-foreground=coal, destructive=risk(#ff8a80), ring=muted.
+     */
+    --background: 0 0% 10%; /* #1a1a1a coal */
+    --foreground: 37 33% 91%; /* #efe9df ink */
+    --card: 34 11% 12%; /* #221f1b surface */
+    --card-foreground: 37 33% 91%;
+    --popover: 34 11% 12%;
+    --popover-foreground: 37 33% 91%;
+    --primary: 37 33% 91%; /* ink */
+    --primary-foreground: 0 0% 10%; /* coal (primary 위 텍스트) */
+    --secondary: 36 14% 15%; /* #2a2620 surface-2 */
+    --secondary-foreground: 37 33% 91%;
+    --muted: 36 14% 15%; /* #2a2620 surface-2 (강조면/트랙) */
+    --muted-foreground: 40 11% 62%; /* #a9a294 muted */
+    --accent: 36 14% 15%;
+    --accent-foreground: 37 33% 91%;
+    --destructive: 5 100% 75%; /* #ff8a80 risk */
+    --destructive-foreground: 0 0% 10%;
+    --border: 30 9% 21%; /* #3a3530 edge */
+    --input: 30 9% 21%;
+    --ring: 40 11% 62%; /* #a9a294 muted */
   }
 
   * {
@@ -108,6 +122,20 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 세리프 헤딩 — 제목 위계를 scanner-web 과 동일하게 serif 로 통일.
+   * 컴포넌트에서 font-serif 미지정 시에도 기본 적용된다.
+   * (큰 숫자/점수/등급은 컴포넌트에서 Tailwind v4 자동 생성 `font-serif`
+   *  유틸리티 — --font-serif @theme 토큰 기반 — 로 명시 적용한다.)
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
   }
 
   /* 접근성: prefers-reduced-motion (REQ-A11Y-006) */

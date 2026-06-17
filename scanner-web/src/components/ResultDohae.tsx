@@ -10,8 +10,11 @@ import { scoreBandClasses } from './shared/scoreBand';
 import { GradeHeader } from './report/GradeHeader';
 import { BenchmarkPosition } from './report/BenchmarkPosition';
 import { KeyFindings } from './report/KeyFindings';
+import { HndlExposure } from './report/HndlExposure';
+import { RegulationMap } from './report/RegulationMap';
 import { ActionPlan } from './report/ActionPlan';
 import { collectFindings } from '@/lib/findings';
+import { computeHndl } from '@/lib/hndl';
 import { useBenchmark } from '@/lib/useBenchmark';
 import type { Sector } from '@/lib/sector';
 import type { ReportTier } from '@/lib/tier';
@@ -79,29 +82,16 @@ function statusBadge(status: ScanResponse['status']): {
   label: string;
   tone: string;
 } {
+  // 모노크롬: 정상/부분은 무채, 차단/실패만 risk 강조.
   switch (status) {
     case 'ok':
-      return {
-        label: 'OK · 측정 성공',
-        tone:
-          'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30',
-      };
+      return { label: 'OK', tone: 'border-edge text-muted' };
     case 'partial':
-      return {
-        label: 'PARTIAL · 부분 측정',
-        tone:
-          'bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30',
-      };
+      return { label: 'PARTIAL', tone: 'border-edge text-muted' };
     case 'blocked':
-      return {
-        label: 'BLOCKED · 측정 차단됨',
-        tone: 'bg-red-500/15 text-red-700 dark:text-red-300 border-red-500/30',
-      };
+      return { label: 'BLOCKED', tone: 'border-risk text-risk' };
     case 'error':
-      return {
-        label: 'ERROR · 측정 실패',
-        tone: 'bg-red-500/15 text-red-700 dark:text-red-300 border-red-500/30',
-      };
+      return { label: 'ERROR', tone: 'border-risk text-risk' };
   }
 }
 
@@ -126,17 +116,17 @@ export function ResultDohae({
     [result],
   );
 
+  // SPEC-PQC-003 ⑤ — keyAlgorithm 파싱 가능 여부 (null → ⑤ unmount, INTEG-3).
+  const hndl = useMemo(() => computeHndl(result), [result]);
+
   return (
     <section className="flex flex-col gap-6">
       {/* === Header === */}
-      <header className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <header className="rounded-xl border border-edge bg-surface p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-              {result.hostname}
-            </h2>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              측정 시각:{' '}
+            <h2 className="font-serif text-2xl text-ink">{result.hostname}</h2>
+            <p className="mt-1 text-xs text-faint">
               <time dateTime={measured.iso}>{measured.human}</time>
             </p>
           </div>
@@ -150,14 +140,14 @@ export function ResultDohae({
               {badge.label}
             </span>
             {result.cached && (
-              <span className="inline-flex items-center rounded-full border border-slate-400/40 bg-slate-500/15 px-3 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                5분 이내 캐시
+              <span className="inline-flex items-center rounded-full border border-edge px-3 py-1 text-xs text-faint">
+                캐시
               </span>
             )}
             <button
               type="button"
               onClick={onScanAgain}
-              className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="rounded-md border border-edge bg-surface-2 px-3 py-1.5 text-xs font-semibold text-ink hover:bg-coal"
             >
               다른 도메인 측정
             </button>
@@ -169,18 +159,18 @@ export function ResultDohae({
       {result.errors && result.errors.length > 0 && (
         <section
           aria-labelledby="errors-title"
-          className="rounded-xl border border-amber-300 bg-amber-50 p-5 dark:border-amber-800 dark:bg-amber-950/30"
+          className="rounded-xl border border-edge bg-surface p-5"
         >
           <h3
             id="errors-title"
-            className="mb-3 text-sm font-semibold text-amber-900 dark:text-amber-200"
+            className="mb-3 font-serif text-sm text-ink"
           >
-            측정 중 발생한 이벤트
+            측정 이벤트
           </h3>
-          <ul className="flex flex-col gap-2 text-sm text-amber-900 dark:text-amber-200">
+          <ul className="flex flex-col gap-2 text-sm text-muted">
             {result.errors.map((err, i) => (
               <li key={`${err.stage}-${i}`} className="flex flex-col gap-0.5">
-                <span className="font-mono text-xs">
+                <span className="font-mono text-xs text-faint">
                   [{err.stage}] {err.code}
                 </span>
                 <span>{err.message}</span>
@@ -188,9 +178,8 @@ export function ResultDohae({
             ))}
           </ul>
           {result.status === 'blocked' && (
-            <p className="mt-3 rounded bg-amber-100 p-2 text-xs text-amber-900 dark:bg-amber-900/40 dark:text-amber-100">
-              외부 TLS 스캔이 차단되었습니다 — 이 자체가 발견입니다.
-              SPEC-PQC-001 의 4개 차단 사례와 동일한 패턴.
+            <p className="mt-3 rounded border border-risk px-2 py-1.5 text-xs text-risk">
+              외부 TLS 스캔 차단 — 차단 자체가 발견입니다.
             </p>
           )}
         </section>
@@ -202,18 +191,14 @@ export function ResultDohae({
       {/* === Section 1 / ② 4축 점수 도해 === */}
       <section
         aria-labelledby="scores-title"
-        className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        className="rounded-xl border border-edge bg-surface p-6"
       >
-        <h3
-          id="scores-title"
-          className="mb-1 text-lg font-semibold text-slate-900 dark:text-slate-100"
-        >
-          4축 점수 도해
-        </h3>
-        <p className="mb-5 text-xs text-slate-500 dark:text-slate-400">
-          각 축은 0~100. 모든 자동 측정 점수는{' '}
-          <code className="font-mono">source: automated</code> 입니다.
-        </p>
+        <div className="mb-5 flex items-baseline justify-between gap-2">
+          <h3 id="scores-title" className="font-serif text-lg text-ink">
+            4축 점수
+          </h3>
+          <span className="text-[11px] text-faint">source: automated · 0–100</span>
+        </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <ScoreCard
@@ -244,7 +229,7 @@ export function ResultDohae({
         </div>
 
         {/* 보조: 가로 ScoreBar 묶음 — 비교용 */}
-        <div className="mt-6 flex flex-col gap-2 border-t border-slate-200 pt-5 dark:border-slate-800">
+        <div className="mt-6 flex flex-col gap-2 border-t border-edge pt-5">
           <ScoreBar
             label="TLS"
             value={result.scores.tls.value}
@@ -280,6 +265,12 @@ export function ResultDohae({
       {/* === ④ 핵심 발견 — fired 룰이 있을 때만 mount (INTEG-3) === */}
       {hasFindings && <KeyFindings result={result} />}
 
+      {/* === ⑤ HNDL 양자위협 노출 — keyAlgorithm 파싱 성공 시에만 mount (INTEG-3) === */}
+      {hndl && <HndlExposure result={result} />}
+
+      {/* === ⑥ 규제 컴플라이언스 매핑 — 항상 mount (정적 테이블), 섹터 인지 텍스트 === */}
+      <RegulationMap result={result} sector={sector} />
+
       {/* === Section 2: 점수 근거 (rule trace) === */}
       <ScoreTraceSection result={result} />
 
@@ -291,32 +282,29 @@ export function ResultDohae({
       {/* === ⑦ 우선순위 액션플랜 — SPEC-PQC-003 === */}
       <ActionPlan result={result} tier={tier} />
 
-      {/* === Footer 정직성 메타 (REQ-HON-004) === */}
-      <footer className="rounded-xl border border-slate-200 bg-slate-50 p-5 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-400">
-        <p className="mb-2 font-semibold text-slate-700 dark:text-slate-300">
-          정직성 메타데이터
-        </p>
-        <dl className="grid grid-cols-1 gap-1 sm:grid-cols-2">
+      {/* === Footer 정직성 메타 + 전역 disclaimer (REQ-HON-004) === */}
+      <footer className="rounded-xl border border-edge bg-surface p-5 text-xs text-faint">
+        <dl className="grid grid-cols-2 gap-1 font-mono text-[11px] sm:grid-cols-4">
           <div>
-            <dt className="inline font-mono">measuredAt:</dt>{' '}
-            <dd className="inline">{measured.iso}</dd>
+            <dt className="inline">measuredAt</dt>{' '}
+            <dd className="inline text-muted">{measured.iso}</dd>
           </div>
           <div>
-            <dt className="inline font-mono">status:</dt>{' '}
-            <dd className="inline">{result.status}</dd>
+            <dt className="inline">status</dt>{' '}
+            <dd className="inline text-muted">{result.status}</dd>
           </div>
           <div>
-            <dt className="inline font-mono">cached:</dt>{' '}
-            <dd className="inline">{String(result.cached ?? false)}</dd>
+            <dt className="inline">cached</dt>{' '}
+            <dd className="inline text-muted">{String(result.cached ?? false)}</dd>
           </div>
           <div>
-            <dt className="inline font-mono">phase2:</dt>{' '}
-            <dd className="inline">{result.meta.phase2.status}</dd>
+            <dt className="inline">phase2</dt>{' '}
+            <dd className="inline text-muted">{result.meta.phase2.status}</dd>
           </div>
         </dl>
-        <p className="mt-3 text-[11px] leading-relaxed text-slate-500 dark:text-slate-500">
-          이 사이트는 강의 발표 시연용 임시 데모입니다. 진단·감사·구매 의사결정에 사용하지 마십시오.
-          SPEC-PQC-002 · scanner-api · scanner-web 통합 산출물.
+        <p className="mt-3 text-[11px] leading-relaxed">
+          강의 발표 시연용 데모. 진단·감사·구매 의사결정 근거가 아닙니다. LLM 분석은 통계적
+          업계표준이 아닙니다. SPEC-PQC-002 · scanner-api · scanner-web.
         </p>
       </footer>
     </section>
@@ -339,33 +327,26 @@ function ScoreCard({
   disclosure?: string;
 }): React.JSX.Element {
   const band = scoreBandClasses(value);
+  const clamped = Math.max(0, Math.min(100, Math.round(value)));
   return (
-    <article
-      className={cn(
-        'flex flex-col rounded-lg border p-4',
-        'border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/50',
-      )}
-    >
+    <article className="flex flex-col rounded-lg border border-edge bg-surface-2 p-4">
       <header className="mb-2 flex items-start justify-between gap-2">
-        <div>
-          <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-            {label}
-          </h4>
-          <p className="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-            {description}
-          </p>
-        </div>
+        <h4 className="font-serif text-sm text-ink">{label}</h4>
         <SourceChip source={source} size="sm" />
       </header>
-      <div className="mt-2 flex items-baseline gap-1">
-        <span className={cn('font-mono text-4xl font-bold tabular-nums', band.text)}>
-          {Math.max(0, Math.min(100, Math.round(value)))}
+      <div className="mt-1 flex items-baseline gap-1">
+        {/* 큰 점수 숫자: 시인성 최우선. 위험밴드만 risk, 나머지 ink/muted. */}
+        <span
+          className={cn('font-serif text-5xl tabular-nums', band.text)}
+        >
+          {clamped}
         </span>
-        <span className="text-sm text-slate-400">/ 100</span>
+        <span className="text-sm text-faint">/ 100</span>
       </div>
+      <p className="mt-1 text-[11px] leading-relaxed text-faint">{description}</p>
       {disclosure && (
-        <p className="mt-3 rounded border border-slate-300 bg-white px-2 py-1.5 text-[11px] leading-relaxed text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
-          calibration disclosure: {disclosure}
+        <p className="mt-2 text-[11px] leading-relaxed text-faint">
+          calibration: {disclosure}
         </p>
       )}
     </article>
@@ -388,22 +369,19 @@ function ScoreTraceSection({
   return (
     <section
       aria-labelledby="trace-title"
-      className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+      className="rounded-xl border border-edge bg-surface p-6"
     >
       <header className="mb-3 flex items-center justify-between">
-        <h3
-          id="trace-title"
-          className="text-lg font-semibold text-slate-900 dark:text-slate-100"
-        >
-          점수 산출 근거
+        <h3 id="trace-title" className="font-serif text-lg text-ink">
+          점수 근거
         </h3>
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          className="rounded border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+          className="rounded border border-edge bg-surface-2 px-3 py-1 text-xs font-semibold text-ink hover:bg-coal"
         >
-          {open ? '접기' : `펼치기 (fired ${firedTls.length + firedCertOps.length}개)`}
+          {open ? '접기' : `자세히 (fired ${firedTls.length + firedCertOps.length})`}
         </button>
       </header>
 
@@ -419,21 +397,26 @@ function ScoreTraceSection({
           fired={firedCertOps.length}
           final={result.meta.scoring.certOps.final}
         />
-        <p className="text-xs text-slate-600 dark:text-slate-400">
-          <span className="font-semibold">하이브리드 KEM:</span>{' '}
-          {hybridKem.value} — {hybridKem.basis}
+        <p className="text-xs text-muted">
+          <span className="font-semibold text-ink">하이브리드 KEM</span>{' '}
+          <span className="font-mono tabular-nums text-ink">{hybridKem.value}</span>
+          <span className="text-faint"> · {hybridKem.basis}</span>
         </p>
         {quantumThreat && (
-          <p className="text-xs text-slate-600 dark:text-slate-400">
-            <span className="font-semibold">양자 위협:</span>{' '}
-            보수 시나리오 logical qubits = {quantumThreat.qubits}
-            {quantumThreat.qubits === 0 && ' (PQC: Shor 무력)'}
+          <p className="text-xs text-muted">
+            <span className="font-semibold text-ink">양자 위협</span> logical qubits{' '}
+            <span className="font-mono tabular-nums text-ink">
+              {quantumThreat.qubits}
+            </span>
+            {quantumThreat.qubits === 0 && (
+              <span className="text-faint"> · PQC Shor 무력</span>
+            )}
           </p>
         )}
       </div>
 
       {open && (
-        <div className="flex flex-col gap-5 border-t border-slate-200 pt-5 dark:border-slate-800">
+        <div className="flex flex-col gap-5 border-t border-edge pt-5">
           <RuleList
             title={`TLS rule trace (final=${result.meta.scoring.tls.final})`}
             rules={firedTls}
@@ -458,9 +441,10 @@ function RuleSummary({
   final: number;
 }): React.JSX.Element {
   return (
-    <p className="text-xs text-slate-600 dark:text-slate-400">
-      <span className="font-semibold">{axisLabel}:</span> {fired}개 룰이 fired,
-      최종 점수 {final}점.
+    <p className="text-xs text-muted">
+      <span className="font-semibold text-ink">{axisLabel}</span> fired{' '}
+      <span className="font-mono tabular-nums text-ink">{fired}</span> · final{' '}
+      <span className="font-mono tabular-nums text-ink">{final}</span>
     </p>
   );
 }
@@ -474,36 +458,27 @@ function RuleList({
 }): React.JSX.Element {
   return (
     <div>
-      <h4 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
-        {title}
-      </h4>
+      <h4 className="mb-2 font-serif text-sm text-ink">{title}</h4>
       {rules.length === 0 ? (
-        <p className="text-xs italic text-slate-500 dark:text-slate-400">
-          fired=true 인 룰 없음 (감점 0).
-        </p>
+        <p className="text-xs text-faint">fired 룰 없음 (감점 0)</p>
       ) : (
         <ul className="flex flex-col gap-2">
           {rules.map((r) => (
             <li
               key={r.id}
-              className="rounded border border-slate-200 bg-slate-50 p-3 text-xs dark:border-slate-800 dark:bg-slate-900/50"
+              className="rounded border border-edge bg-surface-2 p-3 text-xs"
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-slate-100">
-                    {r.label}
-                  </p>
-                  <p className="mt-0.5 font-mono text-[10px] text-slate-500 dark:text-slate-500">
-                    {r.id}
-                  </p>
+                  <p className="font-semibold text-ink">{r.label}</p>
+                  <p className="mt-0.5 font-mono text-[10px] text-faint">{r.id}</p>
                 </div>
-                <span className="shrink-0 rounded bg-red-500/15 px-2 py-0.5 font-mono text-[11px] font-semibold text-red-700 dark:text-red-300">
+                {/* 감점: risk 강조 (미달 신호) */}
+                <span className="shrink-0 rounded border border-risk px-2 py-0.5 font-mono text-[11px] font-semibold text-risk">
                   −{r.deduction}
                 </span>
               </div>
-              <p className="mt-2 text-[11px] italic text-slate-600 dark:text-slate-400">
-                근거: {r.source}
-              </p>
+              <p className="mt-2 text-[11px] text-faint">근거: {r.source}</p>
             </li>
           ))}
         </ul>
@@ -520,36 +495,33 @@ function NarrativeSection({
   return (
     <section
       aria-labelledby="narrative-title"
-      className="rounded-xl border border-violet-200 bg-violet-50/40 p-6 shadow-sm dark:border-violet-900/60 dark:bg-violet-950/20"
+      className="rounded-xl border border-edge bg-surface p-6"
     >
       <header className="mb-3 flex items-center justify-between gap-2">
-        <h3
-          id="narrative-title"
-          className="text-lg font-semibold text-slate-900 dark:text-slate-100"
-        >
+        <h3 id="narrative-title" className="font-serif text-lg text-ink">
           LLM 분석
         </h3>
         <div className="flex items-center gap-2">
           <SourceChip source={narrative.source} size="md" />
-          <span className="rounded bg-violet-500/15 px-2 py-0.5 font-mono text-[11px] text-violet-700 dark:text-violet-300">
+          <span className="rounded border border-edge px-2 py-0.5 font-mono text-[11px] text-faint">
             {narrative.model}
           </span>
         </div>
       </header>
-      <p className="mb-4 whitespace-pre-line text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+      <p className="mb-4 whitespace-pre-line text-sm leading-relaxed text-muted">
         {narrative.text}
       </p>
       {narrative.recommendations.length > 0 && (
         <div>
-          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-violet-700 dark:text-violet-300">
+          <h4 className="mb-2 font-serif text-xs uppercase tracking-wide text-ink">
             권고
           </h4>
-          <ul className="flex flex-col gap-1.5 text-sm text-slate-700 dark:text-slate-300">
+          <ul className="flex flex-col gap-1.5 text-sm text-muted">
             {narrative.recommendations.map((rec, i) => (
               <li key={i} className="flex items-start gap-2">
                 <span
                   aria-hidden="true"
-                  className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500"
+                  className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-faint"
                 />
                 <span>{rec}</span>
               </li>
@@ -557,10 +529,6 @@ function NarrativeSection({
           </ul>
         </div>
       )}
-      <p className="mt-4 rounded bg-violet-100/60 p-2 text-[11px] leading-relaxed text-violet-900 dark:bg-violet-900/30 dark:text-violet-100">
-        LLM 분석은 통계적 출력이며 진단·감사·구매 의사결정 근거가 아닙니다.
-        측정값 자체는 source=automated 로 별도 표시되어 있습니다.
-      </p>
     </section>
   );
 }

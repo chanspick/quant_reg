@@ -20,7 +20,7 @@ import { readTier } from './lib/tier';
 
 export function App(): React.JSX.Element {
   const { status, data, error, startedAt, scan, reset } = useScan();
-  const [sector, setSector] = useState<Sector>('general');
+  const [sector, setSector] = useState<Sector>('일반');
   const tier = useMemo(() => readTier(), []);
 
   const handleScan = useCallback(
@@ -36,27 +36,22 @@ export function App(): React.JSX.Element {
   }, [reset]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-screen bg-coal text-ink">
       <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-8 sm:px-6 sm:py-12">
         {/* Header */}
         <header>
-          <div className="mb-2 inline-flex items-center rounded-full border border-amber-400/40 bg-amber-500/15 px-3 py-1 text-xs font-semibold text-amber-800 dark:border-amber-700 dark:text-amber-200">
-            발표 시연용 임시 데모 · 진단/감사 용도 금지
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
+          <h1 className="font-serif text-3xl font-bold tracking-tight text-ink sm:text-4xl">
             동적 PQC 스캐너
           </h1>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-            도메인 hostname 을 입력하면 TLS · 하이브리드 KEM · 인증서 운영 · 양자 위협 정량의 4축 점수를 측정하고,
-            점수 산출 근거와 LLM narrative 를 보여줍니다.{' '}
-            <span className="font-mono text-xs">SPEC-PQC-002</span>
+          <p className="mt-2 font-sans text-sm leading-relaxed text-muted">
+            도메인을 입력하면 TLS · 하이브리드 KEM · 인증서 운영 · 양자 위협 4축 점수를 측정합니다.
           </p>
         </header>
 
         {/* Form (항상 노출) */}
         <section
           aria-label="hostname 입력"
-          className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+          className="rounded-lg border border-edge bg-surface p-5"
         >
           <ScanForm
             onScan={handleScan}
@@ -64,10 +59,6 @@ export function App(): React.JSX.Element {
             initialValue={data?.hostname ?? ''}
             initialSector={sector}
           />
-          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-            <code className="font-mono">https://</code> 자동 제거 · 소문자 변환 · IP 거부.
-            최대 60초 소요 (sslyze + PQC probe + Claude Sonnet 4.6).
-          </p>
         </section>
 
         {/* Loading */}
@@ -91,15 +82,20 @@ export function App(): React.JSX.Element {
           />
         )}
 
-        {/* Footer (항상 노출) */}
-        <footer className="mt-8 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-500">
-          <p>
+        {/* Footer (항상 노출) — 전역 disclaimer 통합 1곳 */}
+        <footer className="mt-8 border-t border-edge pt-5 font-sans text-xs text-faint">
+          <p className="text-faint">
+            발표 시연용 임시 데모 — 진단 · 감사 용도 금지. 입력은{' '}
+            <code className="font-mono">https://</code> 제거 · 소문자 변환 · IP 거부, 최대 60초 소요
+            (sslyze + PQC probe + Claude Sonnet 4.6).
+          </p>
+          <p className="mt-2">
             정적 47개 도메인 대시보드:{' '}
             <a
               href="https://quant-reg.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-brand-600 hover:underline dark:text-brand-500"
+              className="text-muted underline hover:text-ink"
             >
               quant-reg.vercel.app
             </a>
@@ -133,19 +129,19 @@ function ErrorPanel({ error }: { error: ScanError }): React.JSX.Element {
   return (
     <section
       role="alert"
-      className="rounded-xl border border-red-300 bg-red-50 p-6 shadow-sm dark:border-red-800 dark:bg-red-950/30"
+      className="rounded-lg border border-risk bg-surface p-6"
     >
-      <h3 className="text-base font-semibold text-red-900 dark:text-red-200">
+      <h3 className="font-serif text-base font-semibold text-risk">
         {title}
       </h3>
-      <p className="mt-2 text-sm text-red-800 dark:text-red-200">
+      <p className="mt-2 font-sans text-sm text-ink">
         {error.message}
       </p>
-      <p className="mt-3 font-mono text-xs text-red-700 dark:text-red-300">
+      <p className="mt-3 font-mono text-xs text-faint">
         code = {error.code}
       </p>
       {error.kind === 'NETWORK' && (
-        <p className="mt-3 rounded bg-red-100 p-2 text-xs text-red-900 dark:bg-red-900/40 dark:text-red-100">
+        <p className="mt-3 rounded border border-edge bg-surface-2 p-2 text-xs text-muted">
           scanner-api 가 실행 중인지 확인:{' '}
           <code className="font-mono">uvicorn main:app --port 8000</code>.
           dev 환경에서는{' '}

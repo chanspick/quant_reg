@@ -7,7 +7,7 @@ import {
   type BenchmarkFile,
 } from '@/lib/benchmark';
 import {
-  coarseSectorFromLabel,
+  sectorFromLabel,
   sectorDisplayName,
   sectorMatchLabels,
   type Sector,
@@ -44,7 +44,7 @@ export function BenchmarkPosition({
   const { effectiveSector, autoTagged } = useMemo(() => {
     const label = lookupSectorLabel(benchmark, result.hostname);
     if (label !== null) {
-      return { effectiveSector: coarseSectorFromLabel(label), autoTagged: true };
+      return { effectiveSector: sectorFromLabel(label), autoTagged: true };
     }
     return { effectiveSector: selectedSector, autoTagged: false };
   }, [benchmark, result.hostname, selectedSector]);
@@ -64,23 +64,20 @@ export function BenchmarkPosition({
   return (
     <section
       aria-labelledby="benchmark-title"
-      className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+      className="rounded-lg border border-edge bg-surface p-6"
     >
-      <h3
-        id="benchmark-title"
-        className="mb-1 text-lg font-semibold text-slate-900 dark:text-slate-100"
-      >
+      <h3 id="benchmark-title" className="mb-1 font-serif text-lg text-ink">
         비교군 위치
       </h3>
-      <p className="mb-5 text-xs text-slate-500 dark:text-slate-400">
-        주요 대기업 {position.setSize}개 비교군 — 통계적 업계표준 아님
+      <p className="mb-5 text-xs text-faint">
+        대기업 {position.setSize}개 비교군 · 통계적 업계표준 아님
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Stat
           label="순위"
-          value={`${position.rank}위`}
-          sub={`/ ${position.setSize}개`}
+          value={`${position.rank}`}
+          sub={`/ ${position.setSize}위`}
         />
         <Stat
           label="백분위"
@@ -91,28 +88,31 @@ export function BenchmarkPosition({
       </div>
 
       {showSector && (
-        <div className="mt-5 border-t border-slate-200 pt-5 dark:border-slate-800">
-          <p className="text-sm text-slate-700 dark:text-slate-300">
-            <span className="font-semibold">
+        <div className="mt-5 border-t border-edge pt-5">
+          <p className="text-sm text-muted">
+            <span className="text-ink">
               {sectorDisplayName(effectiveSector)} 평균
             </span>{' '}
-            <span className="font-mono tabular-nums">
+            <span className="font-mono text-ink tabular-nums">
               {position.sectorAvg}
             </span>{' '}
-            vs 대상 <span className="font-mono tabular-nums">{targetOverall}</span>
-            <span className="ml-2 text-xs text-slate-400 dark:text-slate-500">
+            vs 대상{' '}
+            <span className="font-mono text-ink tabular-nums">
+              {targetOverall}
+            </span>
+            <span className="ml-2 text-xs text-faint">
               (동일 섹터 {position.sectorSize}개)
             </span>
             {autoTagged && (
-              <span className="ml-2 rounded bg-sky-500/15 px-1.5 py-0.5 text-[10px] font-medium text-sky-700 dark:text-sky-300">
-                비교군 자동 태그
+              <span className="ml-2 rounded border border-edge px-1.5 py-0.5 text-[10px] text-faint">
+                자동 태그
               </span>
             )}
           </p>
 
           {position.aheadPeers.length > 0 && (
-            <p className="mt-3 text-sm text-slate-700 dark:text-slate-300">
-              <span className="font-semibold">앞선 동종사:</span>{' '}
+            <p className="mt-3 text-sm text-muted">
+              <span className="text-ink">앞선 동종사</span>{' '}
               {position.aheadPeers.join(' · ')}
             </p>
           )}
@@ -120,8 +120,8 @@ export function BenchmarkPosition({
       )}
 
       {!showSector && (
-        <p className="mt-5 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
-          섹터가 지정되지 않아 전체 비교군 대비 위치만 표시합니다.
+        <p className="mt-5 border-t border-edge pt-5 text-xs text-faint">
+          섹터 미지정 — 전체 비교군 대비 위치만 표시.
         </p>
       )}
     </section>
@@ -138,14 +138,12 @@ function Stat({
   sub: string;
 }): React.JSX.Element {
   return (
-    <div className="flex flex-col rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
-      <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-        {label}
-      </span>
-      <span className="mt-1 font-mono text-2xl font-bold tabular-nums text-slate-900 dark:text-slate-100">
+    <div className="flex flex-col rounded-lg border border-edge bg-surface-2 p-4">
+      <span className="text-xs text-muted">{label}</span>
+      <span className="mt-1 font-serif text-3xl text-ink tabular-nums">
         {value}
       </span>
-      <span className="text-xs text-slate-400 dark:text-slate-500">{sub}</span>
+      <span className="text-xs text-faint">{sub}</span>
     </div>
   );
 }

@@ -1,15 +1,28 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" style="background-color: #1a1a1a; color-scheme: dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
     <meta
       name="description"
       content="SPEC-PQC-002 동적 PQC 스캐너 발표 시연용 임시 데모. 진단·감사·구매 의사결정에 사용 금지."
     />
     <title>PQC 스캐너 (발표 시연용)</title>
+
+    <!-- 웹폰트: 제목/등급/큰 숫자 = Noto Serif KR, 본문/라벨 = Pretendard -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <body class="bg-coal text-ink font-sans antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

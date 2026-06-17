@@ -17,7 +17,7 @@ import { cn } from '@/lib/utils';
  *   2: Phase2 PQC probe 중 (2-10s, 평균 6s)
  *   3: LLM narrative 생성 중 (3-8s, 평균 5s)
  *
- * 발표 임팩트: 활성 단계만 펄스 애니메이션 + brand 색. 완료 단계는 emerald 체크.
+ * 발표 임팩트: 활성 단계만 펄스 애니메이션(ink). 완료 단계는 muted 체크.
  */
 
 interface LoadingProgressProps {
@@ -99,22 +99,22 @@ export function LoadingProgress({
     <section
       aria-busy="true"
       aria-live="polite"
-      className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+      className="rounded-lg border border-edge bg-surface p-6"
     >
       <header className="mb-5 flex items-baseline justify-between gap-2">
-        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+        <h2 className="font-serif text-lg font-semibold text-ink">
           측정 진행 중
         </h2>
-        <span className="font-mono text-sm tabular-nums text-slate-500 dark:text-slate-400">
+        <span className="font-mono text-sm tabular-nums text-faint">
           {elapsedSec}s
         </span>
       </header>
 
-      <p className="mb-5 text-sm text-slate-600 dark:text-slate-400">
-        <code className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs dark:bg-slate-800">
+      <p className="mb-5 font-sans text-sm text-muted">
+        <code className="rounded border border-edge bg-surface-2 px-1.5 py-0.5 font-mono text-xs">
           {hostname}
         </code>{' '}
-        — 백엔드가 sslyze · pqc_probe · LLM 을 순차 호출합니다 (최대 60초).
+        — sslyze · pqc_probe · LLM 순차 호출
       </p>
 
       <ol className="flex flex-col gap-3">
@@ -126,23 +126,17 @@ export function LoadingProgress({
               key={stage.id}
               className={cn(
                 'flex items-start gap-3 rounded-lg border p-3 transition-colors',
-                state === 'done' &&
-                  'border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950/30',
-                state === 'active' &&
-                  'border-brand-300 bg-brand-50 dark:border-brand-500/40 dark:bg-brand-500/10',
-                state === 'pending' &&
-                  'border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/50',
+                state === 'done' && 'border-edge bg-surface-2',
+                state === 'active' && 'border-muted bg-surface-2',
+                state === 'pending' && 'border-edge bg-surface',
               )}
             >
               <span
                 className={cn(
                   'mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold',
-                  state === 'done' &&
-                    'bg-emerald-500 text-white',
-                  state === 'active' &&
-                    'animate-stage-active bg-brand-600 text-white',
-                  state === 'pending' &&
-                    'bg-slate-300 text-slate-600 dark:bg-slate-700 dark:text-slate-400',
+                  state === 'done' && 'bg-ink text-coal',
+                  state === 'active' && 'animate-stage-active bg-ink text-coal',
+                  state === 'pending' && 'bg-surface-2 text-faint',
                 )}
                 aria-hidden="true"
               >
@@ -151,15 +145,15 @@ export function LoadingProgress({
               <div className="flex-1">
                 <div
                   className={cn(
-                    'text-sm font-medium',
-                    state === 'done' && 'text-emerald-900 dark:text-emerald-200',
-                    state === 'active' && 'text-brand-700 dark:text-brand-300',
-                    state === 'pending' && 'text-slate-500 dark:text-slate-400',
+                    'font-sans text-sm font-medium',
+                    state === 'done' && 'text-muted',
+                    state === 'active' && 'text-ink',
+                    state === 'pending' && 'text-faint',
                   )}
                 >
                   {stage.title}
                 </div>
-                <div className="text-xs text-slate-500 dark:text-slate-400">
+                <div className="font-sans text-xs text-faint">
                   {stage.detail}
                 </div>
               </div>

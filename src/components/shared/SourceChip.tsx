@@ -6,8 +6,9 @@ import type { DataSource } from '@/data/schema';
  * SPEC-PQC-001:
  * - REQ-APP-003 / REQ-SCH-006 / REQ-DSH-020:
  *   모든 SourcedScore · SourcedText · regulatoryGap 옆에 출처 칩을 노출한다.
- *   배너 레전드와 동일한 4모드 팔레트(sky / amber / violet / slate)를 재사용해
- *   UI 전반에서 1:1 매핑을 보장한다.
+ *   워밍 모노크롬 리스타일: 4모드를 유채(sky/amber/violet/slate) 대신
+ *   무채 농담(foreground 농담)으로 구분한다. 출처는 위험/경고가 아니므로 강조색을
+ *   쓰지 않고, 텍스트/도트 명도 차이만으로 1:1 매핑을 유지한다.
  *
  * 정직성 원칙의 시각적 표현이 본 컴포넌트의 역할이다.
  */
@@ -31,30 +32,31 @@ interface VariantToken {
 }
 
 /**
- * 4 모드 ↔ 시각 토큰 매핑.
- * - dark 대비 4.5:1 충족: text-{color}-300 on slate-900 / -700 on slate-50.
- * - 배경은 -500/15 알파, 가독성 확보.
+ * 4 모드 ↔ 시각 토큰 매핑 (워밍 모노크롬).
+ * - 유채 제거 → 무채 농담으로 4모드 구분. 신뢰도 높은 순으로 명도/불투명도 ↑.
+ *   automated(가장 진함) > llm+verified > manual > llm-only(가장 옅음).
+ * - 시맨틱 토큰(foreground/muted-foreground) 사용으로 라이트/다크 대비 자동 확보.
  */
 const VARIANTS: Record<DataSource, VariantToken> = {
   automated: {
     label: ko.sourceLabel.automated,
-    chip: 'bg-sky-500/15 text-sky-700 dark:text-sky-300',
-    dot: 'bg-sky-500',
+    chip: 'bg-foreground/[0.08] text-foreground',
+    dot: 'bg-foreground',
   },
   manual: {
     label: ko.sourceLabel.manual,
-    chip: 'bg-amber-500/15 text-amber-700 dark:text-amber-300',
-    dot: 'bg-amber-500',
+    chip: 'bg-foreground/[0.06] text-foreground/80',
+    dot: 'bg-foreground/70',
   },
   'llm+verified': {
     label: ko.sourceLabel.llmVerified,
-    chip: 'bg-violet-500/15 text-violet-700 dark:text-violet-300',
-    dot: 'bg-violet-500',
+    chip: 'bg-foreground/[0.07] text-foreground/90',
+    dot: 'bg-foreground/85',
   },
   'llm-only': {
     label: ko.sourceLabel.llmOnly,
-    chip: 'bg-slate-500/20 text-slate-700 dark:text-slate-300',
-    dot: 'bg-slate-400 dark:bg-slate-500',
+    chip: 'bg-muted text-muted-foreground',
+    dot: 'bg-muted-foreground',
   },
 };
 

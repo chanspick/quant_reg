@@ -29,7 +29,7 @@ export function ScanForm({
   onScan,
   disabled,
   initialValue = '',
-  initialSector = 'general',
+  initialSector = '일반',
 }: ScanFormProps): React.JSX.Element {
   const [raw, setRaw] = useState(initialValue);
   const [sector, setSector] = useState<Sector>(initialSector);
@@ -85,22 +85,21 @@ export function ScanForm({
             aria-invalid={error !== null}
             aria-describedby={error ? 'hostname-error' : undefined}
             className={cn(
-              'w-full rounded-md border bg-white px-4 py-3 text-base',
-              'text-slate-900 placeholder:text-slate-400',
-              'shadow-sm transition-colors',
-              'focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30',
+              'w-full rounded-md border bg-surface-2 px-4 py-3 text-base font-sans',
+              'text-ink placeholder:text-faint',
+              'transition-colors',
+              'focus:border-muted focus:outline-none focus:ring-2 focus:ring-muted/30',
               'disabled:cursor-not-allowed disabled:opacity-50',
-              'dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500',
               error
-                ? 'border-red-500 focus:border-red-500 focus:ring-red-500/30 dark:border-red-500'
-                : 'border-slate-300',
+                ? 'border-risk focus:border-risk focus:ring-risk/30'
+                : 'border-edge',
             )}
           />
           {error && (
             <p
               id="hostname-error"
               role="alert"
-              className="mt-2 text-sm text-red-600 dark:text-red-400"
+              className="mt-2 font-sans text-sm text-risk"
             >
               {error}
             </p>
@@ -111,12 +110,11 @@ export function ScanForm({
           type="submit"
           disabled={disabled || raw.trim().length === 0}
           className={cn(
-            'shrink-0 rounded-md px-6 py-3 text-base font-semibold transition-colors',
-            'bg-brand-600 text-white shadow-sm',
-            'hover:bg-brand-700',
-            'focus:outline-none focus:ring-2 focus:ring-brand-500/40',
-            'disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500',
-            'dark:disabled:bg-slate-700 dark:disabled:text-slate-400',
+            'shrink-0 rounded-md px-6 py-3 text-base font-sans font-semibold transition-colors',
+            'bg-ink text-coal',
+            'hover:bg-muted',
+            'focus:outline-none focus:ring-2 focus:ring-muted/40',
+            'disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-faint',
           )}
         >
           스캔 시작
@@ -127,7 +125,7 @@ export function ScanForm({
       <div className="flex items-center gap-2">
         <label
           htmlFor="sector-select"
-          className="text-xs font-medium text-slate-600 dark:text-slate-400"
+          className="font-sans text-xs font-medium text-muted"
         >
           업종 (선택)
         </label>
@@ -137,11 +135,10 @@ export function ScanForm({
           onChange={(e) => setSector(e.target.value as Sector)}
           disabled={disabled}
           className={cn(
-            'rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm',
-            'text-slate-900 shadow-sm transition-colors',
-            'focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30',
+            'rounded-md border border-edge bg-surface-2 px-3 py-1.5 text-sm font-sans',
+            'text-ink transition-colors',
+            'focus:border-muted focus:outline-none focus:ring-2 focus:ring-muted/30',
             'disabled:cursor-not-allowed disabled:opacity-50',
-            'dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100',
           )}
         >
           {SECTOR_OPTIONS.map((opt) => (
@@ -150,8 +147,8 @@ export function ScanForm({
             </option>
           ))}
         </select>
-        <span className="text-[11px] text-slate-400 dark:text-slate-500">
-          비교군 섹터 평균·규제 데드라인에 사용 (서버 미전송)
+        <span className="font-sans text-[11px] text-faint">
+          비교군 산정용 · 서버 미전송
         </span>
       </div>
     </form>

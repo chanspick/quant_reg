@@ -1,23 +1,53 @@
 @import 'tailwindcss';
 
-/* SPEC-PQC-002 — Tailwind v4 인라인 토큰. 정적 대시보드(SPEC-PQC-001) 의
- * shadcn HSL 변수와는 격리. 발표 시연용이라 다크/라이트 자동만 지원.
+/* SPEC-PQC-002 — 모노크롬 리디자인 디자인 시스템 (phase1).
+ * 워밍 다크 모노크롬, dark-only (라이트모드 없음). 레퍼런스 = autax.
+ * 모든 컴포넌트는 여기 정의된 유틸리티만 사용한다.
+ * Tailwind v4 @theme 인라인 토큰 — slate/blue/brand 등 다색 팔레트는 전면 폐기.
  */
 
 @theme {
-  --color-brand-50: #eff6ff;
-  --color-brand-500: #2563eb;
-  --color-brand-600: #1d4ed8;
-  --color-brand-700: #1e40af;
+  /* 무채(먹색/크림/웜그레이) 단계 */
+  --color-coal: #1a1a1a; /* bg-coal — 페이지 배경 */
+  --color-surface: #221f1b; /* bg-surface — 카드 */
+  --color-surface-2: #2a2620; /* bg-surface-2 — 카드 내 강조면/트랙 */
+  --color-ink: #efe9df; /* text-ink — 주 텍스트, 제목, 큰 숫자 */
+  --color-muted: #a9a294; /* text-muted — 보조 텍스트, 라벨 */
+  --color-faint: #6f6a60; /* text-faint — 캡션, 메타, 출처 */
+  --color-edge: #3a3530; /* border-edge — 모든 보더 */
+
+  /* 강조 1색 전용 — 위험/경고/미달/at-risk/fail/낮은점수 */
+  --color-risk: #ff8a80; /* text-risk / bg-risk */
+
+  /* 타이포 — 제목·등급·큰 숫자는 serif, 본문·라벨은 sans */
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Pretendard Variable', Pretendard, sans-serif;
 }
 
+/* dark-only 기본값. FOUC 방지를 위해 배경/텍스트를 루트에 고정. */
 html {
-  font-family:
-    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, sans-serif;
+  background-color: var(--color-coal);
+  color: var(--color-ink);
+  color-scheme: dark;
+  font-family: var(--font-sans);
 }
 
-/* 진행 인디케이터 펄스 — 시각 임팩트용 */
+body {
+  background-color: var(--color-coal);
+  color: var(--color-ink);
+}
+
+/* 제목 기본 serif — 컴포넌트에서 font-serif 미지정 시에도 위계 보장 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+}
+
+/* 진행 인디케이터 펄스 — 시각 임팩트용 (유지) */
 @keyframes pulse-scale {
   0%,
   100% {

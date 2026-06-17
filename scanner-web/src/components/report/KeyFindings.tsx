@@ -26,48 +26,38 @@ export function KeyFindings({ result }: KeyFindingsProps): React.JSX.Element {
   return (
     <section
       aria-labelledby="findings-title"
-      className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+      className="rounded-lg border border-edge bg-surface p-6"
     >
-      <h3
-        id="findings-title"
-        className="mb-1 text-lg font-semibold text-slate-900 dark:text-slate-100"
-      >
+      <h3 id="findings-title" className="mb-1 font-serif text-lg text-ink">
         핵심 발견
       </h3>
-      <p className="mb-5 text-xs text-slate-500 dark:text-slate-400">
-        감점이 발생한 {findings.length}개 항목 (영향 큰 순). 모든 측정은{' '}
-        <code className="font-mono">source: automated</code> 입니다.
+      <p className="mb-5 text-xs text-faint">
+        감점 항목 {findings.length}개 · 영향 큰 순 · source: automated
       </p>
 
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-2">
         {findings.map((f) => (
           <li
             key={`${f.axis}-${f.id}`}
-            className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50"
+            className="rounded-lg border border-edge bg-surface-2 p-4"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded bg-slate-200 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+                  <span className="rounded border border-edge px-1.5 py-0.5 text-[10px] text-muted">
                     {AXIS_LABEL[f.axis]}
                   </span>
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                    {f.label}
-                  </h4>
+                  <h4 className="text-sm font-semibold text-ink">{f.label}</h4>
                 </div>
-                <p className="mt-1 font-mono text-[10px] text-slate-400 dark:text-slate-500">
-                  {f.id}
-                </p>
+                <p className="mt-1 font-mono text-[10px] text-faint">{f.id}</p>
               </div>
-              <span className="shrink-0 rounded bg-red-500/15 px-2 py-0.5 font-mono text-[11px] font-semibold text-red-700 dark:text-red-300">
+              <span className="shrink-0 font-serif text-2xl text-risk tabular-nums">
                 −{f.deduction}
               </span>
             </div>
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <SourceChip source="automated" size="sm" />
-              <span className="text-[11px] italic text-slate-600 dark:text-slate-400">
-                근거: {f.source}
-              </span>
+              <span className="text-[11px] text-faint">근거: {f.source}</span>
             </div>
           </li>
         ))}

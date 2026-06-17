@@ -93,7 +93,8 @@ export function DomainCard({
           <span
             aria-label={`종합 점수 ${headline}`}
             className={cn(
-              'font-mono text-base font-bold tabular-nums sm:text-lg',
+              // 큰 종합 점수 — 워밍 모노크롬 리스타일에서 serif 로 위계 강조.
+              'font-serif text-lg font-bold tabular-nums sm:text-xl',
               headlineBands.text,
             )}
           >

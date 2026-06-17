@@ -23,9 +23,9 @@ interface ActionPlanProps {
 }
 
 const STAGE_META = [
-  { key: 'immediate', label: '즉시', accent: 'border-red-500/40 bg-red-500/5' },
-  { key: 'shortTerm', label: '단기', accent: 'border-amber-500/40 bg-amber-500/5' },
-  { key: 'midTerm', label: '중기', accent: 'border-sky-500/40 bg-sky-500/5' },
+  { key: 'immediate', label: '즉시' },
+  { key: 'shortTerm', label: '단기' },
+  { key: 'midTerm', label: '중기' },
 ] as const;
 
 const LEVEL_LABEL: Record<Difficulty | Impact, string> = {
@@ -45,24 +45,21 @@ export function ActionPlan({ result, tier }: ActionPlanProps): React.JSX.Element
   return (
     <section
       aria-labelledby="action-plan-title"
-      className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+      className="rounded-lg border border-edge bg-surface p-6"
     >
       <h3
         id="action-plan-title"
-        className="mb-1 text-lg font-semibold text-slate-900 dark:text-slate-100"
+        className="mb-5 font-serif text-lg text-ink"
       >
         우선순위 액션플랜
       </h3>
-      <p className="mb-5 text-xs text-slate-500 dark:text-slate-400">
-        측정된 fired 룰과 PQC 전환 상태에 기반한 단계별 조치 (표준 인용 포함).
-      </p>
 
       {plan.execSummary && (
-        <div className="mb-6 rounded-lg border border-violet-200 bg-violet-50/40 p-4 dark:border-violet-900/60 dark:bg-violet-950/20">
-          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-violet-700 dark:text-violet-300">
+        <div className="mb-6 rounded-lg border border-edge bg-surface-2 p-4">
+          <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-faint">
             경영진 요약 (LLM)
           </h4>
-          <p className="whitespace-pre-line text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+          <p className="whitespace-pre-line text-sm leading-relaxed text-muted">
             {plan.execSummary}
           </p>
         </div>
@@ -74,16 +71,11 @@ export function ActionPlan({ result, tier }: ActionPlanProps): React.JSX.Element
           if (items.length === 0) return null;
           return (
             <div key={stage.key}>
-              <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
-                <span
-                  className={cn(
-                    'inline-flex items-center rounded border px-2 py-0.5 text-xs',
-                    stage.accent,
-                  )}
-                >
+              <h4 className="mb-2 flex items-center gap-2 font-serif text-sm text-ink">
+                <span className="inline-flex items-center rounded border border-edge px-2 py-0.5 text-xs text-muted">
                   {stage.label}
                 </span>
-                <span className="text-xs font-normal text-slate-400 dark:text-slate-500">
+                <span className="text-xs font-normal text-faint">
                   {items.length}개
                 </span>
               </h4>
@@ -98,7 +90,7 @@ export function ActionPlan({ result, tier }: ActionPlanProps): React.JSX.Element
       </div>
 
       {tier === 'free' && (
-        <p className="mt-5 rounded bg-slate-100 px-3 py-2 text-xs leading-relaxed text-slate-600 dark:bg-slate-800/60 dark:text-slate-400">
+        <p className="mt-5 rounded border border-edge bg-surface-2 px-3 py-2 text-xs leading-relaxed text-faint">
           난이도·영향도·CBOM 등 상세 액션플랜은 유료 리포트에서 제공됩니다
           (<code className="font-mono">?tier=paid</code> 미리보기).
         </p>
@@ -115,16 +107,19 @@ function ActionRow({
   tier: 'free' | 'paid';
 }): React.JSX.Element {
   return (
-    <li className="rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/50">
-      <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-        {item.title}
-      </p>
+    <li className="rounded-lg border border-edge bg-surface-2 p-3">
+      <p className="text-sm font-medium text-ink">{item.title}</p>
       {tier === 'paid' && (
-        <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
-          <span className="rounded bg-slate-200 px-1.5 py-0.5 dark:bg-slate-700">
+        <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] text-faint">
+          <span className="rounded border border-edge px-1.5 py-0.5">
             난이도 {LEVEL_LABEL[item.difficulty]}
           </span>
-          <span className="rounded bg-slate-200 px-1.5 py-0.5 dark:bg-slate-700">
+          <span
+            className={cn(
+              'rounded border border-edge px-1.5 py-0.5',
+              item.impact === 'high' && 'border-risk text-risk',
+            )}
+          >
             영향 {LEVEL_LABEL[item.impact]}
           </span>
           <span className="italic">{item.standardRef}</span>

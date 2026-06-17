@@ -55,9 +55,10 @@ function ScenarioCard({
         <span
           className={cn(
             'rounded-full px-2 py-0.5 text-[10px] font-medium',
+            // 워밍 모노크롬 — 보수/실증을 무채 농담으로 구분(보수=진함, 실증=옅음).
             variant === 'conservative'
-              ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
-              : 'bg-sky-500/15 text-sky-700 dark:text-sky-300',
+              ? 'bg-foreground/[0.08] text-foreground'
+              : 'bg-muted text-muted-foreground',
           )}
         >
           {variant === 'conservative'
@@ -201,7 +202,7 @@ export function DomainDetailPanel({
           <ul className="flex flex-col gap-1.5 text-sm">
             {recommendations.map((r, i) => (
               <li key={i} className="flex items-start gap-2">
-                <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-muted-foreground" />
                 <span className="flex-1 leading-relaxed text-[hsl(var(--muted-foreground))]">
                   {r.text}
                 </span>

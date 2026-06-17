@@ -33,34 +33,40 @@ export function scoreBand(value: number): ScoreBandName {
 
 export function scoreBandClasses(value: number): ScoreBandClasses {
   const band = scoreBand(value);
+  // 모노크롬 매핑: 위험밴드만 risk(#ff8a80), 나머지는 ink/muted 농담.
+  // 다색 금지 — 채움/텍스트/보더는 무채(크림/웜그레이)로 위계만 표현한다.
   switch (band) {
     case '위험':
+      // 위험: 유일한 강조색
       return {
-        fill: 'bg-red-500',
-        text: 'text-red-700 dark:text-red-300',
-        border: 'border-red-500',
-        ringSoft: 'bg-red-500/15',
+        fill: 'bg-risk',
+        text: 'text-risk',
+        border: 'border-risk',
+        ringSoft: 'bg-risk/15',
       };
     case '주의':
+      // 주의: 어두운 웜그레이 농담 (강조 아님)
       return {
-        fill: 'bg-amber-500',
-        text: 'text-amber-700 dark:text-amber-300',
-        border: 'border-amber-500',
-        ringSoft: 'bg-amber-500/15',
+        fill: 'bg-muted',
+        text: 'text-muted',
+        border: 'border-edge',
+        ringSoft: 'bg-muted/15',
       };
     case '양호':
+      // 양호: 밝은 크림 채움 + 보조 텍스트
       return {
-        fill: 'bg-sky-500',
-        text: 'text-sky-700 dark:text-sky-300',
-        border: 'border-sky-500',
-        ringSoft: 'bg-sky-500/15',
+        fill: 'bg-ink',
+        text: 'text-muted',
+        border: 'border-edge',
+        ringSoft: 'bg-ink/10',
       };
     case '우수':
+      // 우수: 가장 밝은 크림 (최상위 위계)
       return {
-        fill: 'bg-emerald-500',
-        text: 'text-emerald-700 dark:text-emerald-300',
-        border: 'border-emerald-500',
-        ringSoft: 'bg-emerald-500/15',
+        fill: 'bg-ink',
+        text: 'text-ink',
+        border: 'border-edge',
+        ringSoft: 'bg-ink/15',
       };
   }
 }

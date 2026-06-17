@@ -17,18 +17,15 @@ interface StatusBadgeProps {
 }
 
 /**
- * Enum 값 → tone 매핑.
+ * Enum 값 → tone 매핑 (tone 분류 자체는 불변, 색만 워밍 모노크롬화).
  *
- * positive (emerald):
- *   - 활성화, 자동 갱신, 운영 성숙, 기본 제공, 하이브리드
- * neutral-good (sky):
- *   - 베타 적용, 분기 자동 갱신
- * warning (amber):
- *   - 도입 검토 단계, 수동 갱신
- * unknown (slate):
- *   - 미지원, 미감지, 미설정
- * negative (red):
- *   - 비활성화, 차단됨, 준비 미착수, 전환 미실시, 만료 임박
+ * positive: 활성화, 자동 갱신, 운영 성숙, 기본 제공, 하이브리드
+ * neutral-good: 베타 적용, 분기 자동 갱신
+ * warning: 도입 검토 단계, 수동 갱신
+ * unknown: 미지원, 미감지, 미설정
+ * negative: 비활성화, 차단됨, 준비 미착수, 전환 미실시, 만료 임박
+ *
+ * 위험(negative)만 강조 1색(destructive). 나머지 4 tone 은 무채 농담으로 위계 표현.
  */
 const TONE_MAP: Record<string, Tone> = {
   // positive
@@ -56,16 +53,18 @@ const TONE_MAP: Record<string, Tone> = {
 };
 
 const TONE_CLASSES: Record<Tone, string> = {
+  // 무채 농담 — 긍정일수록 진하게(foreground), 중립/미확정일수록 옅게(muted).
   positive:
-    'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30',
+    'bg-foreground/[0.08] text-foreground border border-foreground/20',
   'neutral-good':
-    'bg-sky-500/15 text-sky-700 dark:text-sky-300 border border-sky-500/30',
+    'bg-foreground/[0.06] text-foreground/85 border border-foreground/15',
   warning:
-    'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30',
+    'bg-muted text-foreground/70 border border-foreground/15',
   unknown:
-    'bg-slate-500/15 text-slate-700 dark:text-slate-300 border border-slate-500/30',
+    'bg-muted text-muted-foreground border border-border',
+  // 위험만 강조 1색 (destructive=라이트 머티드레드/다크 risk).
   negative:
-    'bg-red-500/15 text-red-700 dark:text-red-300 border border-red-500/30',
+    'bg-destructive/15 text-destructive border border-destructive/30',
 };
 
 function resolveTone(value: string): Tone {

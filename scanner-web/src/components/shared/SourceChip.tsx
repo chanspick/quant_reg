@@ -19,27 +19,16 @@ interface VariantToken {
   dot: string;
 }
 
+// 모노크롬: 색 구분 폐기 → 모든 출처는 동일한 무채 칩(text-faint + border-edge),
+// 구분은 라벨 텍스트로만. (정직성 라벨 의미 보존)
+const CHIP_BASE = 'border border-edge text-faint';
+const DOT_BASE = 'bg-faint';
+
 const VARIANTS: Record<ScoreSource, VariantToken> = {
-  automated: {
-    label: '자동 측정',
-    chip: 'bg-sky-500/15 text-sky-700 dark:text-sky-300',
-    dot: 'bg-sky-500',
-  },
-  manual: {
-    label: '수동 리서치',
-    chip: 'bg-amber-500/15 text-amber-700 dark:text-amber-300',
-    dot: 'bg-amber-500',
-  },
-  'llm+verified': {
-    label: 'LLM + 샘플 검증',
-    chip: 'bg-violet-500/15 text-violet-700 dark:text-violet-300',
-    dot: 'bg-violet-500',
-  },
-  'llm-only': {
-    label: 'LLM (미검증)',
-    chip: 'bg-violet-500/15 text-violet-700 dark:text-violet-300',
-    dot: 'bg-violet-400 dark:bg-violet-500',
-  },
+  automated: { label: '자동 측정', chip: CHIP_BASE, dot: DOT_BASE },
+  manual: { label: '수동 리서치', chip: CHIP_BASE, dot: DOT_BASE },
+  'llm+verified': { label: 'LLM 검증', chip: CHIP_BASE, dot: DOT_BASE },
+  'llm-only': { label: 'LLM 미검증', chip: CHIP_BASE, dot: DOT_BASE },
 };
 
 export function SourceChip({

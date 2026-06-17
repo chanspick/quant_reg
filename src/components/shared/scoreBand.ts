@@ -1,10 +1,12 @@
 /**
- * SPEC-PQC-001 §4.7 점수 시각화 배지 사양:
- *   0~30  → 위험 (red)
- *   31~60 → 주의 (amber)
- *   61~80 → 양호 (sky)
- *   81~100 → 우수 (emerald)
+ * SPEC-PQC-001 §4.7 점수 시각화 배지 사양 (모노크롬 리스타일):
+ *   0~30  → 위험 (destructive/risk 강조 1색)
+ *   31~60 → 주의 (ink 농담 — 진한 무채)
+ *   61~80 → 양호 (foreground 무채)
+ *   81~100 → 우수 (muted-foreground 옅은 무채)
  *
+ * 시그니처·임계값(scoreBand 분기)은 불변. 색 문자열만 워밍 모노크롬으로 교체한다.
+ * 위험만 강조색(destructive=라이트 머티드레드/다크 risk #ff8a80), 나머지는 무채 농담.
  * 순수 함수만 export 한다 (의존성 없음).
  */
 
@@ -35,41 +37,46 @@ export function scoreBand(value: number): ScoreBandName {
 }
 
 /**
- * 밴드별 Tailwind 클래스 묶음.
- * - dark 모드 대비를 위해 fill 은 -500 톤을 사용한다 (밝기 충분).
- * - text 는 light: -700, dark: -300 으로 4.5:1 이상을 만족하도록 조합.
+ * 밴드별 Tailwind 클래스 묶음 (워밍 모노크롬).
+ * - 위험: 강조 1색(destructive). 라이트=머티드레드, 다크=risk #ff8a80 — 토큰으로 자동 전파.
+ * - 주의/양호/우수: 무채 농담. fill 은 foreground/muted-foreground 농담으로 위계 표현.
+ * - text 는 시맨틱 토큰으로 light/dark 양쪽 대비를 자동 확보 (별도 dark: variant 불필요).
  * - ringSoft 는 /15 알파로 카드/칩 배경에 사용.
  */
 export function scoreBandClasses(value: number): ScoreBandClasses {
   const band = scoreBand(value);
   switch (band) {
     case '위험':
+      // 강조 1색 — 위험만 destructive(risk) 로 시선 집중.
       return {
-        fill: 'bg-red-500',
-        text: 'text-red-700 dark:text-red-300',
-        border: 'border-red-500',
-        ringSoft: 'bg-red-500/15',
+        fill: 'bg-destructive',
+        text: 'text-destructive',
+        border: 'border-destructive',
+        ringSoft: 'bg-destructive/15',
       };
     case '주의':
+      // 진한 무채 — foreground 불투명도 농담으로 "주의" 위계.
       return {
-        fill: 'bg-amber-500',
-        text: 'text-amber-700 dark:text-amber-300',
-        border: 'border-amber-500',
-        ringSoft: 'bg-amber-500/15',
+        fill: 'bg-foreground/70',
+        text: 'text-foreground',
+        border: 'border-foreground/50',
+        ringSoft: 'bg-foreground/10',
       };
     case '양호':
+      // 중간 무채 — foreground 옅게.
       return {
-        fill: 'bg-sky-500',
-        text: 'text-sky-700 dark:text-sky-300',
-        border: 'border-sky-500',
-        ringSoft: 'bg-sky-500/15',
+        fill: 'bg-foreground/45',
+        text: 'text-foreground/80',
+        border: 'border-foreground/30',
+        ringSoft: 'bg-foreground/[0.07]',
       };
     case '우수':
+      // 옅은 무채 — muted-foreground 톤(차분/안정).
       return {
-        fill: 'bg-emerald-500',
-        text: 'text-emerald-700 dark:text-emerald-300',
-        border: 'border-emerald-500',
-        ringSoft: 'bg-emerald-500/15',
+        fill: 'bg-muted-foreground',
+        text: 'text-muted-foreground',
+        border: 'border-muted-foreground/40',
+        ringSoft: 'bg-muted-foreground/15',
       };
   }
 }

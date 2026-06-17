@@ -112,11 +112,9 @@ function CalibrationCaveat({
   return (
     <aside
       aria-label={title}
-      className="rounded-md border-l-4 border-amber-500 bg-amber-500/5 p-4 text-sm"
+      className="rounded-md border-l-4 border-destructive bg-destructive/5 p-4 text-sm"
     >
-      <p className="mb-2 font-semibold text-amber-700 dark:text-amber-300">
-        {title}
-      </p>
+      <p className="mb-2 font-semibold text-destructive">{title}</p>
       <p className="leading-relaxed text-[hsl(var(--foreground))]/90">{body}</p>
     </aside>
   );
@@ -199,8 +197,9 @@ function ScenarioCard({
   meaning: string;
   accent: 'sky' | 'violet';
 }): React.JSX.Element {
-  const border = accent === 'sky' ? 'border-sky-500/40' : 'border-violet-500/40';
-  const bg = accent === 'sky' ? 'bg-sky-500/5' : 'bg-violet-500/5';
+  // 워밍 모노크롬 — 두 시나리오는 강조색 대신 무채 농담으로만 구분(보수=진함, 실증=옅음).
+  const border = accent === 'sky' ? 'border-foreground/30' : 'border-border';
+  const bg = accent === 'sky' ? 'bg-foreground/[0.04]' : 'bg-muted/40';
   return (
     <div className={`rounded-md border ${border} ${bg} p-4`}>
       <h3 className="text-sm font-semibold">{title}</h3>

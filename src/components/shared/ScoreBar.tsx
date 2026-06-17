@@ -99,8 +99,8 @@ export function ScoreBar({
             className={cn(
               'absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2',
               'block h-2.5 w-2.5 rounded-full border border-[hsl(var(--background))]',
-              // 보조는 fill 톤보다 살짝 진하게: slate-700 in light, slate-200 in dark
-              'bg-slate-700 dark:bg-slate-200',
+              // 보조 마커 — 무채 통일. foreground 톤으로 라이트/다크 모두 대비 확보.
+              'bg-foreground',
               'shadow-[0_0_0_1px_hsl(var(--foreground)/0.15)]',
               'transition-[left] duration-300 ease-out',
             )}

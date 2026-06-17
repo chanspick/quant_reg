@@ -40,7 +40,7 @@ export function ScoreBar({
         className={cn(
           'shrink-0 truncate text-sm font-semibold sm:text-base',
           'w-28 sm:w-32',
-          'text-slate-900 dark:text-slate-100',
+          'text-ink',
         )}
         title={label}
       >
@@ -51,7 +51,7 @@ export function ScoreBar({
         className={cn(
           'relative flex-1 overflow-hidden rounded-full',
           'h-2.5 sm:h-3',
-          'bg-slate-200 dark:bg-slate-800',
+          'bg-surface-2',
         )}
         role="progressbar"
         aria-valuemin={0}
@@ -59,10 +59,11 @@ export function ScoreBar({
         aria-valuenow={primary}
         aria-valuetext={ariaLabel}
       >
+        {/* 채움: 기본 ink, 값<40 이면 risk (미달 강조). */}
         <div
           className={cn(
             'h-full rounded-full transition-[width] duration-500 ease-out',
-            bandClasses.fill,
+            primary < 40 ? 'bg-risk' : 'bg-ink',
           )}
           style={{ width: `${primary}%` }}
         />

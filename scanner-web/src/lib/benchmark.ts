@@ -75,7 +75,8 @@ export async function loadBenchmark(): Promise<BenchmarkFile | null> {
  *
  * @param targetOverall  대상 도메인의 종합 점수
  * @param matchSectorLabels  섹터 평균/앞선동종사 계산에 포함할 benchmark sector 라벨 집합.
- *                           null 이면 섹터 항목 unmount (전체 비교군 대비만).
+ *                           이제 **정확 라벨 집합**({선택 섹터}) — d.sector 와 1:1 매칭.
+ *                           null 이면(='일반' 미지정) 섹터 항목 unmount (전체 비교군 대비만).
  */
 export function computePosition(
   benchmark: BenchmarkFile,

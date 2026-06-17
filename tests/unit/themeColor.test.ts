@@ -3,21 +3,20 @@ import { hslTripletToHex } from '@/lib/themeColor';
 
 // SPEC-PQC-001 §3.2 — REQ-THM-004 (theme_color 동기화) 의 핵심 변환 로직 검증.
 // shadcn/ui --background 토큰의 두 가지 형태(공백 구분/콤마 구분)와
-// :root / .dark 의 실제 값(`210 20% 98%`, `215 30% 8%`)을 대표값으로 검증한다.
+// 워밍 모노크롬 리스타일 후 :root / .dark 의 실제 값(`38 25% 94%`, `0 0% 10%`)을
+// 대표값으로 검증한다.
 
 describe('hslTripletToHex', () => {
-  it('converts the light :root --background (210 20% 98%) to its hex equivalent', () => {
-    // h=210, s=0.20, l=0.98 → 표준 HSL→RGB:
-    // c=(1-|2·0.98-1|)·0.20 = 0.04·0.20 = 0.008
-    // x=c·(1-|((210/60) mod 2)-1|) = 0.008·0.5 = 0.004
-    // m=0.98-0.004 = 0.976 → (r,g,b) ≈ (0.976, 0.980, 0.984) → (249,250,251)
-    expect(hslTripletToHex('210 20% 98%')).toBe('#F9FAFB');
+  it('converts the light :root --background (38 25% 94% 워밍 크림) to its hex equivalent', () => {
+    // h=38, s=0.25, l=0.94 → 표준 HSL→RGB:
+    // c=(1-|2·0.94-1|)·0.25 = 0.12·0.25 = 0.03
+    // m=0.94-0.015 = 0.925 → 워밍 크림 (#F4F1EC)
+    expect(hslTripletToHex('38 25% 94%')).toBe('#F4F1EC');
   });
 
-  it('converts the dark .dark --background (215 30% 8%) to a dark blue-grey hex', () => {
-    // h=215, s=0.30, l=0.08 → c=0.048, x≈0.02, m=0.056
-    // (r,g,b) ≈ (0.056, 0.076, 0.104) → (14, 19, 27)
-    expect(hslTripletToHex('215 30% 8%')).toBe('#0E131B');
+  it('converts the dark .dark --background (0 0% 10% coal) to a warm coal hex', () => {
+    // h=0, s=0, l=0.10 → 무채(c=0) → r=g=b=round(0.10·255)=26 → #1A1A1A
+    expect(hslTripletToHex('0 0% 10%')).toBe('#1A1A1A');
   });
 
   it('accepts comma-separated HSL form', () => {
