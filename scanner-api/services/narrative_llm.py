@@ -23,7 +23,7 @@ from models.scan_result import NarrativeMeta
 
 logger = logging.getLogger("scanner_api.narrative")
 
-MODEL_ID = "gemini-2.0-flash"
+MODEL_ID = "gemini-3.1-flash-lite"
 _VERTEX_PROJECT = "496146676363"
 _VERTEX_LOCATION = "us-central1"
 
