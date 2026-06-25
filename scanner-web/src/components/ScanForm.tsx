@@ -1,4 +1,4 @@
-import { useState, useCallback, type FormEvent } from 'react';
+import { useState, useCallback, useEffect, type FormEvent } from 'react';
 import { cn } from '@/lib/utils';
 import {
   HostnameValidationError,
@@ -34,6 +34,11 @@ export function ScanForm({
   const [raw, setRaw] = useState(initialValue);
   const [sector, setSector] = useState<Sector>(initialSector);
   const [error, setError] = useState<string | null>(null);
+
+  // quick scan 등 외부에서 initialValue 가 변경되면 폼 값을 동기화
+  useEffect(() => {
+    if (initialValue) setRaw(initialValue);
+  }, [initialValue]);
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {

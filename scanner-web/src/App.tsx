@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { ScanForm } from './components/ScanForm';
 import { LoadingProgress } from './components/LoadingProgress';
 import { ResultDohae } from './components/ResultDohae';
+import { HeroSection } from './components/HeroSection';
 import { useScan, type ScanError } from './data/useScan';
 import type { Sector } from './lib/sector';
 import { readTier } from './lib/tier';
@@ -21,11 +22,14 @@ import { readTier } from './lib/tier';
 export function App(): React.JSX.Element {
   const { status, data, error, startedAt, scan, reset } = useScan();
   const [sector, setSector] = useState<Sector>('일반');
+  // loading 중 hostname 표시용 — useScan 은 loading 시 data=null
+  const [pendingHostname, setPendingHostname] = useState('');
   const tier = useMemo(() => readTier(), []);
 
   const handleScan = useCallback(
     (hostname: string, selectedSector: Sector) => {
       setSector(selectedSector);
+      setPendingHostname(hostname);
       void scan(hostname);
     },
     [scan],
@@ -33,20 +37,31 @@ export function App(): React.JSX.Element {
 
   const handleScanAgain = useCallback(() => {
     reset();
+    setPendingHostname('');
   }, [reset]);
 
   return (
     <div className="min-h-screen bg-coal text-ink">
       <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-8 sm:px-6 sm:py-12">
-        {/* Header */}
+        {/* Site header */}
         <header>
-          <h1 className="font-serif text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-            동적 PQC 스캐너
-          </h1>
-          <p className="mt-2 font-sans text-sm leading-relaxed text-muted">
-            도메인을 입력하면 TLS · 하이브리드 KEM · 인증서 운영 · 양자 위협 4축 점수를 측정합니다.
-          </p>
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h1 className="font-serif text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              PQC 준비도 스캐너
+            </h1>
+            <span className="font-mono text-[10px] text-faint">
+              양자컴퓨팅 강의 기말 프로젝트
+            </span>
+          </div>
         </header>
+
+        {/* 결과가 없을 때만 Hero 노출 (스캔 중·완료 시 스크롤 최소화) */}
+        {status === 'idle' && (
+          <HeroSection
+            onQuickScan={(hostname) => handleScan(hostname, sector)}
+            disabled={false}
+          />
+        )}
 
         {/* Form (항상 노출) */}
         <section
@@ -56,7 +71,7 @@ export function App(): React.JSX.Element {
           <ScanForm
             onScan={handleScan}
             disabled={status === 'loading'}
-            initialValue={data?.hostname ?? ''}
+            initialValue={data?.hostname ?? pendingHostname}
             initialSector={sector}
           />
         </section>
@@ -65,7 +80,7 @@ export function App(): React.JSX.Element {
         {status === 'loading' && startedAt !== null && (
           <LoadingProgress
             startedAt={startedAt}
-            hostname={data?.hostname ?? '...'}
+            hostname={pendingHostname || data?.hostname || '...'}
           />
         )}
 
@@ -82,29 +97,18 @@ export function App(): React.JSX.Element {
           />
         )}
 
-        {/* Footer (항상 노출) — 전역 disclaimer 통합 1곳 */}
-        <footer className="mt-8 border-t border-edge pt-5 font-sans text-xs text-faint">
-          <p className="text-faint">
-            발표 시연용 임시 데모 — 진단 · 감사 용도 금지. 입력은{' '}
-            <code className="font-mono">https://</code> 제거 · 소문자 변환 · IP 거부, 최대 60초 소요
+        {/* Footer */}
+        <footer className="mt-4 border-t border-edge pt-5 font-sans text-xs text-faint">
+          <p>
+            발표 시연용 데모 — 진단 · 감사 용도 금지.{' '}
+            <code className="font-mono">https://</code> 제거 · 소문자 변환 · IP 거부, 최대 60초
             (sslyze + PQC probe + Claude Sonnet 4.6).
           </p>
-          <p className="mt-2">
-            정적 47개 도메인 대시보드:{' '}
-            <a
-              href="https://quant-reg.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted underline hover:text-ink"
-            >
-              quant-reg.vercel.app
-            </a>
-          </p>
-          <p className="mt-1">
-            강의 개념 매핑:{' '}
-            <code className="font-mono">
-              .moai/specs/SPEC-PQC-001/presentation-concept-mapping.md
-            </code>
+          <p className="mt-1.5">
+            데이터 출처 인용 확인:{' '}
+            <span className="font-mono">각 측정값 옆 SourceChip 참조</span>
+            {' · '}
+            <span className="font-mono">점수 근거 &gt; 자세히</span> 에서 rule trace 확인 가능.
           </p>
         </footer>
       </div>
