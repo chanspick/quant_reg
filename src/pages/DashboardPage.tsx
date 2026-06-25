@@ -4,6 +4,7 @@ import { useDomains } from '@/data/useDomains';
 import { ko } from '@/i18n/ko';
 import { cn } from '@/lib/utils';
 import { applyFilters, applySort, useDashboardState } from '@/lib/dashboardState';
+import { DashboardHero } from '@/components/dashboard/DashboardHero';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { DomainCard } from '@/components/dashboard/DomainCard';
 import { EmptyState } from '@/components/dashboard/EmptyState';
@@ -108,6 +109,9 @@ export function DashboardPage(): React.JSX.Element {
             <EmptyState variant="no-data" />
           ) : (
             <>
+              {/* 살아있는 보고서 — 컨텍스트·위협·측정 개요 */}
+              <DashboardHero domains={domains} />
+
               <SectorSummary domains={domains} />
 
               {/* Controls bar */}
