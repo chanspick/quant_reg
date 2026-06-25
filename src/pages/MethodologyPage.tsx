@@ -60,7 +60,7 @@ export function MethodologyPage(): React.JSX.Element {
         {/* 인터랙티브 계산기 */}
         <QuantumCalculator />
         <Link
-          to="/"
+          to="/dashboard"
           className="inline-block text-xs text-[hsl(var(--muted-foreground))] underline decoration-dotted underline-offset-2 hover:text-[hsl(var(--foreground))]"
         >
           대시보드에서 실제 도메인 점수 확인 →
@@ -166,7 +166,7 @@ function Phase2Discovery(): React.JSX.Element {
         </aside>
 
         <Link
-          to="/about"
+          to="/"
           className="inline-block text-xs text-[hsl(var(--muted-foreground))] underline decoration-dotted underline-offset-2 hover:text-[hsl(var(--foreground))]"
         >
           어바웃 탭에서 데모 큐레이션 및 핵심 발견 전체 →

@@ -50,8 +50,8 @@ export function AboutPage(): React.JSX.Element {
 
       <Section title="논문 인용 체인">
         <p className="text-[hsl(var(--muted-foreground))]">
-          이 프로젝트는 교수님 논문을 이론 프레임으로 삼고, 그 논문이 인용하는 자원 추정
-          논문들을 직접 적용했습니다. 아래 체인이 그 지적 계보입니다.
+          강의에서 다룬 Shor·Grover 알고리즘의 자원 추정 공식을 코드로 직접 구현했습니다.
+          아래는 본 프로젝트가 인용한 논문들의 지적 계보입니다.
         </p>
         <CitationChain />
       </Section>
@@ -164,7 +164,7 @@ function Keystone(): React.JSX.Element {
         <p>{ko.about.keystone}</p>
       </blockquote>
       <p className="px-1 text-xs text-[hsl(var(--muted-foreground))]">
-        — 본 프로젝트의 핵심 주장. 이론(교수님 논문) → 공식 직접 적용 → 실측 데이터.
+        — 본 프로젝트의 핵심 주장. 강의 개념(Shor·Grover) → 자원 추정 공식 직접 구현 → 한국 인프라 실측.
       </p>
     </div>
   );
@@ -194,7 +194,7 @@ function DeploymentsSection(): React.JSX.Element {
             <li>검색·필터·정렬, 데이터 출처 라벨 전수 표기</li>
             <li>PWA 설치 가능, 모바일 최적화</li>
           </ul>
-          <CrossLink to="/" label="대시보드에서 직접 탐색 →" />
+          <CrossLink to="/dashboard" label="대시보드에서 직접 탐색 →" />
         </div>
 
         <div className="space-y-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4">
@@ -388,7 +388,7 @@ function FindingsSection(): React.JSX.Element {
           데모 큐레이션 — 3개 대표 도메인
         </p>
         <DemoCurationTable />
-        <CrossLink to="/" label="대시보드에서 47개 전체 도메인 탐색 →" />
+        <CrossLink to="/dashboard" label="대시보드에서 47개 전체 도메인 탐색 →" />
       </div>
     </Section>
   );
@@ -722,15 +722,6 @@ function HonestyDetails(): React.JSX.Element {
 function CitationChain(): React.JSX.Element {
   return (
     <div className="space-y-0">
-      <ChainNode
-        label="이론 프레임"
-        title="김의결·안혁 (2025)"
-        subtitle="한국정보통신학회 춘계"
-        desc="Shor 알고리즘 원리 · RSA/ECC 구조적 취약점 · PQC 4종 소개 · NIST IR 8547 한국 적용 필요성"
-        color="primary"
-      />
-      <ChainArrow label="인용 · 공식 직접 적용" />
-
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <ChainNode
           label="RSA 자원 추정"

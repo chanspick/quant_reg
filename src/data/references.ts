@@ -30,7 +30,7 @@ export const REFERENCES: Record<CitationId, Citation> = {
     year: 2025,
     title: 'Shor 알고리즘의 기존 암호체계에 미치는 영향과 양자내성암호의 대응 전략',
     venue: '한국정보통신학회 2025년 춘계 종합학술대회',
-    role: '이론 프레임 — RSA/ECC 구조적 취약점, Shor 알고리즘 원리, PQC 4종(ML-KEM/ML-DSA/SLH-DSA/FALCON) 소개, NIST IR 8547 한국 적용 필요성.',
+    role: '한국 PQC 동향 참조 — RSA/ECC 구조적 취약점, Shor 알고리즘 원리, PQC 4종(ML-KEM/ML-DSA/SLH-DSA/FALCON) 소개, NIST IR 8547 한국 적용 필요성.',
   },
   'Roetteler-2017': {
     id: 'Roetteler-2017',

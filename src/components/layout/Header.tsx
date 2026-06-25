@@ -18,9 +18,9 @@ import { useDomains } from '@/data/useDomains';
  */
 
 const NAV_ITEMS = [
-  { to: '/', label: ko.nav.dashboard, end: true },
+  { to: '/', label: ko.nav.about, end: true },
+  { to: '/dashboard', label: ko.nav.dashboard, end: false },
   { to: '/methodology', label: ko.nav.methodology, end: false },
-  { to: '/about', label: ko.nav.about, end: false },
   { to: '/scan', label: ko.nav.scanner, end: false },
 ] as const;
 
