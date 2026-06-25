@@ -15,7 +15,7 @@ RUN corepack enable
 WORKDIR /build
 
 # 왜: 의존성 레이어 캐시 분리 — lockfile 변경 없을 때 pnpm install skip
-COPY package.json pnpm-lock.yaml .npmrc ./
+COPY package.json pnpm-lock.yaml .npmrc pnpm.yaml ./
 RUN pnpm install --no-frozen-lockfile --config.minimum-release-age=0
 
 # 왜: 소스 복사 후 빌드 — TS strict + Vite 6
