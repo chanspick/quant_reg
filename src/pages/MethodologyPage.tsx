@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight, Calculator } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { ko } from '@/i18n/ko';
 import { REFERENCES, type CitationId } from '@/data/references';
 import { cn } from '@/lib/utils';
@@ -38,6 +39,8 @@ export function MethodologyPage(): React.JSX.Element {
         <AxisTable />
       </Section>
 
+      <Phase2Discovery />
+
       <Section title={`2. ${ko.methodology.sectionQuantum}`}>
         <p>
           각 도메인의 인증서 키 알고리즘·길이를 추출하고, 키 종류별 자원 추정
@@ -56,6 +59,12 @@ export function MethodologyPage(): React.JSX.Element {
         />
         {/* 인터랙티브 계산기 */}
         <QuantumCalculator />
+        <Link
+          to="/"
+          className="inline-block text-xs text-[hsl(var(--muted-foreground))] underline decoration-dotted underline-offset-2 hover:text-[hsl(var(--foreground))]"
+        >
+          대시보드에서 실제 도메인 점수 확인 →
+        </Link>
       </Section>
 
       <Section title={`3. ${ko.methodology.sectionScenarios}`}>
@@ -95,6 +104,75 @@ export function MethodologyPage(): React.JSX.Element {
         ]}
       />
     </article>
+  );
+}
+
+// ─── Phase 2 발견 스토리 ─────────────────────────────────────────────────────
+
+function Phase2Discovery(): React.JSX.Element {
+  return (
+    <section className="space-y-4">
+      <h2 className="text-xl font-semibold tracking-tight">표준 도구의 사각지대 — Phase 2 발견</h2>
+      <div className="space-y-3 text-sm sm:text-[0.95rem]">
+        <aside className="rounded-md border-l-4 border-blue-500/60 bg-blue-500/5 p-4 space-y-3">
+          <p className="font-semibold text-blue-700 dark:text-blue-400">
+            측정 방법이 결과를 결정한다
+          </p>
+          <div className="space-y-2 text-sm">
+            <p>
+              처음에는 sslyze로 모든 측정을 끝낼 수 있을 것이라 예상했으나, sslyze가 협상한 cipher
+              suite에서 X25519MLKEM768이 나온 도메인은 <strong>0건</strong>이었다.
+            </p>
+            <p>
+              원인 확인 결과, sslyze의 ClientHello supported_groups에 PQC 그룹이 포함되어 있지
+              않았다 — 서버가 PQC를 지원해도 클라이언트가 제안하지 않으면 협상되지 않는 구조였다.
+            </p>
+            <p>
+              이에 Python의 <code className="rounded bg-[hsl(var(--muted))]/60 px-1 font-mono text-xs">socket</code>·
+              <code className="rounded bg-[hsl(var(--muted))]/60 px-1 font-mono text-xs">struct</code>로
+              TLS 1.3 ClientHello를 직접 조립하고 X25519MLKEM768(0x11ec)을 명시적으로 제안하는
+              raw probe를 별도 구현하였다 (외부 PQC 라이브러리 의존성 0).
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-md border border-[hsl(var(--border))]/60 bg-[hsl(var(--background))]/60 p-3 space-y-1">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
+                Phase 1 (sslyze)
+              </p>
+              <p className="font-mono text-lg font-bold text-red-600 dark:text-red-400">0건</p>
+              <p className="text-[10px] text-[hsl(var(--muted-foreground))]">
+                X25519MLKEM768 협상 없음
+              </p>
+            </div>
+            <div className="flex items-center justify-center text-[hsl(var(--muted-foreground))]">
+              <span className="text-lg">→</span>
+            </div>
+            <div className="rounded-md border border-emerald-500/40 bg-emerald-500/5 p-3 space-y-1">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
+                Phase 2 (raw probe)
+              </p>
+              <p className="font-mono text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                12 / 51
+              </p>
+              <p className="text-[10px] text-[hsl(var(--muted-foreground))]">24% 응답</p>
+            </div>
+          </div>
+
+          <p className="text-xs text-[hsl(var(--muted-foreground))]">
+            네이버 특이 케이스: ClientHello 우선 협상 아님 → HelloRetryRequest로 수용. 지원하지만
+            우선순위가 낮음.
+          </p>
+        </aside>
+
+        <Link
+          to="/about"
+          className="inline-block text-xs text-[hsl(var(--muted-foreground))] underline decoration-dotted underline-offset-2 hover:text-[hsl(var(--foreground))]"
+        >
+          어바웃 탭에서 데모 큐레이션 및 핵심 발견 전체 →
+        </Link>
+      </div>
+    </section>
   );
 }
 

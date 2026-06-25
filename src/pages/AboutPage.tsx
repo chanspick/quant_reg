@@ -1,13 +1,10 @@
 import { Download } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useInstallPrompt } from '@/lib/pwa';
 import { ko } from '@/i18n/ko';
 import { REFERENCES, type CitationId } from '@/data/references';
 import { cn } from '@/lib/utils';
 
-/**
- * SPEC-PQC-001 §3.7 (About Page).
- * 핵심 한 줄 + 주요 발견 + 강의 개념 매핑 + 인용 체인 + 논문 역할 + 개발 마일스톤 + 기술 스택.
- */
 export function AboutPage(): React.JSX.Element {
   const { canInstall, promptInstall } = useInstallPrompt();
 
@@ -27,13 +24,24 @@ export function AboutPage(): React.JSX.Element {
 
       <Keystone />
 
-      {/* 주요 발견 — 프로젝트의 핵심 측정 결과 */}
+      <DeploymentsSection />
+
+      <ProblemSection />
+
+      {/* 주요 발견 — stat boxes */}
       <KeyDiscoveries />
+
+      <FindingsSection />
 
       <Section title="강의 컨텍스트">
         <p>{ko.about.context}</p>
         <LectureMappingTable />
+        <CrossLink to="/methodology" label="측정 원리 탭에서 강의 개념별 인터랙티브 계산기 →" />
       </Section>
+
+      <ChallengesSection />
+
+      <RetrospectSection />
 
       <Section title="정직성 고지">
         <p>{ko.about.honesty}</p>
@@ -101,11 +109,9 @@ export function AboutPage(): React.JSX.Element {
         </ol>
       </Section>
 
-      {/* 개발 마일스톤 */}
       <Section title="개발 마일스톤">
         <p className="text-[hsl(var(--muted-foreground))]">
-          이 프로젝트가 실제로 어떤 과정을 거쳐 만들어졌는지 — 버그 발견, 결론 뒤집기,
-          인용 오류 교정까지 모두 포함합니다.
+          이 프로젝트가 실제로 어떤 과정을 거쳐 만들어졌는지 — git 커밋 기록 기반.
         </p>
         <MakingMilestones />
       </Section>
@@ -133,6 +139,19 @@ export function AboutPage(): React.JSX.Element {
   );
 }
 
+// ─── 크로스링크 ──────────────────────────────────────────────────────────────
+
+function CrossLink({ to, label }: { to: string; label: string }): React.JSX.Element {
+  return (
+    <Link
+      to={to}
+      className="inline-block text-xs text-[hsl(var(--muted-foreground))] underline decoration-dotted underline-offset-2 hover:text-[hsl(var(--foreground))]"
+    >
+      {label}
+    </Link>
+  );
+}
+
 // ─── Keystone ──────────────────────────────────────────────────────────────
 
 function Keystone(): React.JSX.Element {
@@ -151,7 +170,109 @@ function Keystone(): React.JSX.Element {
   );
 }
 
-// ─── 주요 발견 ─────────────────────────────────────────────────────────────
+// ─── 결과물 ────────────────────────────────────────────────────────────────
+
+function DeploymentsSection(): React.JSX.Element {
+  return (
+    <Section title="결과물">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
+              정적 대시보드
+            </span>
+            <span className="rounded bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-semibold text-blue-600 dark:text-blue-400">
+              PWA
+            </span>
+          </div>
+          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))]">
+            quant-reg.vercel.app
+          </p>
+          <ul className="space-y-1 text-xs text-[hsl(var(--foreground))]/80">
+            <li>React 19 + Vite + Tailwind v4, 13개 섹터 47개 도메인</li>
+            <li>4축 준비도 시각화, 섹터별 요약</li>
+            <li>검색·필터·정렬, 데이터 출처 라벨 전수 표기</li>
+            <li>PWA 설치 가능, 모바일 최적화</li>
+          </ul>
+          <CrossLink to="/" label="대시보드에서 직접 탐색 →" />
+        </div>
+
+        <div className="space-y-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
+              동적 스캐너
+            </span>
+            <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+              Railway
+            </span>
+          </div>
+          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))]">
+            quantreg-production.up.railway.app
+          </p>
+          <ul className="space-y-1 text-xs text-[hsl(var(--foreground))]/80">
+            <li>FastAPI 백엔드, Docker single image</li>
+            <li>임의 도메인 입력 → sslyze + raw TLS probe</li>
+            <li>Claude Sonnet 4.6 narrative (최대 60초)</li>
+            <li>정직성 메타데이터 + 진단 금지 경고 명시</li>
+          </ul>
+          <CrossLink to="/scan" label="스캐너 사용해보기 →" />
+        </div>
+      </div>
+
+      <div className="rounded-md border border-[hsl(var(--border))]/60 bg-[hsl(var(--muted))]/30 p-3 font-mono text-xs">
+        <span className="text-[hsl(var(--muted-foreground))]">실측 예시 (www.google.com, 2026-06-15): </span>
+        <span className="font-semibold">TLS 15 / KEM 30 / CertOps 85 / Quantum 20</span>
+        <span className="text-[hsl(var(--muted-foreground))]">
+          {' '}— google.com조차 TLS 위생 15점. PQC 협상과 클래식 TLS 위생은 별개로 관리됨.
+        </span>
+      </div>
+    </Section>
+  );
+}
+
+// ─── 문제 설정 ────────────────────────────────────────────────────────────
+
+function ProblemSection(): React.JSX.Element {
+  return (
+    <Section title="문제 설정">
+      <p className="leading-relaxed">
+        수업에서 다룬 Shor 알고리즘과 Grover 알고리즘은 현재 인터넷 보안의 근간인 공개키 암호(RSA,
+        ECC)와 대칭키 암호의 안전성을 정량적으로 위협한다. 양자컴퓨터의 발전이 충분히 진행되면
+        현재 신뢰하는 TLS 통신은 사실상 무력화되며, 특히{' '}
+        <strong>HNDL(Harvest Now, Decrypt Later)</strong> — 지금 암호화된 통신을 저장해두었다가
+        미래에 복호화하는 공격 — 은 이미 진행 중일 가능성이 있다.
+      </p>
+      <p className="leading-relaxed">
+        이에 대응하여 NIST는 2024년 ML-KEM·ML-DSA·SLH-DSA를 PQC 표준으로 확정하였고, 글로벌
+        빅테크는 X25519MLKEM768 같은 하이브리드 KEM으로 전환을 시작하였다. 그러나{' '}
+        <strong>한국 웹이 지금 어디까지 와 있는지 측정한 자료는 없었다.</strong>
+      </p>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4 space-y-1.5">
+          <span className="font-mono text-[10px] font-semibold text-[hsl(var(--muted-foreground))] uppercase tracking-wide">
+            연구 질문 Q1
+          </span>
+          <p className="text-sm leading-relaxed">
+            한국 주요 도메인의 PQC 전환 준비도를 4개 축으로 측정하고, 실제 신호와 표준 측정
+            도구의 사각지대를 동시에 드러낼 수 있는가?
+          </p>
+        </div>
+        <div className="rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4 space-y-1.5">
+          <span className="font-mono text-[10px] font-semibold text-[hsl(var(--muted-foreground))] uppercase tracking-wide">
+            연구 질문 Q2
+          </span>
+          <p className="text-sm leading-relaxed">
+            양자 위협을 정성적 경고가 아니라 Shor 알고리즘의 리소스 추정(필요 logical qubits)으로
+            정량화할 수 있는가?
+          </p>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+// ─── 주요 발견 stat boxes ──────────────────────────────────────────────────
 
 type Discovery = {
   number: string;
@@ -206,6 +327,168 @@ function KeyDiscoveries(): React.JSX.Element {
         </div>
       ))}
     </section>
+  );
+}
+
+// ─── 핵심 발견 서술 ────────────────────────────────────────────────────────
+
+function FindingsSection(): React.JSX.Element {
+  return (
+    <Section title="핵심 발견">
+      <FindingCard
+        label="발견 A"
+        title='"0%가 아니라 24%" — 측정 방법이 결과를 바꾼다'
+        accent="emerald"
+      >
+        <p className="leading-relaxed">
+          sslyze 표준 측정으로는 PQC 응답이 <strong>0건</strong>이었지만, raw TLS 1.3
+          ClientHello로 X25519MLKEM768을 직접 제안하자 51개 중 12개(24%)가 응답하였다. 네이버는
+          ClientHello에서 우선 협상하지는 않지만 HelloRetryRequest로 받아주는 상태였다.
+          &ldquo;한국 웹은 PQC를 안 쓴다&rdquo;는 통념을 직접 반증하는 결과로,{' '}
+          <strong>측정 방법론 자체가 결과를 좌우함</strong>을 보여준다.
+        </p>
+        <div className="rounded-md border border-[hsl(var(--border))]/60 bg-[hsl(var(--muted))]/30 p-3 text-xs">
+          <span className="font-medium">활성화 12개 도메인: </span>
+          <span className="text-[hsl(var(--muted-foreground))]">
+            LG화학, LG U+, LG이노텍, 현대자동차, 미래에셋, 크래프톤, 한국전력공사, 두산,
+            삼성SDI, 삼성바이오로직스, 네이버, 기아
+          </span>
+        </div>
+        <CrossLink to="/methodology" label="측정 원리 탭에서 Phase 2 발견 과정 →" />
+      </FindingCard>
+
+      <FindingCard
+        label="발견 B"
+        title="CDN/edge 레이어가 PQC 채택을 주도한다"
+        accent="amber"
+      >
+        <p className="leading-relaxed">
+          동일 그룹·섹터 내에서도 격차가 컸다. 삼성전자(미지원) ↔ 삼성SDI·삼성바이오로직스(활성화),
+          SK텔레콤·KT(미지원) ↔ LG U+(활성화). 서비스 본체가 아니라{' '}
+          <strong>CDN/edge 레이어가 PQC 채택의 실질적 게이트키퍼</strong>임을 시사한다. 또한 PQC
+          협상과 TLS 위생은 별개였다 — 네이버는 KEM 100점이지만 TLS 위생 10점(TLS 1.0/1.1·CBC
+          잔존).
+        </p>
+      </FindingCard>
+
+      <FindingCard
+        label="발견 C"
+        title="섹터별 준비도 격차"
+        accent="red"
+      >
+        <p className="leading-relaxed">
+          통신 TLS 평균 <strong>87점(최고)</strong> vs 도메인 최다(9개)인 공공/정부 TLS 평균{' '}
+          <strong>16점(최저)</strong>. 자동차는 KEM 평균 100으로 채택 선두. 전체 47개 중 TLS
+          위생 0점이 <strong>17개</strong> — 양자 위협 이전에 클래식 TLS 위생부터 시급하다.
+        </p>
+      </FindingCard>
+
+      <div className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
+          데모 큐레이션 — 3개 대표 도메인
+        </p>
+        <DemoCurationTable />
+        <CrossLink to="/" label="대시보드에서 47개 전체 도메인 탐색 →" />
+      </div>
+    </Section>
+  );
+}
+
+function FindingCard({
+  label,
+  title,
+  accent,
+  children,
+}: {
+  label: string;
+  title: string;
+  accent: 'emerald' | 'amber' | 'red';
+  children: React.ReactNode;
+}): React.JSX.Element {
+  const accentMap = {
+    emerald: {
+      badge: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400',
+      border: 'border-emerald-500/30',
+      bg: 'bg-emerald-500/5',
+    },
+    amber: {
+      badge: 'bg-amber-500/15 text-amber-700 dark:text-amber-400',
+      border: 'border-amber-500/30',
+      bg: 'bg-amber-500/5',
+    },
+    red: {
+      badge: 'bg-red-500/15 text-red-600 dark:text-red-400',
+      border: 'border-red-500/30',
+      bg: 'bg-red-500/5',
+    },
+  }[accent];
+
+  return (
+    <div className={cn('rounded-lg border p-4 space-y-3', accentMap.border, accentMap.bg)}>
+      <div className="space-y-1">
+        <span className={cn('rounded px-1.5 py-0.5 text-[10px] font-semibold', accentMap.badge)}>
+          {label}
+        </span>
+        <h3 className="text-sm font-semibold">{title}</h3>
+      </div>
+      <div className="space-y-2 text-sm">{children}</div>
+    </div>
+  );
+}
+
+type DemoRow = {
+  domain: string;
+  tls: number;
+  kem: number;
+  certOps: number;
+  quantum: number;
+  message: string;
+};
+
+const DEMO_ROWS: DemoRow[] = [
+  { domain: 'LG화학', tls: 92, kem: 100, certOps: 100, quantum: 23, message: '모범 사례 — 4축 중 3축 90+' },
+  { domain: '네이버', tls: 10, kem: 100, certOps: 85, quantum: 20, message: '엇갈림 — PQC는 켰지만 TLS 위생 미흡' },
+  { domain: '카카오', tls: 0, kem: 15, certOps: 65, quantum: 23, message: '전 영역 미흡 — 같은 섹터 1위 포털과 대조' },
+];
+
+function DemoCurationTable(): React.JSX.Element {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse text-xs">
+        <thead>
+          <tr className="border-b border-[hsl(var(--border))] text-left">
+            <th className="py-2 pr-3 font-semibold">도메인</th>
+            <th className="py-2 pr-3 font-semibold text-right">TLS</th>
+            <th className="py-2 pr-3 font-semibold text-right">KEM</th>
+            <th className="py-2 pr-3 font-semibold text-right">CertOps</th>
+            <th className="py-2 pr-3 font-semibold text-right">Quantum</th>
+            <th className="py-2 font-semibold">메시지</th>
+          </tr>
+        </thead>
+        <tbody>
+          {DEMO_ROWS.map((r) => (
+            <tr key={r.domain} className="border-b border-[hsl(var(--border))]/60">
+              <td className="py-2 pr-3 font-semibold">{r.domain}</td>
+              <td className={cn('py-2 pr-3 text-right font-mono tabular-nums', r.tls >= 80 ? 'text-emerald-600 dark:text-emerald-400' : r.tls >= 40 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400')}>
+                {r.tls}
+              </td>
+              <td className={cn('py-2 pr-3 text-right font-mono tabular-nums', r.kem >= 80 ? 'text-emerald-600 dark:text-emerald-400' : r.kem >= 40 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400')}>
+                {r.kem}
+              </td>
+              <td className={cn('py-2 pr-3 text-right font-mono tabular-nums', r.certOps >= 80 ? 'text-emerald-600 dark:text-emerald-400' : r.certOps >= 40 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400')}>
+                {r.certOps}
+              </td>
+              <td className="py-2 pr-3 text-right font-mono tabular-nums text-[hsl(var(--muted-foreground))]">
+                {r.quantum}
+              </td>
+              <td className="py-2 text-[hsl(var(--muted-foreground))] leading-relaxed">
+                {r.message}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -284,6 +567,109 @@ function LectureMappingTable(): React.JSX.Element {
   );
 }
 
+// ─── 개발 중 어려움 ────────────────────────────────────────────────────────
+
+type Challenge = {
+  num: string;
+  title: string;
+  detail: string;
+};
+
+const CHALLENGES: Challenge[] = [
+  {
+    num: '1',
+    title: 'Calibration scalar의 정직성',
+    detail:
+      '양자 위협 점수 정규화에 score = log₁₀(필요/가용) × 22 × (1 − 성공률 × 0.7)를 사용했는데, 22와 0.7은 정당화 논문이 없는 self-calibration scalar다. 이를 숨기는 대신 README·슬라이드·CHANGELOG·스캐너 disclosure에 동일하게 명시하고, 정성적 결론에는 ordering-preserving 해석만 사용하도록 제한하였다.',
+  },
+  {
+    num: '2',
+    title: '데이터 출처 정직성 게이트',
+    detail:
+      '모든 데이터에 source 필드를 부여하고 enum 4값(automated/manual/llm+verified/llm-only)으로 검증. TypeScript zod 검증 스크립트(pnpm validate-data)로 빌드 시 자동 검증하여 출처 불명 데이터가 production에 올라가지 못하도록 차단하였다.',
+  },
+  {
+    num: '3',
+    title: 'Windows asyncio + uvicorn 호환성',
+    detail:
+      'asyncio.create_subprocess_exec가 NotImplementedError로 죽는 문제. uvicorn --reload + watchfiles가 SelectorEventLoop로 떨어뜨려 subprocess가 동작하지 않았다. asyncio.to_thread(subprocess.run, ...) 패턴으로 event loop 타입과 무관하게 동작하도록 전환하였다.',
+  },
+  {
+    num: '4',
+    title: 'Railway 배포 6차 시도',
+    detail:
+      '.env.production gitignore 누락, 빈 public/ git 미추적, pnpm 11 supply-chain policy, @types/node 누락, PORT 8080 vs 8000 미스매치를 하나씩 해결하며, 로컬과 production이 얼마나 다른지 체험하였다.',
+  },
+];
+
+function ChallengesSection(): React.JSX.Element {
+  return (
+    <Section title="개발 중 어려움과 해결">
+      <div className="space-y-3">
+        {CHALLENGES.map((c) => (
+          <div
+            key={c.num}
+            className="flex gap-3 rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4"
+          >
+            <span className="shrink-0 font-mono text-sm font-bold text-[hsl(var(--muted-foreground))]">
+              {c.num}.
+            </span>
+            <div className="space-y-1">
+              <p className="text-sm font-semibold">{c.title}</p>
+              <p className="text-xs leading-relaxed text-[hsl(var(--muted-foreground))]">
+                {c.detail}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// ─── 회고 및 향후 ─────────────────────────────────────────────────────────
+
+const FUTURE_ITEMS = [
+  'Calibration scalar v2: self-calibration(22/0.7) → discrete grade(A/B/C/D) 또는 분위수 정규화(표본 1,000개+ 확장과 병행)',
+  'HNDL 시간축 모델링: 데이터 수명 × Q-day 추정 결합, NISQ→FTQC 로드맵 반영',
+  'LLM narrative 검증 게이트: 자동 생성 + 사람 검증 → source: llm+verified 격상',
+  '공급망 측정 자동화: 인증서 chain·CA 신뢰도·third-party 의존성 자동 측정',
+  '다축 분석 인터페이스: 데이터 소스별 신뢰도 가중치 차등 부여',
+];
+
+function RetrospectSection(): React.JSX.Element {
+  return (
+    <Section title="회고 및 향후 발전 방향">
+      <p className="leading-relaxed">
+        수업에서 배운 양자컴퓨팅 개념(Shor, Grover, 진폭 증폭, 하이브리드 KEM)을 이론이 아니라
+        작동 중인 인터넷 인프라에 대한 측정 도구로 변환할 수 있었다. 동시에 정성적 경고를
+        ordering-preserving 점수로 정량화하는 과정에서, 측정과 해석의 한계를 정직하게 공개하는
+        일이 결과 자체만큼 중요함을 배웠다.
+      </p>
+      <p className="leading-relaxed">
+        AI 도구(Claude Code)를 측정 엔진·정직성 게이트·스캐너 백엔드·배포 디버깅 전 단계에서
+        활용했지만, AI 코드를 그대로 쓰는 것만으로는 완성할 수 없었다. sslyze가 PQC를 0건으로
+        측정한다는 사실을 확인하고 raw probe를 구현하기로 한 결정, calibration scalar 문제를
+        발견하고 v2 계획을 문서화한 것, narrative를 LLM 자동 생성으로 채우지 않고 사람 검증
+        게이트를 두기로 한 것 — 모두 측정 데이터를 어떻게 다룰지에 대한 판단이 필요했다.
+      </p>
+      <div className="space-y-1.5">
+        <p className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
+          향후 발전 방향
+        </p>
+        <ul className="space-y-1.5 pl-4">
+          {FUTURE_ITEMS.map((item) => (
+            <li key={item} className="flex gap-2 text-sm">
+              <span className="mt-1 shrink-0 text-[hsl(var(--muted-foreground))]">·</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Section>
+  );
+}
+
 // ─── 정직성 세부 ──────────────────────────────────────────────────────────
 
 function HonestyDetails(): React.JSX.Element {
@@ -336,7 +722,6 @@ function HonestyDetails(): React.JSX.Element {
 function CitationChain(): React.JSX.Element {
   return (
     <div className="space-y-0">
-      {/* 1단계: 이론 프레임 */}
       <ChainNode
         label="이론 프레임"
         title="김의결·안혁 (2025)"
@@ -346,7 +731,6 @@ function CitationChain(): React.JSX.Element {
       />
       <ChainArrow label="인용 · 공식 직접 적용" />
 
-      {/* 2단계: 자원 추정 공식 */}
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <ChainNode
           label="RSA 자원 추정"
@@ -365,7 +749,6 @@ function CitationChain(): React.JSX.Element {
       </div>
       <ChainArrow label="결합 · 실증 보정" />
 
-      {/* 3단계: 실증 시뮬레이션 */}
       <ChainNode
         label="실증 시뮬레이션"
         title="Willsch et al. (2023)"
@@ -375,7 +758,6 @@ function CitationChain(): React.JSX.Element {
       />
       <ChainArrow label="한국 인프라 적용" />
 
-      {/* 4단계: 본 프로젝트 */}
       <ChainNode
         label="본 프로젝트"
         title="한국 47개 도메인 정량 분석"
@@ -432,10 +814,11 @@ function ChainArrow({ label }: { label: string }): React.JSX.Element {
   );
 }
 
-// ─── 개발 마일스톤 ────────────────────────────────────────────────────────
+// ─── 개발 마일스톤 (실제 git 커밋 기반) ──────────────────────────────────
 
 type Milestone = {
   date: string;
+  sha: string;
   phase: string;
   title: string;
   detail: string;
@@ -444,50 +827,56 @@ type Milestone = {
 
 const MILESTONES: Milestone[] = [
   {
-    date: '2026-05-14',
-    phase: 'Plan',
-    title: 'SPEC-PQC-001 작성 완료',
-    detail: '4축 측정 모델 확정 — supplyChain 강등 → quantumThreat 신설. EARS 형식 요구사항.',
+    date: '2026-05-24',
+    sha: 'f2d1e82',
+    phase: '초기 커밋',
+    title: 'Phase 1 + Phase 2 완료 → 대시보드 탄생',
+    detail:
+      'sslyze 47개 도메인 측정 (Phase 1) + raw TLS 1.3 ClientHello 프로브로 X25519MLKEM768 24% 발견 (Phase 2). "ML-KEM 0건"을 뒤집은 결론이 이 커밋 하나에 담겼다.',
+    type: 'discovery',
+  },
+  {
+    date: '2026-06-14',
+    sha: 'db1896b',
+    phase: '발표 준비',
+    title: '발표 메이킹 트랙 — 15슬라이드 구성',
+    detail: '측정 결과를 발표 구조로 변환. Phase 3·4 계획 명시 (동적 스캐너 + 살아있는 보고서).',
     type: 'normal',
   },
   {
-    date: '2026-05-17~19',
-    phase: 'Phase 1',
-    title: 'sslyze 47개 도메인 자동 측정',
+    date: '2026-06-15',
+    sha: '5ba940a',
+    phase: '동적 스캐너',
+    title: 'scanner-api Phase A 완성 — Railway 배포 성공',
     detail:
-      '4개 도메인 연결 불가 (금융권 WAF 차단). hybridKem 결과: 거의 전 도메인 30점 (ECDHE only).',
-    type: 'normal',
-  },
-  {
-    date: '2026-05-19',
-    phase: 'Bug',
-    title: 'pqc.keyExchange enum 버그 발견',
-    detail:
-      '47/47 → 46/47 레코드 zod 검증 거부. 측정 엔진(Python) ↔ 스키마(TS) 간 enum 불일치. → validate-data.ts 자동화 추가.',
-    type: 'correction',
-  },
-  {
-    date: '2026-05-19',
-    phase: 'Phase 2',
-    title: '🔑 raw TLS 1.3 프로브 → 24% X25519MLKEM768 발견',
-    detail:
-      'ClientHello supported_groups=[0x11EC] 전송 → ServerHello 파싱. Phase 1 "ML-KEM 0건" 결론을 완전히 뒤집음. 12/51 응답, 16개 ERROR_NETWORK (공공·금융권 보안 정책).',
+      'FastAPI + sslyze + raw TLS probe + Claude Sonnet 4.6 narrative 통합. Railway Docker 빌드 6차 시도 끝에 성공. Windows asyncio 버그, pnpm supply-chain 정책, PORT 미스매치 순차 해결.',
     type: 'discovery',
   },
   {
     date: '2026-06-17',
-    phase: 'Fix',
-    title: 'RSA 인용 귀속 교정',
+    sha: '585e67e',
+    phase: '인용 교정',
+    title: 'RSA 인용 귀속 교정 — Beauregard 2003·Gidney-Ekerå',
     detail:
-      'Roetteler 2017은 ECC 논문임 — RSA 2n+3의 실제 출처는 Beauregard 2003. RSA 자원 추정은 Gidney-Ekerå 2019/2025. 숫자·공식 불변, 귀속만 교정.',
+      'Roetteler 2017이 ECC 논문임을 뒤늦게 확인. RSA 2n+3의 실제 출처는 Beauregard 2003. 숫자·공식 불변, 귀속만 교정.',
     type: 'correction',
   },
   {
     date: '2026-06-25',
-    phase: 'Now',
-    title: '살아있는 보고서 완성',
+    sha: 'fca8a4f',
+    phase: '통합',
+    title: 'Vercel 대시보드 → Railway 단일 사이트 통합',
     detail:
-      'DashboardHero (HNDL 위협·Q-Day 타임라인·라이브 메트릭) + /methodology 인터랙티브 계산기 + /about 인용 체인 시각화.',
+      '/scan 라우트 추가. pnpm@10.33.0 고정 (corepack 11.9.0 fatal 에러 방지). Dockerfile Stage 1을 루트 프로젝트로 전환.',
+    type: 'normal',
+  },
+  {
+    date: '2026-06-25',
+    sha: '(현재)',
+    phase: '지금',
+    title: '살아있는 보고서 완성 + 에세이 전체 임베드',
+    detail:
+      'DashboardHero (HNDL·Q-Day 타임라인·라이브 메트릭) + /methodology 인터랙티브 qubit 계산기 + /about 에세이 전체 임베드 + 탭 간 유기적 크로스링크.',
     type: 'discovery',
   },
 ];
@@ -515,10 +904,13 @@ function MakingMilestones(): React.JSX.Element {
                 <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
                   {m.date}
                 </span>
+                <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]/60">
+                  {m.sha}
+                </span>
                 <span
                   className={cn(
                     'rounded px-1.5 py-0.5 text-[10px] font-semibold',
-                    m.phase === 'Phase 2' || m.phase === 'Now'
+                    m.type === 'discovery' || m.phase === '지금'
                       ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
                       : m.type === 'correction'
                         ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400'
@@ -587,4 +979,3 @@ function Section({
     </section>
   );
 }
-
