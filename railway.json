@@ -6,12 +6,12 @@
     "watchPatterns": [
       "scanner/**",
       "scanner-api/**",
-      "scanner-web/**",
       "src/**",
       "public/**",
       "package.json",
       "pnpm-lock.yaml",
       ".npmrc",
+      ".dockerignore",
       "vite.config.ts",
       "index.html",
       "railway.json"
