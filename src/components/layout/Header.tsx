@@ -21,6 +21,7 @@ const NAV_ITEMS = [
   { to: '/', label: ko.nav.dashboard, end: true },
   { to: '/methodology', label: ko.nav.methodology, end: false },
   { to: '/about', label: ko.nav.about, end: false },
+  { to: '/scan', label: ko.nav.scanner, end: false },
 ] as const;
 
 export function Header(): React.JSX.Element {

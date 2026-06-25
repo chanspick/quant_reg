@@ -5,7 +5,7 @@
 # 실행:  docker run -p 8000:8000 -e ALLOWED_ORIGINS=http://localhost:8000 quant-scanner:test
 
 # ---------------------------------------------------------------------------
-# Stage 1: web-builder — scanner-web/ → /build/dist (Vite production build)
+# Stage 1: web-builder — 루트 프로젝트(대시보드 + 스캐너) → /build/dist
 # ---------------------------------------------------------------------------
 FROM node:22-alpine AS web-builder
 
@@ -15,18 +15,16 @@ RUN corepack enable
 WORKDIR /build
 
 # 왜: 의존성 레이어 캐시 분리 — lockfile 변경 없을 때 pnpm install skip
-# .npmrc 도 함께 — pnpm install 시 정책 (minimum-release-age) 즉시 적용
-COPY scanner-web/package.json scanner-web/pnpm-lock.yaml scanner-web/.npmrc ./
-# 왜: 발표 시연 빌드 안정성 — supply-chain policy disable + lockfile 자동 갱신 허용
-# (host 의 pnpm-lock.yaml 은 그대로, 컨테이너 내부 lockfile 만 update)
+COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm install --no-frozen-lockfile --config.minimum-release-age=0
 
 # 왜: 소스 복사 후 빌드 — TS strict + Vite 6
-COPY scanner-web/tsconfig.json scanner-web/tsconfig.app.json scanner-web/tsconfig.node.json ./
-COPY scanner-web/vite.config.ts scanner-web/index.html ./
-COPY scanner-web/src ./src
-COPY scanner-web/public ./public
-COPY scanner-web/.env.production ./
+COPY tsconfig.json tsconfig.app.json tsconfig.node.json ./
+COPY vite.config.ts index.html ./
+COPY src ./src
+COPY public ./public
+# VITE_SCANNER_API_URL 빈 값 = 동일 오리진 상대 경로 (Railway 단일 이미지 배포)
+RUN echo 'VITE_SCANNER_API_URL=' > .env.production
 
 RUN pnpm build
 

@@ -12,6 +12,7 @@ export const ko = {
     dashboard: '대시보드',
     methodology: '측정 방법론',
     about: '프로젝트 소개',
+    scanner: '동적 스캐너',
   },
 
   meta: {

@@ -25,6 +25,9 @@ const AboutPage = lazy(() =>
 const NotFoundPage = lazy(() =>
   import('@/pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })),
 );
+const ScannerPage = lazy(() =>
+  import('@/pages/ScannerPage').then((m) => ({ default: m.ScannerPage })),
+);
 
 function RouteFallback(): React.JSX.Element {
   return (
@@ -58,6 +61,14 @@ export function App(): React.JSX.Element {
               element={
                 <Suspense fallback={<RouteFallback />}>
                   <AboutPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="scan"
+              element={
+                <Suspense fallback={<RouteFallback />}>
+                  <ScannerPage />
                 </Suspense>
               }
             />

@@ -19,7 +19,7 @@
  */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap');
 
-/* Tailwind v4 CSS-first 테마 토큰 (font-family stacks) */
+/* Tailwind v4 CSS-first 테마 토큰 (font-family stacks + 스캐너 다크 팔레트) */
 @theme {
   --font-sans:
     'Pretendard Variable', 'Inter Variable', system-ui, -apple-system,
@@ -27,6 +27,16 @@
   --font-serif: 'Noto Serif KR', serif;
   --font-mono:
     'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* 스캐너 전용 다크 팔레트 — bg-coal/bg-surface/text-ink/border-edge 등 */
+  --color-coal: #1a1a1a;
+  --color-surface: #221f1b;
+  --color-surface-2: #2a2620;
+  --color-ink: #efe9df;
+  --color-muted: #a9a294;
+  --color-faint: #6f6a60;
+  --color-edge: #3a3530;
+  --color-risk: #ff8a80;
 }
 
 /* shadcn/ui 호환 HSL 토큰 + Tailwind v4 inline 매핑 */
