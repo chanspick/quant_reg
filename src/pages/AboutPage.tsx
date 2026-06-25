@@ -179,14 +179,14 @@ function DeploymentsSection(): React.JSX.Element {
         <div className="space-y-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
-              정적 대시보드
+              준비도 대시보드
             </span>
-            <span className="rounded bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-semibold text-blue-600 dark:text-blue-400">
-              PWA
+            <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+              Railway
             </span>
           </div>
           <p className="font-mono text-xs text-[hsl(var(--muted-foreground))]">
-            quant-reg.vercel.app
+            quantreg-production.up.railway.app
           </p>
           <ul className="space-y-1 text-xs text-[hsl(var(--foreground))]/80">
             <li>React 19 + Vite + Tailwind v4, 13개 섹터 47개 도메인</li>
@@ -207,12 +207,12 @@ function DeploymentsSection(): React.JSX.Element {
             </span>
           </div>
           <p className="font-mono text-xs text-[hsl(var(--muted-foreground))]">
-            quantreg-production.up.railway.app
+            quantreg-production.up.railway.app/scan
           </p>
           <ul className="space-y-1 text-xs text-[hsl(var(--foreground))]/80">
             <li>FastAPI 백엔드, Docker single image</li>
             <li>임의 도메인 입력 → sslyze + raw TLS probe</li>
-            <li>Claude Sonnet 4.6 narrative (최대 60초)</li>
+            <li>Gemini 3.1 Flash Lite narrative (최대 60초)</li>
             <li>정직성 메타데이터 + 진단 금지 경고 명시</li>
           </ul>
           <CrossLink to="/scan" label="스캐너 사용해보기 →" />

@@ -314,9 +314,9 @@ function CreatorNote(): React.JSX.Element {
             하나의 질문이 생겼습니다: <strong className="text-[hsl(var(--foreground))]">"그렇다면 지금 한국의 실제 인터넷 인프라는 얼마나 준비됐는가?"</strong>
           </p>
           <p>
-            교수님 논문(김의결·안혁 2025)이 양자 위협의 이론을 다뤘다면, 본 프로젝트는
+            강의에서 다룬 Shor(L4)·Grover(L3·L5) 알고리즘의 이론을 출발점으로, 본 프로젝트는
             자원 추정 공식(RSA: Beauregard 2003·Gidney-Ekerå 2019/2025, ECC: Roetteler 2017)과
-            Willsch 2023의 실증 시뮬레이션(성공률 50%+)을 한국 47개 실제 인프라에 적용해
+            Willsch 2023의 실증 시뮬레이션(성공률 50%+)을 한국 47개 실제 인프라에 직접 적용해
             도메인별 <em>양자 깨짐 비용</em>을 보수·실증 두 시나리오로 정량화합니다.
           </p>
           <div className="rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-3">
