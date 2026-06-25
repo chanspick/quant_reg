@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
   "description": "PQC 준비도 스캐너 — 한국 주요 50개 도메인의 양자내성암호 전환 준비도 데모 대시보드 (PWA)",
   "scripts": {
     "dev": "vite",
