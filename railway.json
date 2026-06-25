@@ -7,6 +7,13 @@
       "scanner/**",
       "scanner-api/**",
       "scanner-web/**",
+      "src/**",
+      "public/**",
+      "package.json",
+      "pnpm-lock.yaml",
+      ".npmrc",
+      "vite.config.ts",
+      "index.html",
       "railway.json"
     ]
   },
