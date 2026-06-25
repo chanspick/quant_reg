@@ -1,24 +1,14 @@
-"""Phase D LLM narrative wrapper — Claude Sonnet 4.6 via Anthropic SDK.
+"""Phase D LLM narrative wrapper — Gemini 2.0 Flash via google-genai SDK.
 
-SPEC-PQC-002 §3.3 / §5.3 REQ-LLM-001~004:
-- 모델: ``claude-sonnet-4-6`` (1M 변형 아님, 일반 sonnet 4.6)
-- prompt cache: 4축 모델 + 정직성 + 출력 포맷 규약을 system message 에 박고
-  ``cache_control: {"type": "ephemeral"}`` 적용 → 도메인당 cache-read 비용으로 회수
-- ``source`` 라벨 ``llm-only`` 박제 (정직성 시스템 일관)
-- 실패/timeout/no-key → ``None`` 반환, 호출자가 ``errors[]`` 에 ErrorTrace 추가
+환경변수 (둘 중 하나):
+  GOOGLE_API_KEY                 → Google AI Studio 모드 (API key 직접 지정)
+  GOOGLE_APPLICATION_CREDENTIALS → Vertex AI 모드 (서비스 계정 JSON 경로)
 
-호출 측 패턴(``routes/scan.py``):
-    result = await asyncio.wait_for(
-        generate_narrative(scan_data), timeout=8.0
-    )
+GOOGLE_API_KEY 우선. 없으면 ADC(GOOGLE_APPLICATION_CREDENTIALS)로 Vertex AI
+project=496146676363 / location=us-central1 에 연결.
 
-설계 결정:
-- 환경변수 ``ANTHROPIC_API_KEY`` 미설정 시 SDK 초기화도 안 한다 (NO_API_KEY 즉시 반환).
-- ``AsyncAnthropic`` 사용 — FastAPI async 컨텍스트와 정합.
-- system message 는 ``list[dict]`` 형식으로 보내야 ``cache_control`` 이 작동한다
-  (string 단축 형식은 cache 미적용).
-- 출력 파싱은 strict JSON — SDK 의 ``response.content[0].text`` 에서 json.loads.
-  실패해도 ``None`` 반환해 narrative 섹션을 응답에서 제외 (REQ-LLM-004 자가당착 차단).
+source 라벨 ``llm-only`` 박제 (정직성 시스템 일관).
+실패/timeout/no-key → ``None`` 반환, 호출자가 errors[] 에 ErrorTrace 추가.
 """
 
 from __future__ import annotations
@@ -33,22 +23,14 @@ from models.scan_result import NarrativeMeta
 
 logger = logging.getLogger("scanner_api.narrative")
 
-# REQ-LLM-001 — 모델 ID 박제 (1M 변형 아님)
-MODEL_ID = "claude-sonnet-4-6"
+MODEL_ID = "gemini-2.0-flash"
+_VERTEX_PROJECT = "496146676363"
+_VERTEX_LOCATION = "us-central1"
 
-# narrative timeout — Railway 컨테이너 → Anthropic API 라우팅 지연 + prompt cache
-# write + 한국어 300-500자 생성 합쳐 15s 도 부족. 60s 로 상향 (발표 시연 안정성 우선).
-# cache hit 후엔 3-5s 회복하므로 평소엔 거의 도달 안 함.
 NARRATIVE_TIMEOUT_SECONDS = 60.0
-
-# 출력 토큰 상한 — 300-500자 한국어 + recommendations 3개면 충분
 MAX_OUTPUT_TOKENS = 1024
 
 
-# --- system message: 4축 모델 + 정직성 + 출력 포맷 (prompt cache 대상) ----------
-
-# prompt cache 최소 prefix 가 sonnet 4.6 에서 2048 tokens 이므로
-# 4축 설명·정직성 규약·출력 포맷 명세를 충분히 길게 박아 cache 발동시킨다.
 _SYSTEM_PROMPT = """\
 당신은 양자컴퓨팅 강의 발표 시연용 PQC(Post-Quantum Cryptography) 분석 보조자입니다.
 TLS 측정 결과를 입력받아 한국어 narrative + 권고 3개를 반환합니다.
@@ -99,12 +81,6 @@ recommendations 는 정확히 3개. 각 50-100자.
 
 
 def _build_user_message(scan_data: dict[str, Any]) -> str:
-    """측정 결과 → user message 본문. 매 호출마다 변하는 부분.
-
-    SPEC §3.3: scores + scoring breakdown + cert + phase2 를 압축해 전달.
-    너무 길면 토큰 낭비이므로 핵심 필드만 골라 직렬화.
-    """
-    # 안전한 필드 추출 — 빈 dict 도 허용
     hostname = scan_data.get("hostname") or "(unknown)"
     scores = scan_data.get("scores") or {}
     meta = scan_data.get("meta") or {}
@@ -112,7 +88,6 @@ def _build_user_message(scan_data: dict[str, Any]) -> str:
     certificate = meta.get("certificate") or {}
     phase2 = meta.get("phase2") or {}
 
-    # cipher 감점 dict 가 너무 크면 상위 5개만
     tls_block = dict(scoring.get("tls") or {})
     cd = tls_block.get("cipher_deductions") or tls_block.get("cipherDeductions") or {}
     if isinstance(cd, dict) and len(cd) > 5:
@@ -141,17 +116,11 @@ def _build_user_message(scan_data: dict[str, Any]) -> str:
 
 
 def _parse_response(text: str) -> NarrativeMeta | None:
-    """LLM 응답 텍스트 → NarrativeMeta. 실패 시 None.
-
-    엄격 JSON 파싱 + 필드 검증. 자가당착 차단을 위해 스키마 불일치는 모두 None.
-    """
     if not text or not text.strip():
         return None
 
-    # 모델이 코드 펜스를 붙였을 경우 한 번만 떼어낸다 (system 에서 금지했지만 방어적)
     s = text.strip()
     if s.startswith("```"):
-        # ```json ... ``` 또는 ``` ... ```
         lines = s.splitlines()
         if len(lines) >= 2:
             lines = lines[1:]
@@ -176,7 +145,6 @@ def _parse_response(text: str) -> NarrativeMeta | None:
     if not isinstance(recs, list) or not all(isinstance(r, str) for r in recs):
         return None
 
-    # NarrativeMeta 의 source 는 Literal["llm-only"] — 박제
     try:
         return NarrativeMeta(
             text=narrative_text.strip(),
@@ -185,7 +153,6 @@ def _parse_response(text: str) -> NarrativeMeta | None:
             model=MODEL_ID,
         )
     except Exception as exc:  # noqa: BLE001
-        # Pydantic ValidationError 등 — None 으로 폴백
         logger.warning("NarrativeMeta 생성 실패: %s", exc)
         return None
 
@@ -196,110 +163,69 @@ async def generate_narrative(
     api_key: str | None = None,
     timeout: float = NARRATIVE_TIMEOUT_SECONDS,
 ) -> NarrativeMeta | None:
-    """측정 결과로 Claude Sonnet 4.6 narrative 생성.
-
-    Args:
-        scan_data: ScanResponse 의 dict 표현. hostname/scores/meta 키 사용.
-        api_key: 명시 키. None 이면 환경변수 ``ANTHROPIC_API_KEY``.
-        timeout: 호출 timeout (초). 기본 8.0 (SPEC §5.1).
+    """측정 결과로 Gemini 2.0 Flash narrative 생성.
 
     Returns:
-        성공: NarrativeMeta. 실패/timeout/no-key/parse-fail: ``None``.
-
-    Notes:
-        호출자는 ``None`` 반환 시 ``errors[]`` 에 stage='narrative' 의
-        ErrorTrace 를 추가해야 한다 (REQ-API-004). 자세한 실패 분류는
-        로그에만 남고 응답 envelope 에는 자가당착 차단을 위해 노출하지 않는다.
+        성공: NarrativeMeta. 실패/timeout/no-key/parse-fail: None.
     """
-    key = api_key or os.environ.get("ANTHROPIC_API_KEY")
-    if not key:
-        # 로컬 개발 친화 — 즉시 None, 호출자가 NO_API_KEY ErrorTrace 추가
-        logger.info("ANTHROPIC_API_KEY 미설정 → narrative 생성 건너뜀")
+    key = api_key or os.environ.get("GOOGLE_API_KEY")
+    has_vertex = bool(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"))
+
+    if not key and not has_vertex:
+        logger.info("GOOGLE_API_KEY / GOOGLE_APPLICATION_CREDENTIALS 미설정 → narrative 건너뜀")
         return None
 
-    # 지연 import — anthropic 미설치 환경에서도 모듈 로드 가능
     try:
-        from anthropic import AsyncAnthropic
-        from anthropic import (
-            APIConnectionError,
-            APIStatusError,
-            APITimeoutError,
-        )
+        from google import genai
+        from google.genai import types as genai_types
     except ImportError as exc:
-        logger.warning("anthropic SDK import 실패: %s", exc)
+        logger.warning("google-genai SDK import 실패: %s", exc)
         return None
 
-    client = AsyncAnthropic(api_key=key)
+    if key:
+        client = genai.Client(api_key=key)
+    else:
+        client = genai.Client(
+            vertexai=True,
+            project=_VERTEX_PROJECT,
+            location=_VERTEX_LOCATION,
+        )
+
     user_text = _build_user_message(scan_data)
 
     try:
-        # asyncio.wait_for 로 SDK 내부 timeout 과 별개의 외곽 timeout 적용
         response = await asyncio.wait_for(
-            client.messages.create(
+            client.aio.models.generate_content(
                 model=MODEL_ID,
-                max_tokens=MAX_OUTPUT_TOKENS,
-                # system 은 list[dict] 형식이어야 cache_control 작동 (string 단축 X)
-                system=[
-                    {
-                        "type": "text",
-                        "text": _SYSTEM_PROMPT,
-                        "cache_control": {"type": "ephemeral"},
-                    }
-                ],
-                messages=[{"role": "user", "content": user_text}],
+                contents=user_text,
+                config=genai_types.GenerateContentConfig(
+                    system_instruction=_SYSTEM_PROMPT,
+                    max_output_tokens=MAX_OUTPUT_TOKENS,
+                ),
             ),
             timeout=timeout,
         )
     except asyncio.TimeoutError:
         logger.warning("narrative 호출 timeout (%.1fs 초과)", timeout)
         return None
-    except APITimeoutError as exc:
-        logger.warning("anthropic APITimeoutError: %s", exc)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("narrative 예외: %s", exc)
         return None
-    except APIConnectionError as exc:
-        logger.warning("anthropic APIConnectionError: %s", exc)
-        return None
-    except APIStatusError as exc:
-        logger.warning(
-            "anthropic APIStatusError: status=%s type=%s",
-            getattr(exc, "status_code", "?"),
-            getattr(exc, "type", "?"),
-        )
-        return None
-    except Exception as exc:  # noqa: BLE001 — SDK 외 예외 광범위 방어
-        logger.warning("narrative 알 수 없는 예외: %s", exc)
-        return None
-    finally:
-        # AsyncAnthropic 의 내부 httpx 클라이언트 정리
-        try:
-            await client.close()
-        except Exception:  # noqa: BLE001
-            pass
 
-    # 응답 파싱 — content[0] 이 text block 이라 가정 (system 에서 JSON only 강제)
     try:
-        blocks = response.content
-        if not blocks:
-            return None
-        first = blocks[0]
-        text = getattr(first, "text", None)
+        text = response.text
         if not text:
             return None
     except Exception as exc:  # noqa: BLE001
-        logger.warning("narrative 응답 구조 파싱 실패: %s", exc)
+        logger.warning("narrative 응답 텍스트 추출 실패: %s", exc)
         return None
 
-    # cache hit 가시화 — 발표 시연용으로 도움됨
     try:
-        usage = response.usage
-        cache_read = getattr(usage, "cache_read_input_tokens", 0) or 0
-        cache_write = getattr(usage, "cache_creation_input_tokens", 0) or 0
+        usage = response.usage_metadata
         logger.info(
-            "narrative usage: in=%s out=%s cache_read=%s cache_write=%s",
-            getattr(usage, "input_tokens", "?"),
-            getattr(usage, "output_tokens", "?"),
-            cache_read,
-            cache_write,
+            "narrative usage: prompt_tokens=%s candidates_tokens=%s",
+            getattr(usage, "prompt_token_count", "?"),
+            getattr(usage, "candidates_token_count", "?"),
         )
     except Exception:  # noqa: BLE001
         pass

@@ -404,12 +404,12 @@ async def _attach_narrative(
     - NO_API_KEY 와 그 외 실패는 errors[] 의 code 로만 구분 (메시지로는 노출 안 함)
     """
     # 환경변수 미설정이면 호출 자체를 안 한다 — NO_API_KEY 로 표기
-    if not os.environ.get("ANTHROPIC_API_KEY"):
+    if not os.environ.get("GOOGLE_API_KEY") and not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"):
         errors.append(
             ErrorTrace(
                 stage="narrative",
                 code="NO_API_KEY",
-                message="ANTHROPIC_API_KEY 미설정으로 LLM 분석 건너뜀.",
+                message="GOOGLE_API_KEY 미설정으로 LLM 분석 건너뜀.",
             )
         )
         response.errors = errors or None

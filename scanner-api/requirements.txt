@@ -12,6 +12,6 @@ pydantic>=2.9,<3.0
 sslyze>=6.0,<7
 cryptography>=45,<46
 
-# Phase D — Claude Sonnet 4.6 narrative (REQ-LLM-001~004).
-# AsyncAnthropic + cache_control + APIStatusError 모두 0.40+ 에서 안정 지원.
-anthropic>=0.40,<1.0
+# Phase D — Gemini 2.0 Flash narrative (REQ-LLM-001~004).
+# google-genai 1.x: AI Studio(GOOGLE_API_KEY) + Vertex AI(ADC) 통합 지원.
+google-genai>=1.0,<2.0

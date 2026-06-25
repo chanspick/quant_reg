@@ -15,7 +15,7 @@ CORS:
 환경변수:
     - PORT             : uvicorn 포트 (기본 8000)
     - ALLOWED_ORIGINS  : CORS 화이트리스트 (콤마 구분, 예: ``https://a.com,https://b.com``)
-    - ANTHROPIC_API_KEY: Phase D 에서 사용 (현재는 미사용)
+    - GOOGLE_API_KEY   : Gemini AI Studio API 키 (Phase D narrative)
     - LOG_LEVEL        : 로그 레벨 (기본 INFO)
 """
 
